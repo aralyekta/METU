@@ -4,8 +4,8 @@ int main ()
 {
     int task,task_amount, iterator;
     char operation, currency;
-    float euro_exc, dollar_exc;
-    double total_dollar, total_euro, initial_balance,currency_amount_per_op;
+    double total_dollar, total_euro, currency_amount_per_op, euro_exc, dollar_exc;
+    long double initial_balance;
     float penalty, type1_val, type2_val, type3_val, type4_val, point;
     char exam, ayt_type;
     int type1, type2, type3, type4;
@@ -16,7 +16,7 @@ int main ()
     scanf("%d", &task);
 
     if(task == 1) {
-	    scanf("%lf %f %f", &initial_balance, &euro_exc, &dollar_exc);
+	    scanf("%Lf %lf %lf", &initial_balance, &euro_exc, &dollar_exc);
 	    scanf("%d", &task_amount);
 	    for (iterator=0;iterator < task_amount;iterator++){
 		    scanf(" %c %c %lf", &operation, &currency, &currency_amount_per_op);
@@ -37,10 +37,9 @@ int main ()
 		    }
 	    }
 	    }
-	    printf("%f %f\n",total_dollar, total_euro);
 		    initial_balance += total_dollar * dollar_exc;
 		    initial_balance += total_euro * euro_exc;
-		    printf("Final balance: %.2f\n", initial_balance);
+		    printf("Final balance: %.2Lf TL.", initial_balance);
         
         
     } else if(task == 2) {
