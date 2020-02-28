@@ -37,20 +37,21 @@ int main ()
 		    }
 	    }
 	    }
-		    initial_balance += total_dollar * dollar_exc;
-		    initial_balance += total_euro * euro_exc;
+		    initial_balance += total_dollar * dollar_exc + total_euro * euro_exc;
 		    printf("Final balance: %.2Lf TL.", initial_balance);
         
         
     } else if(task == 2) {
-	    scanf(" %c %c %f", &exam, &ayt_type, &penalty);
+	    scanf(" %c", &exam);
 	    if (exam == 'T'){
+		    scanf("%f", &penalty);
 		    scanf("%d %f %d %f %d %f %d %f", &type1, &type1_val, &type2, &type2_val, &type3, &type3_val, &type4, &type4_val);
 		    point = type1*type1_val + type2*type2_val + type3*type3_val + type4*type4_val;
 		    point -= ((40 - type1)*type1_val + (40 - type2)*type2_val + (40- type3)*type3_val + (40-type4)*type4_val) * penalty;
 		    printf("T result: %.2f points.", point);
 	    }
 	    else if (exam == 'A'){
+		    scanf(" %c %f", &ayt_type, &penalty);
 		    if (ayt_type == 'E'){
  		    scanf("%d %f %d %f %d %f %d %f", &type1, &type1_val, &type2, &type2_val, &type3, &type3_val, &type4, &type4_val);
 		    point = type1*type1_val + type2*type2_val + type3*type3_val + type4*type4_val;
