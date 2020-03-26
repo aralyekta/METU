@@ -1,0 +1,21 @@
+Initial values
+0 - 15
+1 - 4
+2 - 8
+3 - 12
+4 - 8
+5 - 3
+6 - 7
+10 - 6
+12 - 2
+13 - 2
+14 - 7
+26 - 3
+28 - 3
+29 - 6
+30 - 9
+62 - 5
+Min value of tree with root[0] is 2
+Min value of tree with root[1] is 4
+Min value of tree with root[2] is 2
+Min value of tree with root[14] is 5

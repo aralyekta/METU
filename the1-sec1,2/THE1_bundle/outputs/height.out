@@ -1,0 +1,21 @@
+Initial values
+0 - 15
+1 - 4
+2 - 8
+3 - 1
+4 - 8
+5 - 3
+6 - 7
+10 - 1
+12 - 2
+13 - 2
+14 - 4
+26 - 1
+28 - 1
+29 - 1
+30 - 2
+62 - 1
+Height of tree with root[0] is 5
+Height of tree with root[1] is 2
+Height of tree with root[2] is 4
+Height of tree with root[14] is 2
