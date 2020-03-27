@@ -33,7 +33,7 @@ int main() {
     printf("%d is at %d in tree with root[%d].\n", 8, breadth_first_search_itr(binary_tree, 0,8), 0);
     printf("%d is at %d in tree with root[%d].\n", 8, breadth_first_search_itr(binary_tree, 1,8), 1);
     printf("%d is at %d in tree with root[%d].\n", 7, breadth_first_search_itr(binary_tree, 0,7), 0);
-    printf("%d is at %d in tree with root[%d].\n", 1, breadth_first_search_itr(binary_tree, 6,1), 1);
+    printf("%d is at %d in tree with root[%d].\n", 6, breadth_first_search_itr(binary_tree, 6,1), 1);
     printf("%d is at %d in tree with root[%d].\n", 7, breadth_first_search_itr(binary_tree, 10,7), 10);
     printf("%d is at %d in tree with root[%d].\n", 4, breadth_first_search_itr(binary_tree, 0,4), 0);
 	

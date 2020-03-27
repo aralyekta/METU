@@ -28,12 +28,13 @@ int main() {
 	
 	printf("Breadth first search results:\n");
 
-    printf("%d is at %d in tree with root[%d].\n", 8, breadth_first_search_itr(binary_tree, 0,8), 0);
-    printf("%d is at %d in tree with root[%d].\n", 8, breadth_first_search_itr(binary_tree, 1,8), 1);
-    printf("%d is at %d in tree with root[%d].\n", 7, breadth_first_search_itr(binary_tree, 0,7), 0);
-    printf("%d is at %d in tree with root[%d].\n", 1, breadth_first_search_itr(binary_tree, 6,1), 1);
-    printf("%d is at %d in tree with root[%d].\n", 7, breadth_first_search_itr(binary_tree, 10,7), 10);
-    printf("%d is at %d in tree with root[%d].\n", 35, breadth_first_search_itr(binary_tree, 0,35), 0);
+    printf("%d is at %d in tree with root number %d.\n", 8, breadth_first_search_itr(binary_tree, 0,8), 0);
+    printf("%d is at %d in tree with root number %d.\n", 8, breadth_first_search_itr(binary_tree, 1,8), 1);
+    printf("%d is at %d in tree with root number %d.\n", 7, breadth_first_search_itr(binary_tree, 0,7), 0);
+    printf("%d is at %d in tree with root number %d.\n", 1, breadth_first_search_itr(binary_tree, 6,1), 6);
+    printf("%d is at %d in tree with root number %d.\n", 2, breadth_first_search_itr(binary_tree, 14,2), 14);
+    printf("%d is at %d in tree with root number %d.\n", 35, breadth_first_search_itr(binary_tree, 0,35), 0);
+    printf("%d is at %d in tree with root number %d.\n", 4, breadth_first_search_itr(binary_tree, 2,4), 2);
  	
 	return 0;
 }

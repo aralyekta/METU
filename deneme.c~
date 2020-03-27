@@ -1,6 +1,6 @@
 #include <stdio.h>
 int array[10];
-int func()
+int func(int array[])
 {
 	int i;
 	for (i = 0 ; i < 10; i++)
@@ -12,7 +12,7 @@ int func()
 int main()
 {
 	int i;
-	func();
+	func(array);
 	for ( i = 0 ; i < 10 ; i++)
 	{
 		printf("%d\n",array[i]);

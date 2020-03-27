@@ -112,7 +112,7 @@ int find_min_of_tree_rec(int binary_tree[MAX_LENGTH], int root)
 	return MAX_VAL;
 }
 
-int breadth_first_search_itr(int binary_tree[MAX_LENGTH], int root, int value) 
+int breadth_first_search_itr(int binary_tree[MAX_LENGTH], int root, int value)
 {
 	int queue[MAX_LENGTH];
 	int i, length = 0, index_to_append = 1;
@@ -122,28 +122,27 @@ int breadth_first_search_itr(int binary_tree[MAX_LENGTH], int root, int value)
 			length++;
 	}
 	queue[0] = root;
-	if (binary_tree[queue[0]] == value)
+	if (binary_tree[root] == value)
 		return root;
-	printf("%dth index is added to the queue[%d]\n", root, 0);
-	for (i = 0 ; i < length ; i++)
+	for (i = 0 ; i < length-1 ; i++)
 	{
+		if (i == index_to_append)
+		{
+			return -1;
+		}
 		root = queue[i];
 		if (binary_tree[2*root+1] != -1)
 		{
-			printf("Currently looking at the index %d\n", 2*root+1);
 			if (binary_tree[2*root+1] == value)
 				return 2*root+1;
 			queue[index_to_append] = 2*root+1;
-			printf("%dth index is added to the queue[%d]\n", 2*root+1, index_to_append);
 			index_to_append++;
 		}
 		if (binary_tree[2*root+2] != -1)
 		{
-			printf("Currently looking at the index %d\n", 2*root+2);
 			if (binary_tree[2*root+2] == value)
 				return 2*root+2;
 			queue[index_to_append] = 2*root+2;
-			printf("%dth index is added to the queue[%d]\n", 2*root+2, index_to_append);
 			index_to_append++;
 		}
 	}
