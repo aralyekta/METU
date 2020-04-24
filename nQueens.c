@@ -3,6 +3,13 @@
 int solve(int Q[], int row, int n);
 int check(int Q[], int j, int row);
 
+int main()
+{
+	int Q[5]= {0};
+	solve(Q, 0, 5);
+	return 0;
+}
+
 int check(int Q[], int j, int row)
 {
 	int i, state = 1;
@@ -64,9 +71,3 @@ int solve(int Q[], int row, int n)
 		return 0;
 }
 
-int main()
-{
-	int Q[4]= {0};
-	solve(Q, 0, 4);
-	return 0;
-}
