@@ -16,34 +16,35 @@ char *find_parenthesis_end(char *);
 int main()
 {
 	char arr1[] = "(A&B),B#D,E,C";
-	char *ptr1 = arr1;
 	char arr2[] = "-A#F";
-	char *ptr2 = arr2;
 	char arr3[] = "-A,C#B";
-	char *ptr3 = arr3;
 	char arr4[] = "(A|B)#C,A";
-	char *ptr4 = arr4;
 	char arr5[] = "(A&B),((C|D)>(A|B))#(C&D),(A&B)";
-	char *ptr5 = arr5;
 	char arr6[] = "B,C,D,(A|B)#F";
-	char *ptr6 = arr6;
+
 	char arr7[] = "B#F,D,-A";
-	char *ptr7 = arr7;
-	char arr8[] = "B#(F&D),-A";
-	char *ptr8 = arr8;
-	char arr9[] = "B,D,-((A|B)>D)#C,E";
-	char *ptr9 = arr9;
-	char arr10[] = "B,D#C,E,-((A|B)>D),F";
-	char *ptr10 = arr10;
-	char arr11[] = "B,-((A|B)>D),D#C,E";
-	char *ptr11 = arr11;
+	char arr8[] = "B#-A,(F&D)"; /* Okay */
+	char arr9[] = "B,D,-((A|B)>D)#C,E"; /* Okay*/
+	char arr10[] = "B,D#C,E,-((A|B)>D),F"; /* Okay*/
+	char arr11[] = "B,-((A|B)>D),D#C,E"; /* Okay */
+	char arr12[] = "-((A|B)>D),B,D#C,E,F"; /* Okay */
+	char arr13[] = "B,-((A|B)>D),D#C,E,F"; /* Okay */
+	char arr14[] = "B,D#-((A|B)>D),C,E"; /* Okay */
+	char arr15[] = "B,D#-((A|B)>D)"; /* Okay */
+	char arr16[] = "-((A|B)>D)#C,E,F"; /* Okay */
+	char arr17[] = "B,D#C,E,-((A|B)>D)"; /* Okay */
+	char arr18[] = "-A,B,D#"; /*Okay*/
+	char arr19[] = "#-A,B,D"; /*Okay*/
+
+
+
 /*
 	while (!check_if_finished(ptr))
 	{
 	
 	}
 	*/
-	solve(ptr10);
+	solve(a19);
 	return 0;
 }
 
@@ -83,7 +84,11 @@ char *solve(char *str)
 	char *str_to_return;
 	int length_string = strlen(str);
 	long len_before, len_after, len_current, len_after2;
-	/*printf("Entered the loop for string %s\n", str);*/
+	printf("Entered the loop for string %s\n", str);
+	if (start == arrow)
+	{
+		start++;
+	}
 	if (!end)
 		{
 /*			printf("No commas found\n");*/
@@ -110,10 +115,10 @@ char *solve(char *str)
 			end--;
 /*			printf("The order of the end value is %ld\n", end-str);*/
 		}
-/*	printf("Start and end address and value is %p,%p,%ld,%ld\n", start, end, start-str, end-str);*/
-	while (end == start)
+	printf("Start and end address and value is %p,%p,%ld,%ld\n", start, end, start-str, end-str);
+	while (end == start || start == arrow)
 	{
-/*		printf("Start and end address and value is %p,%p,%ld,%ld\n", start, end, start-str, end-str);*/
+		printf("Start and end address and value is %p,%p,%ld,%ld\n", start, end, start-str, end-str);
 		if (*end == str[length_string-1])
 		{
 /*			printf("Solve function called for non solvable string, exiting.\n");*/
@@ -139,78 +144,161 @@ char *solve(char *str)
 		{
 			/*printf("Commas found\n");*/
 			end = arrow-1;
-/*			printf("The order of the end value is %ld\n", end-str);*/
+			printf("The order of the end value is %ld\n", end-str);
 		}
 		else 
 		{
 			/*printf("No problems at all\n");*/
 			end--;
-/*			printf("The order of the end value is %ld\n", end-str);*/
+			printf("The order of the end value is %ld\n", end-str);
 		}
 	}
 	printf("END OF LOOP, Start and end address and value is %ld %ld\n", start-str, end-str);
-	/* "B,D,-((A|B)>D)#C,E" */
 	if (*start == '-')
 	{
 		if (start < arrow)
 		{
 			printf("Operation R1 on the left side\n");
 			len_before = start-str-1; 
-			len_after = length_string-1-(end-str)+1;
+			len_after = length_string-(end-str);
 			len_current = end-start;
-			str_to_return = malloc((len_before+len_after+len_current) * sizeof(char));
-			new_str_before = malloc(len_before * sizeof(char));
-			new_str_before = memcpy(new_str_before, str, len_before);
-			printf("The string before the operation is: %s\n", new_str_before);
-			new_str_after = malloc(len_after * sizeof(char));
-			new_str_after = memcpy(new_str_after, end+1, len_after);
-			new_str_after = strcat(new_str_after, ",");
-			printf("The string after the operation is: %s\n", new_str_after);
+			if (len_before > 0)
+			{
+				new_str_before = malloc(len_before * sizeof(char));
+				new_str_before = memcpy(new_str_before, str, len_before);
+				printf("The string before the operation is: %s\n", new_str_before);
+				if (arrow == &str[length_string-1])
+				{
+					len_after--;
+					printf("Length is :%d %d %d\n", len_before, len_after, len_current);
+					new_str_after = malloc(len_after * sizeof(char));
+					new_str_after = memcpy(new_str_after, end+1, len_after);
+				}
+				else
+				{
+					printf("Length is :%d %d %d\n", len_before, len_after, len_current);
+					new_str_after = malloc(len_after * sizeof(char));
+					new_str_after = memcpy(new_str_after, end+1, len_after);
+					new_str_after = strcat(new_str_after, ",");
+				}
+				printf("The string after the operation is: %s\n", new_str_after);
+			}
+			else 
+			{
+				len_after--;
+				if (start == str && end == arrow-1)
+				{
+					if (arrow == &str[length_string-1])
+					{
+						printf("Length is :%d %d %d\n", len_before, len_after, len_current);
+						new_str_after = malloc(len_after * sizeof(char));
+						new_str_after = strcat(new_str_after, "#");
+						new_str_after = strcat(new_str_after, end+2);
+					}
+					else 
+					{
+						len_after++;
+						printf("Length is :%d %d %d\n", len_before, len_after, len_current);
+						new_str_after = malloc(len_after * sizeof(char));
+						new_str_after = strcat(new_str_after, "#");
+						new_str_after = strcat(new_str_after, end+2);
+						new_str_after = strcat(new_str_after, ",");
+					}
+				}
+				else if (arrow == &str[length_string-1])
+				{
+					printf("Arrow is the last element\n");
+					len_after--;
+					printf("Length is :%d %d %d\n", len_before, len_after, len_current);
+					new_str_after = malloc(len_after * sizeof(char));
+					new_str_after = memcpy(new_str_after, end+2, len_after);
+				}
+				else 
+				{
+					printf("Length is :%d %d %d\n", len_before, len_after, len_current);
+					new_str_after = malloc(len_after * sizeof(char));
+					new_str_after = memcpy(new_str_after, end+2, len_after);
+					new_str_after = strcat(new_str_after, ",");
+				}
+				printf("The string after the operation is: %s\n", new_str_after);
+
+			}
 			new_str_current = malloc(len_current * sizeof(char));
 			new_str_current = memcpy(new_str_current, start+1, len_current);
 			printf("The string at the operation is: %s\n", new_str_current);
-			str_to_return = strcat(str_to_return, new_str_before);
+			str_to_return = malloc((len_before+len_after+len_current) * sizeof(char));
+			if (len_before > 0)
+			{
+				str_to_return = strcat(str_to_return, new_str_before);
+			}
 			str_to_return = strcat(str_to_return, new_str_after);
 			str_to_return = strcat(str_to_return, new_str_current);
 			printf("str to return is: %s\n", str_to_return);
 		}
 		else if (start == arrow)
 		{
-			printf("There is a problem, start is equal to arrow\n");
+/*			printf("There is a problem, start is equal to arrow\n");*/
 		}
 		else if (start > arrow)
 		{
-			/* "B,D#C,E,-((A|B)>D),F" */
-			printf("Operation R1 on the right side\n");
+/*			printf("Operation R1 on the right side\n");*/
 			len_before = arrow-str+1; /*We will append ',' to this*/
 			len_after = start-arrow-1; /*No comma included*/
 			len_after2 = length_string-(end-str)-1; /*May be 0 */
 			len_current = end-start;
-			str_to_return = malloc((len_before+len_after+len_after2+len_current) * sizeof(char));
-			new_str_before = malloc(len_before * sizeof(char));
-			new_str_before = memcpy(new_str_before, str, len_before-1);
-			new_str_before = strcat(new_str_before, ",");
-			printf("The string before the operation is: %s\n", new_str_before);
-			new_str_after = malloc(len_after * sizeof(char));
-			new_str_after = memcpy(new_str_after, arrow, len_after);
-			printf("The string after the operation is: %s\n", new_str_after);
+			if (&str[0] == arrow)
+			{
+				len_before--;
+			}
+	/*		printf("Length is :%d %d %d %d\n", len_before, len_after, len_after2, len_current);*/
+			if (len_before)
+			{
+				new_str_before = malloc(len_before * sizeof(char));
+				new_str_before = memcpy(new_str_before, str, len_before-1);
+				new_str_before = strcat(new_str_before, ",");
+/*				printf("The string before the operation is: %s\n", new_str_before);*/
+			}
+			if (len_after)
+			{
+				new_str_after = malloc(len_after * sizeof(char));
+				new_str_after = memcpy(new_str_after, arrow, len_after);
+/*				printf("The string after the operation is: %s\n", new_str_after);*/
+			}
 			if (len_after2)
 			{
 				new_str_after2 = malloc(len_after2 * sizeof(char));
 				new_str_after2 = memcpy(new_str_after2, end+1, len_after2);
-				printf("The string after2 the operation is: %s\n", new_str_after2);
+/*				printf("The string after2 the operation is: %s\n", new_str_after2);*/
 			}
 			new_str_current = malloc(len_current * sizeof(char));
 			new_str_current = memcpy(new_str_current, start+1, len_current);
-			printf("The string at the operation is: %s\n", new_str_current);
-			str_to_return = strcat(str_to_return, new_str_before);
+		/*	printf("The string at the operation is: %s\n", new_str_current);*/
+			if (!len_after)
+			{
+				new_str_after2[0] = '#';
+			}
+			if (!len_after && !len_after2)
+			{
+		/*		printf("No len_after and len_after2, so appended # to the end\n");*/
+				len_after++;
+				new_str_after = malloc(1 * sizeof(char));
+				new_str_after = strcat(new_str_after, "#");
+			}
+			str_to_return = malloc((len_before+len_after+len_after2+len_current) * sizeof(char));
+			if (len_before)
+			{
+				str_to_return = strcat(str_to_return, new_str_before);
+			}
 			str_to_return = strcat(str_to_return, new_str_current);
-			str_to_return = strcat(str_to_return, new_str_after);
+			if (len_after)
+			{
+				str_to_return = strcat(str_to_return, new_str_after);
+			}
 			if (len_after2)
 			{
 				str_to_return = strcat(str_to_return, new_str_after2);
 			}
-			printf("Str to return is %s\n", str_to_return);
+			printf("Str to return from R1 is %s\n", str_to_return);
 		}
 	}
 }
