@@ -10,8 +10,9 @@
 #include <string.h>
 
 int check_if_finished(char *);
-char *solve(char *);
+void solve(char *, char *, char *);
 char *find_parenthesis_end(char *);
+int randomfunc(int);
 
 int main()
 {
@@ -38,24 +39,24 @@ int main()
 	char arr20[] = "A,E#-c";
 	char arr21[] = "A,B,C#D,-C";
 
-	char a1[] = "-(-A|B)#E,F";
-	char a2[] = "E#-(A&-B)";
-	char a3[] = "(A&-B),E#F,G";
 	char *result;
 	char *result2;
 	char *result3;
+	char *result4;
+	char *str1 = malloc(1);
+	str1[0] = '\0';
+	char *str2 = malloc(1);
+	str2[0] = '\0';
 	/* 
 	while (!check_if_finished(ptr))
 	{
 	
 	}
 	*/
-	result = solve(a2);
-	printf("THE RESULT OF 1 FUNCTION IS %s\n", result);
-	result2 = solve(result);
-	printf("THE RESULT OF 2 FUNCTION IS %s\n", result2);
-	result3 = solve(result2);
-	printf("THE RESULT OF 3 FUNCTION IS %s\n", result3);
+	solve(arr21,str1,str2);
+	randomfunc(10);
+	printf("THE RESULT OF 1 FUNCTION IS %s\n", str1);
+	printf("THE RESULT OF 1 FUNCTION IS %s\n", str2);
 	return 0;
 }
 
@@ -80,7 +81,7 @@ char *find_parenthesis_end(char *str)
 	}
 }
 
-char *solve(char *str)
+void solve(char *str, char *str1, char *str2)
 {
 	/* String manipulasyonunu 1 kere yapar.
 	 * Yeni olusacak string icin yer malloc edip eskisini free eder. Yeni stringi doner. */
@@ -92,7 +93,6 @@ char *solve(char *str)
 	char *new_str_current;
 	char *new_str_after;
 	char *new_str_after2;
-	char *str_to_return;
 	int what_is_operation = 0, is_there_parenthesis = 0;
 	int length_string = strlen(str);
 	long len_before, len_after, len_current, len_after2;
@@ -134,7 +134,6 @@ char *solve(char *str)
 		if (end == &str[length_string-1])
 		{
 			printf("Solve function called for non solvable string, exiting.\n");
-			return str;
 		}
 		start += 2;
 		end = strchr(start, ',');
@@ -186,7 +185,7 @@ char *solve(char *str)
 					len_after--;
 					printf("Length1 is :%d %d %d\n", len_before, len_after, len_current);
 					new_str_after = malloc(len_after * sizeof(char));
-					new_str_after = strncpy(new_str_after, end+1, len_after-2);
+					new_str_after = strncpy(new_str_after, end+1, len_after);
 					new_str_after[len_after+1] = '\0';
 				}
 				else
@@ -247,14 +246,14 @@ char *solve(char *str)
 			new_str_current = strncpy(new_str_current, start+1, len_current-1);
 			new_str_current[len_current-1] = '\0';
 			printf("The string at the operation is: %s\n", new_str_current);
-			str_to_return = malloc((len_before+len_after+len_current-2) * sizeof(char));
+			str1 = realloc(str1, (len_before+len_after+len_current-2) * sizeof(char));
 			if (len_before > 1)
 			{
-				str_to_return = strcat(str_to_return, new_str_before);
+				str1 = strcat(str1, new_str_before);
 			}
-			str_to_return = strcat(str_to_return, new_str_after);
-			str_to_return = strcat(str_to_return, new_str_current);
-			printf("str to return is: %s\n", str_to_return);
+			str1 = strcat(str1, new_str_after);
+			str1 = strcat(str1, new_str_current);
+			printf("str to return is: %s\n", str1);
 		}
 		else if (start == arrow)
 		{
@@ -311,21 +310,21 @@ char *solve(char *str)
 				printf("THIS PART IS IMPORTANT\n");
 				new_str_after2[0] = '#';
 			}
-			str_to_return = malloc((len_before+len_after+len_after2+len_current-3) * sizeof(char));
+			str1 = realloc(str1, (len_before+len_after+len_after2+len_current-3) * sizeof(char));
 			if (len_before > 1)
 			{
-				str_to_return = strcat(str_to_return, new_str_before);
+				str1 = strcat(str1, new_str_before);
 			}
-			str_to_return = strcat(str_to_return, new_str_current);
+			str1 = strcat(str1, new_str_current);
 			if (len_after > 1)
 			{
-				str_to_return = strcat(str_to_return, new_str_after);
+				str1 = strcat(str1, new_str_after);
 			}
 			if (len_after2 > 1)
 			{
-				str_to_return = strcat(str_to_return, new_str_after2);
+				str1 = strcat(str1, new_str_after2);
 			}
-			printf("Str to return from R1 is %s\n", str_to_return);
+			printf("Str to return from R1 is %s\n", str1);
 			if (len_after2 > 1)
 			{
 				printf("Freeing after2 string\n");
@@ -344,7 +343,6 @@ char *solve(char *str)
 		{
 			free(new_str_current);
 		}
-		return str_to_return;
 	}
 	else if(*start == '(')
 	{
@@ -431,24 +429,23 @@ char *solve(char *str)
 			new_str_current = strncpy(new_str_current, start+1, len_current-1);
 			new_str_current[len_current-1] = '\0';
 			printf("New str current is %s\n", new_str_current);
-			str_to_return = malloc((len_before+len_after+len_current-2) * sizeof(char));
+			str1 = realloc(str1, (len_before+len_after+len_current-2) * sizeof(char));
 			if (len_before > 1)
 			{
-				str_to_return = strcat(str_to_return, new_str_before);
+				str1 = strcat(str1, new_str_before);
 				free(new_str_before);
 			}
 			if (len_current > 1)
 			{
-				str_to_return = strcat(str_to_return, new_str_current);
+				str1 = strcat(str1, new_str_current);
 				free(new_str_current);
 			}
 			if (len_after > 1)
 			{
-				str_to_return = strcat(str_to_return, new_str_after);
+				str1 = strcat(str1, new_str_after);
 				free(new_str_after);
 			}
-			printf("String to return from R2 is %s\n", str_to_return);
-			return str_to_return;
+			printf("String to return from R2 is %s\n", str1);
 		}
 		else if (what_is_operation == 2)
 		{
@@ -461,13 +458,11 @@ char *solve(char *str)
 		else 
 		{
 			printf("Couldn't identify operation, exiting\n");
-			return str;
 		}
 	}
 	else
 	{
 		printf("ERROR, Start is neither - nor (, exiting\n");
-		return str;
 	}
 }
 
@@ -512,4 +507,9 @@ int check_if_finished(char *str)
 		/*printf("There are changes to be made, returning 0\n");*/
 		return 0;
 	}
+}
+
+int randomfunc(int a)
+{
+	return a+5;
 }
