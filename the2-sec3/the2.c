@@ -38,6 +38,8 @@ int main()
 	char arr19[] = "#-A,B,D"; /*Okay*/
 	char arr20[] = "A,E#-c";
 	char arr21[] = "A,B,C#D,-C";
+	char a1[] = "-(A|-B),E,F#G,H";
+	char a2[] = "(A&-B),E,F#G,H";
 
 	char *result;
 	char *result2;
@@ -53,32 +55,19 @@ int main()
 	
 	}
 	*/
-	solve(arr21,str1,str2);
+	solve(a1,str1,str2);
 	randomfunc(10);
 	printf("THE RESULT OF 1 FUNCTION IS %s\n", str1);
 	printf("THE RESULT OF 1 FUNCTION IS %s\n", str2);
+	solve(str1, str1, str2);
+	randomfunc(15);
+	printf("THE RESULT OF 2 FUNCTION IS %s\n", str1);
+	printf("THE RESULT OF 2 FUNCTION IS %s\n", str2);
+	solve(str1, str1, str2);
+	randomfunc(-5);
+	printf("THE RESULT OF 3 FUNCTION IS %s\n", str1);
+	printf("THE RESULT OF 3 FUNCTION IS %s\n", str2);
 	return 0;
-}
-
-char *find_parenthesis_end(char *str)
-{
-	int amount = 0;
-	while (*str)
-	{
-		if (*str == '(')
-		{
-			amount++;
-		}
-		else if (*str == ')')
-		{
-			amount--;
-			if (!amount)
-			{
-				return str;
-			}
-		}
-		str++;
-	}
 }
 
 void solve(char *str, char *str1, char *str2)
@@ -96,7 +85,7 @@ void solve(char *str, char *str1, char *str2)
 	int what_is_operation = 0, is_there_parenthesis = 0;
 	int length_string = strlen(str);
 	long len_before, len_after, len_current, len_after2;
-	printf("Entered the loop for string %s\n", str);
+	printf("Entered the function for strings %s %s %s\n", str, str1, str2);
 	if (start == arrow)
 	{
 		start++;
@@ -247,6 +236,7 @@ void solve(char *str, char *str1, char *str2)
 			new_str_current[len_current-1] = '\0';
 			printf("The string at the operation is: %s\n", new_str_current);
 			str1 = realloc(str1, (len_before+len_after+len_current-2) * sizeof(char));
+			memset(str1, '\0', sizeof(len_before+len_after+len_current-2));
 			if (len_before > 1)
 			{
 				str1 = strcat(str1, new_str_before);
@@ -311,6 +301,7 @@ void solve(char *str, char *str1, char *str2)
 				new_str_after2[0] = '#';
 			}
 			str1 = realloc(str1, (len_before+len_after+len_after2+len_current-3) * sizeof(char));
+			memset(str1, '\0', sizeof(len_before+len_after+len_current-2));
 			if (len_before > 1)
 			{
 				str1 = strcat(str1, new_str_before);
@@ -430,6 +421,7 @@ void solve(char *str, char *str1, char *str2)
 			new_str_current[len_current-1] = '\0';
 			printf("New str current is %s\n", new_str_current);
 			str1 = realloc(str1, (len_before+len_after+len_current-2) * sizeof(char));
+			memset(str1, '\0', sizeof(len_before+len_after+len_current-2));
 			if (len_before > 1)
 			{
 				str1 = strcat(str1, new_str_before);
@@ -513,3 +505,25 @@ int randomfunc(int a)
 {
 	return a+5;
 }
+
+char *find_parenthesis_end(char *str)
+{
+	int amount = 0;
+	while (*str)
+	{
+		if (*str == '(')
+		{
+			amount++;
+		}
+		else if (*str == ')')
+		{
+			amount--;
+			if (!amount)
+			{
+				return str;
+			}
+		}
+		str++;
+	}
+}
+
