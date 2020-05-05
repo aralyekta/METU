@@ -1,0 +1,24 @@
+	char arr1[] = "(A&B),B#D,E,C";
+	char arr2[] = "-A#F";
+	char arr3[] = "-A,C#B";
+	char arr4[] = "(A|B)#C,A";
+	char arr5[] = "(A&B),((C|D)>(A|B))#(C&D),(A&B)";
+	char arr6[] = "B,C,D,(A|B)#F";
+
+	char arr7[] = "B#F,D,-A";
+	char arr8[] = "B#-A,(F&D)"; /* Okay */
+	char arr9[] = "B,D,-((A|B)>D)#C,E"; /* Okay*/
+	char arr10[] = "B,D#C,E,-((A|B)>D),F"; /* Okay*/
+	char arr11[] = "B,-((A|B)>D),D#C,E"; /* Okay */
+	char arr12[] = "-((A|B)>D),B,D#C,E,F"; /* Okay */
+	char arr13[] = "B,-((A|B)>D),D#C,E,F"; /* Okay */
+	char arr14[] = "B,D#-((A|B)>D),C,E"; /* Okay */
+	char arr15[] = "B,D#-((A|B)>D)"; /* Okay */
+	char arr16[] = "-((A|B)>D)#C,E,F"; /* Okay */
+	char arr17[] = "B,D#C,E,-((A|B)>D)"; /* Okay */
+	char arr18[] = "-A,B,D#"; /*Okay*/
+	char arr19[] = "#-A,B,D"; /*Okay*/
+	char arr20[] = "A,E#-c";
+	char arr21[] = "A,B,C#D,-C";
+	char a1[] = "-(A|-B),E,F#G,H";
+	char a2[] = "(A&-B),E,F#G,H";

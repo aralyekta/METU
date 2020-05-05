@@ -10,82 +10,72 @@
 #include <string.h>
 
 int check_if_finished(char *);
-void solve(char *, char *, char *);
+char **solve(char *);
 char *find_parenthesis_end(char *);
 int randomfunc(int);
 
 int main()
 {
-	char arr1[] = "(A&B),B#D,E,C";
-	char arr2[] = "-A#F";
-	char arr3[] = "-A,C#B";
-	char arr4[] = "(A|B)#C,A";
-	char arr5[] = "(A&B),((C|D)>(A|B))#(C&D),(A&B)";
-	char arr6[] = "B,C,D,(A|B)#F";
-
-	char arr7[] = "B#F,D,-A";
-	char arr8[] = "B#-A,(F&D)"; /* Okay */
-	char arr9[] = "B,D,-((A|B)>D)#C,E"; /* Okay*/
-	char arr10[] = "B,D#C,E,-((A|B)>D),F"; /* Okay*/
-	char arr11[] = "B,-((A|B)>D),D#C,E"; /* Okay */
-	char arr12[] = "-((A|B)>D),B,D#C,E,F"; /* Okay */
-	char arr13[] = "B,-((A|B)>D),D#C,E,F"; /* Okay */
-	char arr14[] = "B,D#-((A|B)>D),C,E"; /* Okay */
-	char arr15[] = "B,D#-((A|B)>D)"; /* Okay */
-	char arr16[] = "-((A|B)>D)#C,E,F"; /* Okay */
-	char arr17[] = "B,D#C,E,-((A|B)>D)"; /* Okay */
-	char arr18[] = "-A,B,D#"; /*Okay*/
-	char arr19[] = "#-A,B,D"; /*Okay*/
-	char arr20[] = "A,E#-c";
-	char arr21[] = "A,B,C#D,-C";
-	char a1[] = "-(A|-B),E,F#G,H";
-	char a2[] = "(A&-B),E,F#G,H";
-
-	char *result;
-	char *result2;
-	char *result3;
-	char *result4;
-	char *str1 = malloc(1);
-	char *str2 = malloc(1);
-	str1[0] = '\0';
-	str2[0] = '\0';
+	/*
+	char a1[] = "(A&--B),F#G,H";
+	char a2[] = "F,(---A&B)#G,H";
+	char a3[] = "F,(---(--B|A)&C)#F,G";
+	*/
+	char a2[] = "((--A&---B)&(---C|----D))#F,G";
+	char *str1;
+	char *str2;
+	int i;
+	
+	char ** result = malloc(2 * sizeof(char *));
 	/* 
 	while (!check_if_finished(ptr))
 	{
 	
 	}
 	*/
-	solve(a1,str1,str2);
+	result = solve(a2);
 	randomfunc(10);
+	str1 = malloc(strlen(result[0]) * sizeof(char));
+	str1 = strcpy(str1, result[0]);
+	/* Bunun str2sini de yapacaksin tabii */
+	for (i = 0; i < 2; i++)
+	{
+		free(result[i]);
+	}
+	free(result);
 	printf("THE RESULT OF 1 FUNCTION IS %s\n", str1);
-	printf("THE RESULT OF 1 FUNCTION IS %s\n", str2);
-	solve(str1, str1, str2);
+	printf("THE RESULT OF 1 FUNCTION IS %s\n", str1);
+	result = solve(str1);
 	randomfunc(15);
-	printf("THE RESULT OF 2 FUNCTION IS %s\n", str1);
-	printf("THE RESULT OF 2 FUNCTION IS %s\n", str2);
-	solve(str1, str1, str2);
-	randomfunc(-5);
-	printf("THE RESULT OF 3 FUNCTION IS %s\n", str1);
-	printf("THE RESULT OF 3 FUNCTION IS %s\n", str2);
+	str1 = realloc(str1, strlen(result[0]) * sizeof(char));
+	str1 = strcpy(str1, result[0]);
+	for (i = 0; i < 2; i++)
+	{
+		free(result[i]);
+	}
+	free(result);
+	printf("THE RESULT OF 2 FUNCTION IS %s\n",str1);
+	printf("THE RESULT OF 2 FUNCTION IS %s\n",str1);
 	return 0;
 }
 
-void solve(char *str, char *str1, char *str2)
+char ** solve(char *str)
 {
 	/* String manipulasyonunu 1 kere yapar.
 	 * Yeni olusacak string icin yer malloc edip eskisini free eder. Yeni stringi doner. */
+	char **result = malloc(2 * sizeof(char *));
 	char *start = str;
 	char *arrow = strchr(str, '#');
 	char *end = strchr(str, ',');
-	char *operator;
 	char *new_str_before;
 	char *new_str_current;
 	char *new_str_after;
 	char *new_str_after2;
-	int what_is_operation = 0, is_there_parenthesis = 0;
+	char *index_of_operation;
+	int what_is_operation = 0, is_there_parenthesis = 0, how_many_negations = 0;
 	int length_string = strlen(str);
 	long len_before, len_after, len_current, len_after2;
-	printf("Entered the function for strings %s %s %s\n", str, str1, str2);
+	printf("Entered the function for string %s\n", str);
 	if (start == arrow)
 	{
 		start++;
@@ -123,6 +113,7 @@ void solve(char *str, char *str1, char *str2)
 		if (end == &str[length_string-1])
 		{
 			printf("Solve function called for non solvable string, exiting.\n");
+			return result;
 		}
 		start += 2;
 		end = strchr(start, ',');
@@ -235,19 +226,27 @@ void solve(char *str, char *str1, char *str2)
 			new_str_current = strncpy(new_str_current, start+1, len_current-1);
 			new_str_current[len_current-1] = '\0';
 			printf("The string at the operation is: %s\n", new_str_current);
-			str1 = realloc(str1, (len_before+len_after+len_current-2) * sizeof(char));
-			memset(str1, '\0', sizeof(len_before+len_after+len_current-2));
+			result[0] = malloc((len_before+len_after+len_current-2) * sizeof(char));
+/*			memset(result[0], '\0', sizeof(len_before+len_after+len_current-2));*/
 			if (len_before > 1)
 			{
-				str1 = strcat(str1, new_str_before);
+				result[0] = strcat(result[0], new_str_before);
+				free(new_str_before);
 			}
-			str1 = strcat(str1, new_str_after);
-			str1 = strcat(str1, new_str_current);
-			printf("str to return is: %s\n", str1);
+			if (len_after > 1)
+			{
+				result[0] = strcat(result[0], new_str_after);
+				free(new_str_after);
+			}
+			result[0] = strcat(result[0], new_str_current);
+			free(new_str_current);
+			printf("str to return is: %s\n", result[0]);
+			return result;
 		}
 		else if (start == arrow)
 		{
 			printf("There is a problem, start is equal to arrow\n");
+			return result;
 		}
 		else if (start > arrow)
 		{ 
@@ -300,105 +299,70 @@ void solve(char *str, char *str1, char *str2)
 				printf("THIS PART IS IMPORTANT\n");
 				new_str_after2[0] = '#';
 			}
-			str1 = realloc(str1, (len_before+len_after+len_after2+len_current-3) * sizeof(char));
-			memset(str1, '\0', sizeof(len_before+len_after+len_current-2));
+			result[0] = malloc((len_before+len_after+len_after2+len_current-3) * sizeof(char));
+/*			memset(str1, '\0', sizeof(len_before+len_after+len_current-2));*/
 			if (len_before > 1)
 			{
-				str1 = strcat(str1, new_str_before);
+				result[0] = strcat(result[0], new_str_before);
+				free(new_str_before);
 			}
-			str1 = strcat(str1, new_str_current);
+			result[0] = strcat(result[0], new_str_current);
+			free(new_str_current);
 			if (len_after > 1)
 			{
-				str1 = strcat(str1, new_str_after);
+				result[0] = strcat(result[0], new_str_after);
+				free(new_str_after);
 			}
 			if (len_after2 > 1)
 			{
-				str1 = strcat(str1, new_str_after2);
-			}
-			printf("Str to return from R1 is %s\n", str1);
-			if (len_after2 > 1)
-			{
-				printf("Freeing after2 string\n");
+				result[0] = strcat(result[0], new_str_after2);
 				free(new_str_after2);
 			}
-		}
-		if (len_before > 1)
-		{
-			free(new_str_before);
-		}
-		if (len_after > 1)
-		{
-			free(new_str_after);
-		}
-		if (len_current > 1)
-		{
-			free(new_str_current);
+			printf("Str to return from R1 is %s\n", result[0]);
+			return result;
 		}
 	}
 	else if(*start == '(')
 	{
-		if (*(start+1) == '(')
+		if (*(start+1) == '(') 
 		{
-			is_there_parenthesis = 1;
-			if(*(find_parenthesis_end(start+1)+1) ==  '&')
-			{
-				what_is_operation = 1;
-			}
-			else if (*(find_parenthesis_end(start+1)+1) ==  '|')
-			{
-				what_is_operation = 2;
-			}
-			else if (*(find_parenthesis_end(start+1)+1) ==  '>')
-			{
-				what_is_operation = 3;
-			}
+			index_of_operation = find_parenthesis_end(start+1)+1;
 		}
-		else if (isalpha(*(start+1)))
+		else if(isalpha(*(start+1))) 
 		{
-			if(*(start+2) == '&')
-			{
-				what_is_operation = 1;
-			}
-			else if (*(start+2) == '|')
-			{
-				what_is_operation = 2;
-			}
-			else if (*(start+2) == '>')
-			{
-				what_is_operation = 3;
-			}
+			index_of_operation = start+2;
 		}
-		else if (*(start+1) == '-')
+		else 
 		{
-			is_there_parenthesis = 2;
-			if(*(start+3) == '&')
+			for(; *(start+1+how_many_negations) == '-';how_many_negations++);
+			if (*(start+1+how_many_negations) == '(')
 			{
-				what_is_operation = 1;
-			}
-			else if (*(start+3) == '|')
-			{
-				what_is_operation = 2;
-			}
-			else if (*(start+3) == '>')
-			{
-				what_is_operation = 3;
-			}
-		}
-		if ((what_is_operation == 1 && end < arrow) || what_is_operation == 2 && start > arrow)
-		{
-			printf("R2 is called\n");
-			if (is_there_parenthesis == 1)
-			{
-				*(find_parenthesis_end(start+1)+1) =  ',';
-			}
-			else if (is_there_parenthesis == 2)
-			{
-				*(start+3) = ',';
+				index_of_operation = find_parenthesis_end(start+1+how_many_negations)+1;
 			}
 			else
 			{
-				*(start+2) = ',';
+				index_of_operation = start+2+how_many_negations;
 			}
+		}
+
+		if(*(index_of_operation) == '&')
+		{
+			what_is_operation = 1;
+		}
+		else if (*(index_of_operation) == '|')
+		{
+			what_is_operation = 2;
+		}
+		else if (*(index_of_operation) == '>')
+		{
+			what_is_operation = 3;
+		}
+
+		if ((what_is_operation == 1 && end < arrow) || what_is_operation == 2 && start > arrow)
+		{
+			printf("R2 is called\n");
+			/* Burası tek tip, dönülen operatör adresini düzenlemek olacak */
+			*(index_of_operation) = ',';
 			printf("& is changed to , New string is\n%s\n", str);
 			len_before = start-str+1;
 			len_current = end-start;
@@ -420,24 +384,25 @@ void solve(char *str, char *str1, char *str2)
 			new_str_current = strncpy(new_str_current, start+1, len_current-1);
 			new_str_current[len_current-1] = '\0';
 			printf("New str current is %s\n", new_str_current);
-			str1 = realloc(str1, (len_before+len_after+len_current-2) * sizeof(char));
-			memset(str1, '\0', sizeof(len_before+len_after+len_current-2));
+			result[0] = malloc((len_before+len_after+len_current-2) * sizeof(char));
+/*			memset(str1, '\0', sizeof(len_before+len_after+len_current-2));*/
 			if (len_before > 1)
 			{
-				str1 = strcat(str1, new_str_before);
+				result[0] = strcat(result[0], new_str_before);
 				free(new_str_before);
 			}
 			if (len_current > 1)
 			{
-				str1 = strcat(str1, new_str_current);
+				result[0] = strcat(result[0], new_str_current);
 				free(new_str_current);
 			}
 			if (len_after > 1)
 			{
-				str1 = strcat(str1, new_str_after);
+				result[0] = strcat(result[0], new_str_after);
 				free(new_str_after);
 			}
-			printf("String to return from R2 is %s\n", str1);
+			printf("String to return from R2 iso %s\n", result[0]);
+			return result;
 		}
 		else if (what_is_operation == 2)
 		{
