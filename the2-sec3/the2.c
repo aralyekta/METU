@@ -17,46 +17,66 @@ int randomfunc(int);
 int main()
 {
 	/*
-	char a1[] = "(A&--B),F#G,H";
 	char a2[] = "F,(---A&B)#G,H";
 	char a3[] = "F,(---(--B|A)&C)#F,G";
-	*/
 	char a2[] = "((--A&---B)&(---C|----D))#F,G";
-	char *str1;
-	char *str2;
+	*/
+	char a1[] = "A,((-A&B)|(C>D))#F,G";
+	char a2[] = "(A&--B),F#G,H";
+	char a3[] = "A,(--B|D)#F,G";
+	char *str1 = malloc(1);
+	char *str2 = malloc(1);
 	int i;
 	
 	char ** result = malloc(2 * sizeof(char *));
+	str1[0] = '\0';
+	str2[0] = '\0';
 	/* 
 	while (!check_if_finished(ptr))
 	{
 	
 	}
 	*/
-	result = solve(a2);
+	result = solve(a1);
 	randomfunc(10);
-	str1 = malloc(strlen(result[0]) * sizeof(char));
-	str1 = strcpy(str1, result[0]);
-	/* Bunun str2sini de yapacaksin tabii */
-	for (i = 0; i < 2; i++)
-	{
-		free(result[i]);
-	}
-	free(result);
-	printf("THE RESULT OF 1 FUNCTION IS %s\n", str1);
-	printf("THE RESULT OF 1 FUNCTION IS %s\n", str1);
-	result = solve(str1);
-	randomfunc(15);
+	/* Buna fonkun başına malloc koy, loopta realloc yapsın */
 	str1 = realloc(str1, strlen(result[0]) * sizeof(char));
-	str1 = strcpy(str1, result[0]);
+	strcpy(str1, result[0]);
+	if (result[1])
+	{
+		str2 = realloc(str2, strlen(result[1]) * sizeof(char));
+		strcpy(str2, result[1]);
+	}
 	for (i = 0; i < 2; i++)
 	{
 		free(result[i]);
 	}
 	free(result);
-	printf("THE RESULT OF 2 FUNCTION IS %s\n",str1);
-	printf("THE RESULT OF 2 FUNCTION IS %s\n",str1);
-	return 0;
+	printf("THE RESULT OF 1 FUNCTION IS %s %d\n", str1, strlen(str1));
+	if (str2[0] != '\0')
+	{
+		printf("THE RESULT OF 1 FUNCTION IS %s %d\n", str2, strlen(str2));
+	}
+	result = solve(str1);
+	randomfunc(10);
+	str1 = realloc(str1, strlen(result[0]) * sizeof(char));
+	strcpy(str1, result[0]);
+	if (result[1])
+	{
+		str2 = realloc(str2, strlen(result[1]) * sizeof(char));
+		strcpy(str2, result[1]);
+	}
+	for (i = 0; i < 2; i++)
+	{
+		free(result[i]);
+	}
+	free(result);
+	printf("THE RESULT OF 2 FUNCTION IS %s %d\n", str1, strlen(str1));
+	if (str2[0] != '\0')
+	{
+		printf("THE RESULT OF 2 FUNCTION IS %s %d\n", str2, strlen(str2));
+	}
+return 0;
 }
 
 char ** solve(char *str)
@@ -69,12 +89,13 @@ char ** solve(char *str)
 	char *end = strchr(str, ',');
 	char *new_str_before;
 	char *new_str_current;
+	char *new_str_current2;
 	char *new_str_after;
 	char *new_str_after2;
 	char *index_of_operation;
-	int what_is_operation = 0, is_there_parenthesis = 0, how_many_negations = 0;
+	int what_is_operation = 0, how_many_negations = 0;
 	int length_string = strlen(str);
-	long len_before, len_after, len_current, len_after2;
+	long len_before, len_after, len_current, len_current2, len_after2;
 	printf("Entered the function for string %s\n", str);
 	if (start == arrow)
 	{
@@ -157,7 +178,7 @@ char ** solve(char *str)
 			if (len_before > 1)
 			{
 				new_str_before = malloc(len_before * sizeof(char));
-				new_str_before = strncpy(new_str_before, str, len_before-1);
+				strncpy(new_str_before, str, len_before-1);
 				new_str_before[len_before-1] = '\0';
 				printf("The string before the operation is: %s\n", new_str_before);
 				if (arrow == &str[length_string-1])
@@ -165,14 +186,14 @@ char ** solve(char *str)
 					len_after--;
 					printf("Length1 is :%d %d %d\n", len_before, len_after, len_current);
 					new_str_after = malloc(len_after * sizeof(char));
-					new_str_after = strncpy(new_str_after, end+1, len_after);
+					strncpy(new_str_after, end+1, len_after);
 					new_str_after[len_after+1] = '\0';
 				}
 				else
 				{
 					printf("Length2 is :%d %d %d\n", len_before, len_after, len_current);
 					new_str_after = malloc(len_after * sizeof(char));
-					new_str_after = strncpy(new_str_after, end+1, len_after-1);
+					strncpy(new_str_after, end+1, len_after-1);
 					new_str_after = strcat(new_str_after, ",");
 					new_str_after[len_after-1] = '\0';
 				}
@@ -208,14 +229,14 @@ char ** solve(char *str)
 					len_after--;
 					printf("Length5 is :%d %d %d\n", len_before, len_after, len_current);
 					new_str_after = malloc(len_after * sizeof(char));
-					new_str_after = strncpy(new_str_after, end+2, len_after-1);
+					strncpy(new_str_after, end+2, len_after-1);
 					new_str_after[len_after-1] = '\0';
 				}
 				else 
 				{
 					printf("Length6 is :%d %d %d\n", len_before, len_after, len_current);
 					new_str_after = malloc(len_after * sizeof(char));
-					new_str_after = strncpy(new_str_after, end+2, len_after-1);
+					strncpy(new_str_after, end+2, len_after-1);
 					new_str_after = strcat(new_str_after, ",");
 					new_str_after[len_after-1] = '\0';
 				}
@@ -223,11 +244,11 @@ char ** solve(char *str)
 
 			}
 			new_str_current = malloc(len_current * sizeof(char));
-			new_str_current = strncpy(new_str_current, start+1, len_current-1);
+			strncpy(new_str_current, start+1, len_current-1);
 			new_str_current[len_current-1] = '\0';
 			printf("The string at the operation is: %s\n", new_str_current);
 			result[0] = malloc((len_before+len_after+len_current-2) * sizeof(char));
-/*			memset(result[0], '\0', sizeof(len_before+len_after+len_current-2));*/
+			memset(result[0], '\0', sizeof(len_before+len_after+len_current-2));
 			if (len_before > 1)
 			{
 				result[0] = strcat(result[0], new_str_before);
@@ -263,7 +284,7 @@ char ** solve(char *str)
 			if (len_before > 1)
 			{
 				new_str_before = malloc(len_before * sizeof(char));
-				new_str_before = strncpy(new_str_before, str, len_before-2);
+				strncpy(new_str_before, str, len_before-2);
 				new_str_before[len_before-2] = ',';
 				new_str_before[len_before-1] = '\0';
 				printf("The string before the operation is: %s\n", new_str_before);
@@ -271,19 +292,19 @@ char ** solve(char *str)
 			if (len_after > 1)
 			{
 				new_str_after = malloc(len_after * sizeof(char));
-				new_str_after = strncpy(new_str_after, arrow, len_after-1);
+				strncpy(new_str_after, arrow, len_after-1);
 				new_str_after[len_after-1] = '\0';
 				printf("The string after the operation is: %s\n", new_str_after);
 			}
 			if (len_after2 > 1)
 			{
 				new_str_after2 = malloc(len_after2 * sizeof(char));
-				new_str_after2 = strncpy(new_str_after2, end+1, len_after2-1);
+				strncpy(new_str_after2, end+1, len_after2-1);
 				new_str_after2[len_after2-1] = '\0'; 
 				printf("The string after2 the operation is: %s\n", new_str_after2);
 			}
 			new_str_current = malloc(len_current * sizeof(char));
-			new_str_current = strncpy(new_str_current, start+1, len_current-1);
+			strncpy(new_str_current, start+1, len_current-1);
 			new_str_current[len_current-1] = '\0';
 			printf("The string at the operation is: %s\n", new_str_current);
 			if (len_after <= 1 && len_after2 <= 1)
@@ -300,7 +321,7 @@ char ** solve(char *str)
 				new_str_after2[0] = '#';
 			}
 			result[0] = malloc((len_before+len_after+len_after2+len_current-3) * sizeof(char));
-/*			memset(str1, '\0', sizeof(len_before+len_after+len_current-2));*/
+			memset(result[0], '\0', sizeof(len_before+len_after+len_current-2));
 			if (len_before > 1)
 			{
 				result[0] = strcat(result[0], new_str_before);
@@ -358,7 +379,7 @@ char ** solve(char *str)
 			what_is_operation = 3;
 		}
 
-		if ((what_is_operation == 1 && end < arrow) || what_is_operation == 2 && start > arrow)
+		if ((what_is_operation == 1 && end < arrow) || (what_is_operation == 2 && start > arrow))
 		{
 			printf("R2 is called\n");
 			/* Burası tek tip, dönülen operatör adresini düzenlemek olacak */
@@ -370,47 +391,105 @@ char ** solve(char *str)
 			if (len_before > 1)
 			{
 				new_str_before = malloc(len_before * sizeof(char));
-				new_str_before = strncpy(new_str_before, str, len_before-1);
+				strncpy(new_str_before, str, len_before-1);
 				new_str_before[len_before-1] = '\0';
 				printf("New str before is %s\n", new_str_before);
 			}
 			if (len_after > 1)
 			{
 				new_str_after = malloc(len_after * sizeof(char));
-				new_str_after = strncpy(new_str_after, end+1, len_after);
+				strncpy(new_str_after, end+1, len_after);
 				printf("New str after is %s\n", new_str_after);
 			}
 			new_str_current = malloc(len_current * sizeof(char));
-			new_str_current = strncpy(new_str_current, start+1, len_current-1);
+			strncpy(new_str_current, start+1, len_current-1);
 			new_str_current[len_current-1] = '\0';
 			printf("New str current is %s\n", new_str_current);
 			result[0] = malloc((len_before+len_after+len_current-2) * sizeof(char));
-/*			memset(str1, '\0', sizeof(len_before+len_after+len_current-2));*/
+			memset(result[0], '\0', sizeof(len_before+len_after+len_current-2));
 			if (len_before > 1)
 			{
+				printf("Before exists %s %d\n", new_str_before, strlen(new_str_before));
 				result[0] = strcat(result[0], new_str_before);
 				free(new_str_before);
 			}
 			if (len_current > 1)
 			{
+				printf("Current exists %s %d\n", new_str_current, strlen(new_str_current));
 				result[0] = strcat(result[0], new_str_current);
 				free(new_str_current);
 			}
 			if (len_after > 1)
 			{
+				printf("After exists %s %d\n", new_str_after, strlen(new_str_after));
 				result[0] = strcat(result[0], new_str_after);
 				free(new_str_after);
 			}
 			printf("String to return from R2 iso %s\n", result[0]);
 			return result;
 		}
-		else if (what_is_operation == 2)
+		/* 1 &, 2 |, 3 > */
+		else if (what_is_operation == 2 && end < arrow)
 		{
 			printf("R3 is called\n");
+			len_before = (start-str)+1;
+			len_current = index_of_operation-start;
+			len_current2 = end-index_of_operation;
+			len_after = length_string-(end-str);
+			if (len_before > 1)
+			{
+				new_str_before = malloc(len_before * sizeof(char));
+				strncpy(new_str_before, str, len_before-1);
+				new_str_before[len_before-1] = '\0';
+				printf("Str before is %s\n", new_str_before);
+			}
+			if (len_after > 1)
+			{
+				new_str_after = malloc(len_after * sizeof(char));
+				strncpy(new_str_after, end+1, len_after-1);
+				new_str_after[len_after-1] = '\0';
+				printf("Str after is %s\n", new_str_after);
+			}
+			new_str_current = malloc(len_current * sizeof(char));
+			strncpy(new_str_current, start+1, len_current-1);
+			new_str_current[len_current-1] = '\0';
+			printf("Str current1 is %s\n", new_str_current);
+			new_str_current2 = malloc(len_current2 * sizeof(char));
+			strncpy(new_str_current2, index_of_operation+1, len_current2-1);
+			new_str_current2[len_current2-1] = '\0';
+			printf("Str current2 is %s\n", new_str_current2);
+			result[0] = malloc((len_before + len_current + len_after - 2) * sizeof(char));
+			result[1] = malloc((len_before + len_current2 + len_after -2) * sizeof(char));
+			memset(result[0], '\0', sizeof(len_before+len_after+len_current-2));
+			memset(result[1], '\0', sizeof(len_before+len_after+len_current2-2));
+			if (len_before > 1)
+			{
+				printf("Adding string before\n");
+				result[0] = strcat(result[0], new_str_before);
+				result[1] = strcat(result[1], new_str_before);
+				free(new_str_before);
+			}
+			result[0] = strcat(result[0], new_str_current);
+			free(new_str_current);
+			result[1] = strcat(result[1], new_str_current2);
+			free(new_str_current2);
+			if (len_after > 1)
+			{
+				printf("Adding string after\n");
+				result[0] = strcat(result[0], new_str_after);
+				result[1] = strcat(result[1], new_str_after);
+				free(new_str_after);
+			}
+			printf("The string 1 to return is %s\nThe string 2 to return is %s\n", result[0], result[1]);
+			return result;
+		}
+		else if (what_is_operation == 1 && start > arrow)
+		{
+			printf("R4 is called\n");
 		}
 		else if (what_is_operation == 3)
 		{
-			printf("R4 is called\n");
+			printf("R5 is called\n");
 		}
 		else 
 		{

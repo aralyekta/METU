@@ -1,4 +1,10 @@
-(--A&---B)&(---C|--D) ve türevleri
-(--------(------A&B)&C) vs -------A
-(---()&())
-(---A&B)
+(()|()),(),()#(),()
+(A|B)
+(--A|B)
+((-A&B)|C)
+((-A&B)|-C)
+((A&B)|(-C&D))
+(),(),()#(()&())
+
+İlk kısmı index_of_op-1 ile start+1 arasında alıcaz ve 1. current
+İkinci kısmı end-1 ile index_of_op+1 arasında alıcaz ve 2. current
