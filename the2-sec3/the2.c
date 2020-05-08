@@ -10,44 +10,93 @@
 #include <string.h>
 
 int check_if_finished(char *);
+int check_if_one_char(char *, char *);
 char **solve(char *);
 char *find_parenthesis_end(char *);
 int randomfunc(int);
+int solve_loop(char *);
+
+int solve_loop(char *str)
+{
+	char *str1 = malloc(strlen(str) * sizeof(char));
+	char *str2 = malloc(1);
+	char ** result;
+	int result_val, result_str2 = -1, i;
+	strcpy(str1, str);
+	str2[0] = '\0';
+	for (result_val = check_if_finished(str1); !result_val; result_val = check_if_finished(str1))
+	{
+		printf("\nEntered THE SOLVE LOOP for %s\n", str1); 
+		result = solve(str1);
+		str1 = realloc(str1, strlen(result[0]) * sizeof(char));
+		strcpy(str1, result[0]);
+		if (result[1][0] != '\0')
+		{
+			str2 = realloc(str2, strlen(result[1]) * sizeof(char));
+			strcpy(str2, result[1]);
+			result_str2 = solve_loop(str2);
+			if (result_str2)
+			{
+				printf("Right str passed, continuing \n");
+				str2 = realloc(str2, 1);
+				str2[0] = '\0';
+				continue;
+			}
+			else
+			{
+				printf("Right str didn't pass, exiting \n");
+				return 0;
+			}
+		}
+		for (i = 0; i < 2; i++)
+		{
+			free(result[i]);
+		}
+		free(result);
+		
+	}
+	if (result_val == -1)
+	{
+		return 0;
+	}
+	else if (result_val == 1)
+	{
+		return 1;
+	}
+}
 
 int main()
 {
-	/*
-	char a2[] = "F,(---A&B)#G,H";
-	char a3[] = "F,(---(--B|A)&C)#F,G";
-	char a2[] = "((--A&---B)&(---C|----D))#F,G";
-	*/
-	/*
-	char a1[] = "A,((-A&B)|(C>D))#F,G";
-	char a2[] = "(A&--B),F#G,H";
-	char a3[] = "A,(B|--D)#F,G";
-	*/
-	/*
-	char a1[] = "(--(---A&B)&C),F#G,H";
-	char a2[] = "A,B#(--G&(H|I))";
-	*/
 	char a1[] = "(--(A&B)>-C),F#G,H";
-	char a2[] = "A,B#(-A>B),F,G";
+	char a2[] = "A,B#-(-A>B),F,G";
+	char a3[] = "A,B#(--B|C)";
+	char a4[] = "A,B#(C|B)";
+	char a5[] = "A,B#--C,(C&--A)";
+	char a6[] = "A,B#B,(-C|A)";
+	char a7[] = "A,B#";
+	char a8[] = "A,B#C";
+	char a10[] = "(P>Q),(Q>R),-R#-P";
+	char a9[] = "((A|B)|(B|A))#F";
+	int result;
+	result = solve_loop(a10);
+	if (result)
+	{
+		printf("T\n");
+	}
+	else
+	{
+		printf("F\n");
+	}
+	/*
 	char *str1 = malloc(1);
 	char *str2 = malloc(1);
 	int i;
 	
-	char ** result = malloc(2 * sizeof(char *));
+	char ** result;
 	str1[0] = '\0';
 	str2[0] = '\0';
-	/* 
-	while (!check_if_finished(ptr))
-	{
-	
-	}
-	*/
-	result = solve(a2);
+	result = solve(a10);
 	randomfunc(10);
-	/* Buna fonkun başına malloc koy, loopta realloc yapsın */
 	str1 = realloc(str1, strlen(result[0]) * sizeof(char));
 	strcpy(str1, result[0]);
 	if (result[1][0] != '\0')
@@ -65,6 +114,50 @@ int main()
 	{
 		printf("THE RESULT OF 1 FUNCTION IS %s %d\n", str2, strlen(str2));
 	}
+	printf("%d\n", check_if_finished(str1));
+	result = solve(str1);
+	randomfunc(10);
+	str1 = realloc(str1, strlen(result[0]) * sizeof(char));
+	strcpy(str1, result[0]);
+	if (result[1][0] != '\0')
+	{
+		str2 = realloc(str2, strlen(result[1]) * sizeof(char));
+		strcpy(str2, result[1]);
+	}
+	for (i = 0; i < 2; i++)
+	{
+		free(result[i]);
+	}
+	free(result);
+	printf("THE RESULT OF 1 FUNCTION IS %s %d\n", str1, strlen(str1));
+	if (str2[0] != '\0')
+	{
+		printf("THE RESULT OF 1 FUNCTION IS %s %d\n", str2, strlen(str2));
+	}
+	printf("%d\n", check_if_finished(str1));
+	*/
+	/*
+	result = solve(a2);
+	randomfunc(10);
+	str1 = realloc(str1, strlen(result[0]) * sizeof(char));
+	strcpy(str1, result[0]);
+	if (result[1][0] != '\0')
+	{
+		str2 = realloc(str2, strlen(result[1]) * sizeof(char));
+		strcpy(str2, result[1]);
+	}
+	for (i = 0; i < 2; i++)
+	{
+		free(result[i]);
+	}
+	free(result);
+	printf("THE RESULT OF 1 FUNCTION IS %s %d\n", str1, strlen(str1));
+	if (str2[0] != '\0')
+	{
+		printf("THE RESULT OF 1 FUNCTION IS %s %d\n", str2, strlen(str2));
+	}
+	printf("%d\n", check_if_finished(str1));
+	*/
 	/*
 	result = solve(str2);
 	randomfunc(10);
@@ -107,8 +200,8 @@ int main()
 		printf("THE RESULT OF 3 FUNCTION IS %s %d\n", str2, strlen(str2));
 	}
 	*/
-	return 0;
 }
+
 
 char ** solve(char *str)
 {
@@ -576,9 +669,14 @@ char ** solve(char *str)
 		{
 			printf("R5 is called\n");
 			len_before = start-str+1;
-			len_current = end-start+1;
+			len_current = end-start+3;
 			len_after = length_string-(end-str);
 			*(index_of_operation) = '|';
+			/* 
+			char a2[] = "A,B#(-A>B),F,G";
+			8 lazım
+			start 4, end 9
+			*/
 			printf("String is %s\n", str);
 			if (len_before > 1)
 			{
@@ -595,8 +693,9 @@ char ** solve(char *str)
 				printf("Str after is %s\n", new_str_after);
 			}
 			new_str_current = malloc(len_current * sizeof(char));
-			new_str_current[0] = '-';
-			strncpy(new_str_current+1, start+1, len_current-2);
+			new_str_current[0] = '(';
+			new_str_current[1] = '-';
+			strncpy(new_str_current+2, start+1, len_current-3);
 			new_str_current[len_current-1] = '\0';
 			printf("Str current is %s\n", new_str_current);
 			result[0] = realloc(result[0], (len_before + len_current + len_after - 2) * sizeof(char));
@@ -626,49 +725,6 @@ char ** solve(char *str)
 	}
 }
 
-int check_if_finished(char *str)
-{
-	char *arrow_index = strchr(str, '#');
-	char *char_index;
-	int flag = 0;
-	char *ptr_forw = str;
-	char *ptr_back;
-	while (ptr_forw < arrow_index)
-	{
-		/*printf("Entered the loop\n");*/
-		ptr_back = ptr_forw;
-		ptr_forw = strchr(ptr_forw+1, ',');
-		/*printf("New orders back and forward are %d %d\n", ptr_back-str, ptr_forw-str);*/
-		if (ptr_forw > arrow_index)
-		{
-			/*printf("# asildi\n");*/
-			ptr_forw = arrow_index;
-		}
-		if (ptr_forw - ptr_back > 2)
-		{
-			/*printf("Longer than a character, incrementing flag\n");*/
-			flag++;
-			continue;
-		}
-		char_index = strchr(arrow_index+1, *(ptr_forw-1));
-		if (char_index)
-		{
-			/*printf("Found the char %c\n", *char_index);*/
-			return 1;
-		}
-	}
-	if (flag == 0)
-	{
-		/*printf("Flag is 0 and returning -1\n");*/
-		return -1;
-	}
-	else
-	{
-		/*printf("There are changes to be made, returning 0\n");*/
-		return 0;
-	}
-}
-
 int randomfunc(int a)
 {
 	return a+5;
@@ -692,6 +748,120 @@ char *find_parenthesis_end(char *str)
 			}
 		}
 		str++;
+	}
+}
+
+int check_if_one_char(char *str, char *index)
+{
+	int length_string = strlen(str), left = -1, right = -1, has_right_element = -1;
+	if (index == &str[length_string-1])
+	{
+		has_right_element = 0;
+	}
+	else 
+	{
+		has_right_element = 1;
+	}
+	if (*(index-1) == ',' || *(index-1) == '#')
+	{
+		left = 1;
+	}
+	else 
+	{
+		left = 0;
+	}
+	if (has_right_element)
+	{
+		if (*(index+1) == ',')
+		{
+			right = 1;
+		}
+		else
+		{
+			right = 0;
+		}
+	}
+	return (right && left);
+}
+
+int check_if_finished(char *str)
+{
+	char *arrow_index = strchr(str, '#');
+	char *char_index;
+	int flag = 0, length_string = strlen(str);
+	char *ptr_forw = str;
+	char *ptr_back;
+	printf("\n");
+	if (arrow_index == &str[length_string-1])
+	{
+		printf("No element after #, exiting");
+		return -1;
+	}
+	/* 
+	char a6[] = "A,B#B,(-C|A)";
+	char a7[] = "A,B#";
+	char a3[] = "A,B#(--B|C)";
+	*/
+	while (ptr_forw < arrow_index) /* This loop ends as ptr_forw = arrow_index */
+	{
+		ptr_back = ptr_forw;
+		ptr_forw = strchr(ptr_forw+1, ',');
+		if (!ptr_forw)
+		{
+			printf("No commas found, I'm at the left side\n");
+			ptr_forw = arrow_index;
+		}
+		printf("New orders back and forward are %d %d\n", ptr_back-str, ptr_forw-str);
+		if (ptr_forw > arrow_index)
+		{
+			printf("# asildi\n");
+			ptr_forw = arrow_index;
+		}
+		if (ptr_forw - ptr_back > 2)
+		{
+			printf("Longer than a character, incrementing flag\n");
+			flag++;
+			continue;
+		}
+		char_index = strchr(arrow_index+1, *(ptr_forw-1));
+		if (char_index > arrow_index && check_if_one_char(str, char_index))
+		{
+			printf("Found the char %c\n", *char_index);
+			return 1;
+		}
+	}
+	while (ptr_forw >= arrow_index)
+	{
+		ptr_back = ptr_forw;
+		ptr_forw = strchr(ptr_forw+1, ',');
+		if (!ptr_forw)
+		{
+			printf("Finished all commas, looking at the last element\n");
+			ptr_forw = &str[length_string-1];
+			if (ptr_forw - ptr_back > 1)
+			{
+				printf("Longer than a character, incrementing flag\n");
+				flag++;
+			}
+			break;
+		}
+		printf("New orders back and forward are %d %d\n", ptr_back-str, ptr_forw-str);
+		if (ptr_forw - ptr_back > 2)
+		{
+			printf("Longer than a character, incrementing flag\n");
+			flag++;
+			continue;
+		}
+	}
+	if (flag == 0)
+	{
+		printf("Flag is 0 and returning -1\n");
+		return -1;
+	}
+	else
+	{
+		printf("There are changes to be made, returning 0\n");
+		return 0;
 	}
 }
 
