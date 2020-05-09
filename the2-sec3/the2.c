@@ -11,6 +11,7 @@ int solve_loop(char *);
 
 int main()
 {
+	/*
 	char a1[] = "(--(A&B)>-C),F#G,H";
 	char a2[] = "A,B#-(-A>B),F,G";
 	char a3[] = "A,B#(--B|C)";
@@ -28,10 +29,27 @@ int main()
 	char a14[] = "A,-B#C,F";
 	char a15[] = "B,C#F,-F";
 	char a17[] = "-R#-P,P,Q";
+	*/
 	int result;
+	char **resultptr;
 	char str[201];
 	scanf("%s", str);
-	result = solve_loop(str);
+	/*
+	char *str2;
+	resultptr = solve(str);
+	free(str);
+	str2 = malloc(201);
+	strcpy(str2, resultptr[0]);
+	free(resultptr[0]);
+	free(resultptr[1]);
+	free(resultptr);
+	resultptr = solve(str2);
+	free(str2);
+	free(resultptr[0]);
+	free(resultptr[1]);
+	free(resultptr);
+	*/
+	result = solve_loop(str); 
 	if (result)
 	{
 		printf("T\n");
@@ -40,42 +58,61 @@ int main()
 	{
 		printf("F\n");
 	}
+	return 0;
 }
 
 int solve_loop(char *str)
 {
-	int result_val, result_str2 = -1, i, len_str = strlen(str), len_str2 = 1;
-	char *str1 = malloc(len_str * sizeof(char));
+	int result_val, result_str2 = -1, i, len_str = strlen(str), len_str2 = 1, entered_loop = 0, free_before;
+	char *str1 = malloc((len_str+1) * sizeof(char));
 	char *str2 = malloc(1);
 	char ** result;
-	memset(str1, '\0', len_str);
+	memset(str1, '\0', len_str+1);
 	strcpy(str1, str);
 	str2[0] = '\0';
-	for (result_val = check_if_finished(str1); !result_val; result_val = check_if_finished(str1))
+	for (result_val = check_if_finished(str1); !result_val; result_val = check_if_finished(str1), entered_loop++)
 	{
+		free_before = 0;
 		printf("\nEntered THE SOLVE LOOP for %s\n", str1); 
 		result = solve(str1);
 		len_str = strlen(result[0]);
-		str1 = realloc(str1, len_str * sizeof(char));
+		free(str1);
+		str1 = malloc((len_str+1) * sizeof(char));
 		memset(str1, '\0', len_str);
 		strcpy(str1, result[0]);
 		if (result[1][0] != '\0')
 		{
+			printf("Yea\n");
 			len_str2 = strlen(result[1]); 
-			str2 = realloc(str2, len_str2 * sizeof(char));
+			free(str2);
+			str2 = malloc((len_str2+1) * sizeof(char));
 			memset(str2, '\0', len_str2);
 			strcpy(str2, result[1]);
 			result_str2 = solve_loop(str2);
+			printf("Returned %d for second str\n", result_str2);
 			if (result_str2)
 			{
 				printf("Right str passed, continuing \n");
-				str2 = realloc(str2, 1);
+				free(str2);
+				str2 = malloc(1);
 				str2[0] = '\0';
+				for (i = 0; i < 2; i++)
+				{
+					free(result[i]);
+				}
+				free(result);
 				continue;
 			}
 			else
 			{
 				printf("Right str didn't pass, exiting \n");
+				free(str1);
+				free(str2);
+				for (i = 0; i < 2; i++)
+				{
+					free(result[i]);
+				}
+				free(result);
 				return 0;
 			}
 		}
@@ -84,8 +121,9 @@ int solve_loop(char *str)
 			free(result[i]);
 		}
 		free(result);
-		
 	}
+	free(str1);
+	free(str2); 
 	if (result_val == -1)
 	{
 		return 0;
@@ -95,6 +133,7 @@ int solve_loop(char *str)
 		return 1;
 	}
 }
+
 
 char ** solve(char *str)
 {
@@ -275,7 +314,8 @@ char ** solve(char *str)
 			strncpy(new_str_current, start+1, len_current-1);
 			new_str_current[len_current-1] = '\0';
 			printf("The string at the operation is: %s\n", new_str_current);
-			result[0] = realloc(result[0], (len_before+len_after+len_current-2) * sizeof(char));
+			free(result[0]);
+			result[0] = malloc((len_before+len_after+len_current-2) * sizeof(char));
 			memset(result[0], '\0', (len_before+len_after+len_current-2) * sizeof(char));
 			if (len_before > 1)
 			{
@@ -295,6 +335,9 @@ char ** solve(char *str)
 		else if (start == arrow)
 		{
 			printf("There is a problem, start is equal to arrow\n");
+			free(new_str_current);
+			free(new_str_before);
+			free(new_str_after);
 			return result;
 		}
 		else if (start > arrow)
@@ -352,7 +395,8 @@ char ** solve(char *str)
 				/*printf("THIS PART IS IMPORTANT\n");*/
 				new_str_after2[0] = '#';
 			}
-			result[0] = realloc(result[0], (len_before+len_after+len_after2+len_current-3) * sizeof(char));
+			free(result[0]);
+			result[0] = malloc((len_before+len_after+len_after2+len_current-3) * sizeof(char));
 			memset(result[0], '\0', (len_before+len_after+len_current-2) * sizeof(char));
 			if (len_before > 1)
 			{
@@ -440,7 +484,8 @@ char ** solve(char *str)
 			strncpy(new_str_current, start+1, len_current-1);
 			new_str_current[len_current-1] = '\0';
 			printf("New str current is %s\n", new_str_current);
-			result[0] = realloc(result[0], (len_before+len_after+len_current-2) * sizeof(char));
+			free(result[0]);
+			result[0] = malloc((len_before+len_after+len_current-2) * sizeof(char));
 			memset(result[0], '\0', (len_before+len_after+len_current-2) * sizeof(char));
 			if (len_before > 1)
 			{
@@ -494,8 +539,10 @@ char ** solve(char *str)
 			strncpy(new_str_current2, index_of_operation+1, len_current2-1);
 			new_str_current2[len_current2-1] = '\0';
 			printf("Str current2 is %s\n", new_str_current2);
-			result[0] = realloc(result[0], (len_before + len_current + len_after - 2) * sizeof(char));
-			result[1] = realloc(result[1], (len_before + len_current2 + len_after -2) * sizeof(char));
+			free(result[0]);
+			free(result[1]);
+			result[0] = malloc((len_before + len_current + len_after - 2) * sizeof(char));
+			result[1] = malloc((len_before + len_current2 + len_after -2) * sizeof(char));
 			memset(result[0], '\0', (len_before+len_after+len_current-2) * sizeof(char));
 			memset(result[1], '\0', (len_before+len_after+len_current2-2) * sizeof(char));
 			if (len_before > 1)
@@ -550,8 +597,10 @@ char ** solve(char *str)
 			strncpy(new_str_current2, index_of_operation+1, len_current2-1);
 			new_str_current2[len_current2-1] = '\0';
 			printf("Str current2 is %s\n", new_str_current2);
-			result[0] = realloc(result[0], (len_before + len_current + len_after - 2) * sizeof(char));
-			result[1] = realloc(result[1], (len_before + len_current2 + len_after -2) * sizeof(char));
+			free(result[0]);
+			free(result[1]);
+			result[0] = malloc((len_before + len_current + len_after - 2) * sizeof(char));
+			result[1] = malloc((len_before + len_current2 + len_after -2) * sizeof(char));
 			memset(result[0], '\0', (len_before+len_after+len_current-2) * sizeof(char));
 			memset(result[1], '\0', (len_before+len_after+len_current2-2) * sizeof(char));
 			if (len_before > 1)
@@ -608,7 +657,8 @@ char ** solve(char *str)
 			strncpy(new_str_current+2, start+1, len_current-3);
 			new_str_current[len_current-1] = '\0';
 			printf("Str current is %s\n", new_str_current);
-			result[0] = realloc(result[0], (len_before + len_current + len_after - 2) * sizeof(char));
+			free(result[0]);
+			result[0] = malloc((len_before + len_current + len_after - 2) * sizeof(char));
 			memset(result[0], '\0', (len_before+len_after+len_current-2) * sizeof(char));
 			if (len_before > 1)
 			{

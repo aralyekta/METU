@@ -1,20 +1,6 @@
-A,B#--(-C|--B)
-A,B#(C|(B&D))
-A,B#---B
-A,B#(A|B),B
-A,B#B
-A,B#B,(A|B)
-A,B#(),B,()
 A,B#
-B#B
+-A,B#
 
-Neler kabul?
-Sol -> #
-Sol Sağ -> ,
+start, arrow, end, index_of_operation
 
-Neler kabul değil?
-- () & | >  
-
-#B,-F vb. sol tarafın boş olduğu durumu dene
-
-(A>B)
+arrow_index, char_index, ptr_forw, ptr_back
