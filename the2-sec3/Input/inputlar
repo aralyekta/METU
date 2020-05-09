@@ -1,0 +1,20 @@
+A,B#--(-C|--B)
+A,B#(C|(B&D))
+A,B#---B
+A,B#(A|B),B
+A,B#B
+A,B#B,(A|B)
+A,B#(),B,()
+A,B#
+B#B
+
+Neler kabul?
+Sol -> #
+Sol Sağ -> ,
+
+Neler kabul değil?
+- () & | >  
+
+#B,-F vb. sol tarafın boş olduğu durumu dene
+
+(A>B)
