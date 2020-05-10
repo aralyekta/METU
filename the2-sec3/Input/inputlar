@@ -1,6 +1,13 @@
-A,B#
--A,B#
+result Her zaman, dışarıda freelenecek ama
+start Her zaman
+arrow Her zaman
+end Her zaman 
 
-start, arrow, end, index_of_operation
+new_str_before 
+new_str_current 
+new_str_current2
+new_str_after 
+new_str_after2 
 
-arrow_index, char_index, ptr_forw, ptr_back
+index_of_operation
+
