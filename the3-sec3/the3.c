@@ -3,12 +3,19 @@
 #include <string.h>
 #include <math.h>
 #include <ctype.h>
+#define MAX(ptr) ((ptr)->max)
+#define MIN(ptr) ((ptr)->min)
+#define VALUE(ptr) ((ptr)->val)
+#define LETTER(ptr) ((ptr)->letter)
+#define CTR(ptr) ((ptr)->counter)
 
-typedef struct letter_value
+typedef struct letter_struct
 {
 	char letter;
-	int value;
-} struct1;
+	int counter;
+	float *probability;
+	double val, max, min;
+} letter_struct;
 
 char *in_to_post(char *str);
 char *removespaces(char *str, int *letter_amount);
@@ -16,6 +23,103 @@ int how_many_chars(char *str);
 int which_func(char *str);
 char *find_parenthesis_end(char *str);
 int can_i_insert(char *temp, char *stack, char *stack_start);
+double post_to_result(char *str, letter_struct *ptr_struct);
+double find_val(letter_struct *ptr_struct, char letter);
+double solve_func(char *str, letter_struct *ptr_struct);
+
+double solve_func(char *str, letter_struct *ptr_struct)
+{
+	char *str_post;
+	double val_return;
+	str_post = in_to_post(str);
+	printf("Str after post is %s\n", str_post);
+	val_return = post_to_result(str_post, ptr_struct);
+	free(str_post);
+	return val_return;
+}
+
+double find_val(letter_struct *ptr_struct, char letter)
+{
+	for(; LETTER(ptr_struct) != letter; ptr_struct++);
+	return VALUE(ptr_struct);
+}
+
+double post_to_result(char *str, letter_struct *ptr_struct)
+{
+	double stack[200];
+	char *temp;
+	int i, c;
+	for (temp = str, i = 0; *temp; temp = strchr(temp, ' '), temp++)
+	{
+		printf("Entered the loop for: ");
+		for (c = 0; c < i; c++)
+		{
+			printf("%f ", stack[c]);
+		}
+		printf("\n");
+		/* *temp can be
+		 * number
+		 * Uppercase letter (variable)
+		 * lowercase letter (func)
+		 * operator */
+		if (isdigit(*temp))
+		{
+			stack[i] = atof(temp);
+			i++;
+		}
+		else if (*temp >= 'A' && *temp <= 'Z')
+		{
+			stack[i] = find_val(ptr_struct, *temp);
+			i++;
+		}
+		else if (*temp == 's')
+		{
+			stack[i-1] = sin(stack[i-1]);
+		}
+		else if (*temp == 'c')
+		{
+			stack[i-1] = cos(stack[i-1]);
+		}
+		else if (*temp == 'l')
+		{
+			stack[i-1] = log(stack[i-1]);
+		}
+		else if (*temp == 'q')
+		{
+			stack[i-1] = sqrt(stack[i-1]);
+		}
+		else if (*temp == '~')
+		{
+			stack[i-1] *= (-1);
+		}
+		else if (*temp == '+')
+		{
+			stack[i-2] += stack[i-1];
+			i--;
+		}
+		else if (*temp == '-')
+		{
+			stack[i-2] -= stack[i-1];
+			i--;
+		}
+		else if (*temp == '/')
+		{
+			stack[i-2] /= stack[i-1];
+			i--;
+		}
+		else if (*temp == '*')
+		{
+			stack[i-2] *= stack[i-1];
+			i--;
+		}
+		else if (*temp == '^')
+		{
+			stack[i-2] = pow(stack[i-2], stack[i-1]);
+			i--;
+		}
+	}
+	return stack[0];
+}
 
 int main()
 {
@@ -23,37 +127,30 @@ int main()
 	char *func = malloc(201 * sizeof(char));
 	scanf("%s", func);
 	*/
+	int i;
 	int *letter_amount = malloc(sizeof(int));
-	/*
-	struct1 * ptr_struct1;
-	*/
+	letter_struct *ptr_struct;
 	/* Dont forget that you will be using a ptr for the string, so free that */
 	char array[201] = "    sqrt(2 - sin(3*A/B)^2.5)+ 0.5*(C*~(D) + 3.11 +B)";
 	char array2[201] = " sin (15)*co s( 2 0)/ln(15)        ^sqrt(4 ) ";
 	char array3[201] = "A-B^C^D*(E-(F-G-H))/K";
-	char array4[201] = "sin(1.5*ln(20+cos(15)) - 256*123^(12))";
+	char array4[201] = "sin(1.5*ln(20+cos(15)) - 25*12^(2))";
+	char array5[201] = "sin(1.5)+15-2^2";
 	char *str;
-	str = removespaces(array2, letter_amount);
-	/*
-	ptr_struct1 = malloc((*letter_amount) * sizeof(struct1));
+	str = removespaces(array, letter_amount);
+	ptr_struct = malloc((*letter_amount) * sizeof(letter_struct));
 	for (i = 0; i < *letter_amount; i++)
 	{
-		(ptr_struct1+i)->letter = 'A'+i;
-		(ptr_struct1+i)->value = 1+i;
+		LETTER(ptr_struct+i)= 'A'+i;
+		VALUE(ptr_struct+i)= 1+i;
 	}
 	for (i = 0; i < *letter_amount; i++)
 	{
-		printf("%c %d\n", (ptr_struct1+i)->letter, (ptr_struct1+i)->value);
+		printf("%c %f\n", LETTER(ptr_struct+i), VALUE(ptr_struct+i));
 	}
-	*/
-	printf("%s\n", str);
-	str = in_to_post(str);
-	printf("%s\n", str);
+	printf("%f\n", solve_func(str, ptr_struct));
 	free(letter_amount);
-	free(str);
-	/*
-	free(ptr_struct1);
-	*/
+	free(ptr_struct);
 	return 0;
 }
 
@@ -253,10 +350,10 @@ int can_i_insert(char *temp, char *stack, char *stack_start)
 char *in_to_post(char *str)
 {
 	/* This function transforms infix to postfix.*/
-	char *result = malloc(400 * sizeof(int));
+	char *result = malloc(400 * sizeof(char));
 	char *stack = malloc(200 * sizeof(char));
 	char *temp;
-	int i, j, c, temp_return;
+	int i, j, temp_return;
 	memset(result, '\0', 400);
 	memset(stack, '\0', 200);
 	for (temp = str, i = 0, j = 0; *temp; temp++)

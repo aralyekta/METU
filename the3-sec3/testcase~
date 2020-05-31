@@ -25,7 +25,7 @@ Add and Subt -> Left to right
 15
 sin (*)
 
-1.5 20 15 c + l * 256 123 12 ^ * - s
+1.5 20 15 cos + ln * 256 123 12 ^ * - sin
 
 sin(1.5*ln(20+cos(15))-256*123^12)
 
