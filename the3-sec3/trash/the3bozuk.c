@@ -16,12 +16,17 @@
 #define INT_DIFF(ptr) ((ptr)->interval_diff)
 #define PROB(ptr) ((ptr).probability)
 
+typedef struct temporary_struct
+{
+	double max, min;
+} temporary_struct;
+
 typedef struct letter_struct
 {
 	char letter;
 	double *probability;
-	double val, max, min;
-	double interval_diff;
+	int max, min, interval_diff;
+	double val;
 } letter_struct;
 
 typedef struct result_intervals
@@ -51,6 +56,7 @@ int main()
 	char *str, *str_post;
 	char temp_char;
 	interval_struct * int_struct;
+	temporary_struct * temporary_struct;
 	int *probabilities = malloc(20 * sizeof(int));
 	double abs_max, abs_min, temp1, temp2, temp_def, interval_diff;
 	srand(time(0));
@@ -61,10 +67,9 @@ int main()
 			func[read_counter] = temp_char;
 			read_counter++;
 		}
-	}
+	}	
 	func[read_counter] = '\0';
 	letter_amount = how_many_chars(func);
-	str = removespaces(func);
 	ptr_struct = malloc(letter_amount * sizeof(letter_struct));
 	scanf("%d %ld", &interval_amount, &experiment_amount);
 	set_intervals(ptr_struct, interval_amount, letter_amount);

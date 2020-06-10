@@ -45,15 +45,24 @@ void randomize_letter(letter_struct *ptr_struct, int interval_amount);
 int main()
 {
 	char *func = malloc(201 * sizeof(char));
-	int interval_amount, i, j, letter_amount, temp, flag;
+	int interval_amount, i, j, letter_amount, temp, flag, read_counter = 0;
 	long int experiment_amount, total_experiment_amount;
 	letter_struct *ptr_struct;
 	char *str, *str_post;
+	char temp_char;
 	interval_struct * int_struct;
 	int *probabilities = malloc(20 * sizeof(int));
-	double abs_max, abs_min, temp1, temp2, temp_def, interval_diff, test;
+	double abs_max, abs_min, temp1, temp2, temp_def, interval_diff;
 	srand(time(0));
-	fgets(func, 201, stdin);
+	for (scanf("%c", &temp_char); temp_char != '\n'; scanf("%c", &temp_char))
+	{
+		if ((temp_char != ' ') && (temp_char != '\t'))
+		{
+			func[read_counter] = temp_char;
+			read_counter++;
+		}
+	}
+	func[read_counter] = '\0';
 	letter_amount = how_many_chars(func);
 	str = removespaces(func);
 	ptr_struct = malloc(letter_amount * sizeof(letter_struct));
@@ -114,12 +123,11 @@ int main()
 		}
 	}
 	printf("%.3f %.3f ", abs_min, abs_max);
-	for (i = 0, test = 0; i < interval_amount; i++)
+	for (i = 0; i < interval_amount; i++)
 	{
 		printf("%.3f ", ((int_struct+i)->counter)/(double)total_experiment_amount);
-		test += ((int_struct+i)->counter)/(double)total_experiment_amount;
 	}
-	printf("And total probability is %f\n", test);
+	printf("\n");
 	/*
 	for (i = 0; i < letter_amount; i++)
 	{

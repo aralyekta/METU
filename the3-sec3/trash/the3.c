@@ -4,7 +4,8 @@
 #include <math.h>
 #include <ctype.h>
 #include <time.h>
-#define ERROR 1000000
+#define ERROR 100000000
+#define POWER(ptr) ((ptr)->power)
 #define MAX(ptr) ((ptr)->max)
 #define MIN(ptr) ((ptr)->min)
 #define MIN_STR(strct) (strct.min)
@@ -20,8 +21,8 @@ typedef struct letter_struct
 {
 	char letter;
 	double *probability;
-	double val, max, min;
-	double interval_diff;
+	int power, interval_diff, max, min;
+	double val;
 } letter_struct;
 
 typedef struct result_intervals
@@ -41,18 +42,101 @@ double solve_func(char *str_post, letter_struct *ptr_struct, int letter_amount, 
 double find_random(double min, double max);
 void set_intervals(letter_struct *ptr_struct, int interval_amount, int letter_amount);
 void randomize_letter(letter_struct *ptr_struct, int interval_amount);
+void adjust_min_max(letter_struct *ptr_struct);
+
+/*
+j = 0;
+		negative_flag = 0;
+		if (min_temp < 0)
+		{
+			negative_flag = 1;
+			min_temp *= -1;
+		}
+		if (min_temp != 0)
+		{
+			while (min_temp -(int)min_temp < ((double)1/(ERROR * pow(10, min_power))))
+			{
+				if (j < 10)
+				printf("Min is: %5.17f %d and the diff is %2.7f\n", min_temp, (int)min_temp, min_temp-(int)min_temp);
+				min_temp *= 10;
+				j++;
+				min_power++;
+			}
+			if (negative_flag)
+			{
+				min_temp *= -1;
+				negative_flag = 0;
+			}
+			printf("Finished min\n");
+			if (min_power < 3)
+			{
+				for (; min_power < 3; min_temp *= 10, min_power++);
+			}
+			printf("Added extra\n");
+		}
+		j = 0;
+		if (max_temp < 0)
+		{
+			negative_flag = 1;
+			max_temp *= -1;
+		}
+		if (max_temp != 0)
+		{
+			while (max_temp - (int)max_temp < ((double)1/(ERROR * pow(10, max_power))))
+			{
+				if (j < 10)
+				printf("Max is: %5.17f %d and the diff is %2.7f\n", max_temp, (int)max_temp, max_temp-(int)max_temp);
+				max_temp *= 10;
+				max_power++;
+				j++;
+			}
+			if (negative_flag)
+			{
+				max_temp *= -1;
+				negative_flag = 0;
+			}
+			printf("Finished max\n");
+			if (max_power < 3)
+			{
+				for (; max_power < 3; max_temp *= 10, max_power++);
+			}
+			printf("Added extra max\n");
+		}
+		if (max_power > min_power)
+		{
+			POWER(ptr_struct+i) = max_power;
+			for (j = 0; j < (max_power-min_power); j++, min_power *= 10);
+		}
+		else if (min_power > max_power)
+		{
+			POWER(ptr_struct+i) = min_power;
+			for (j = 0; j < (min_power - max_power); j++, max_power *= 10);
+		}
+		else
+		{
+			POWER(ptr_struct+i) = min_power;
+		}
+		INT_DIFF(ptr_struct+i) = (max_temp - min_temp) / interval_amount;
+		MAX(ptr_struct+i) = max_temp;
+		MIN(ptr_struct+i) = min_temp;
+		printf("Done\n");
+		printf("Finished reading for %d\n", i);
+	}
+	for (i = 0; i < letter_amount; i++)
+	{
+		printf("MIN is %d, MAX is %d and INT_DIFF is %d\n", MIN(ptr_struct+i), MAX(ptr_struct+i), INT_DIFF(ptr_struct+i));
+	}
+*/
 
 int main()
 {
 	char *func = malloc(201 * sizeof(char));
-	int interval_amount, i, j, letter_amount, temp, flag, read_counter = 0;
+	int interval_amount, i, j, letter_amount, flag, read_counter = 0, min_power, max_power, negative_flag;
 	long int experiment_amount, total_experiment_amount;
 	letter_struct *ptr_struct;
-	char *str, *str_post;
-	char temp_char;
+	char *str_post, temp_char;
 	interval_struct * int_struct;
-	int *probabilities = malloc(20 * sizeof(int));
-	double abs_max, abs_min, temp1, temp2, temp_def, interval_diff;
+	double abs_max, abs_min, temp1, temp2, temp_def, interval_diff, min_temp, max_temp;
 	srand(time(0));
 	for (scanf("%c", &temp_char); temp_char != '\n'; scanf("%c", &temp_char))
 	{
@@ -64,11 +148,12 @@ int main()
 	}
 	func[read_counter] = '\0';
 	letter_amount = how_many_chars(func);
-	str = removespaces(func);
 	ptr_struct = malloc(letter_amount * sizeof(letter_struct));
 	scanf("%d %ld", &interval_amount, &experiment_amount);
+	int_struct = malloc(interval_amount * sizeof(interval_struct));
+	str_post = in_to_post(func);
 	set_intervals(ptr_struct, interval_amount, letter_amount);
-	for (i = 0; i < letter_amount; i++)
+	for (i = 0, min_power = 0, max_power = 0; i < letter_amount; i++)
 	{
 		scanf(" %c %lf %lf", &LETTER(ptr_struct+i), &MIN(ptr_struct+i), &MAX(ptr_struct+i));
 		INT_DIFF(ptr_struct+i) = (MAX(ptr_struct+i)-MIN(ptr_struct+i))/interval_amount;
@@ -77,8 +162,6 @@ int main()
 			scanf(" %lf", (((ptr_struct+i)->probability) + j));
 		}
 	}
-	int_struct = malloc(interval_amount * sizeof(interval_struct));
-	str_post = in_to_post(str);
 	temp1 = solve_func(str_post, ptr_struct, letter_amount, interval_amount);
 	temp2 = solve_func(str_post, ptr_struct, letter_amount, interval_amount);
 	abs_max = (temp1 > temp2) ? temp1 : temp2;
@@ -112,7 +195,6 @@ int main()
 			if ((temp_def < (int_struct+j)->max) && (temp_def >= (int_struct+j)->min))
 			{
 			/*	printf("This value is in %dth interval, counter is %d\n", j, (int_struct+j)->counter);*/
-				((int_struct+j)->counter)++;
 				flag = 1;
 				break;
 			}
@@ -128,38 +210,10 @@ int main()
 		printf("%.3f ", ((int_struct+i)->counter)/(double)total_experiment_amount);
 	}
 	printf("\n");
-	/*
-	for (i = 0; i < letter_amount; i++)
-	{
-		randomize_letter(ptr_struct+i, interval_amount);
-	}
-	printf("Values are\n");
-	for (i = 0; i < letter_amount; i++)
-	{
-		printf("%2.6f ", VALUE(ptr_struct+i));
-	}
-	printf("\n%f\n", solve_func(func, ptr_struct));
-	*/
-	/*
-	for (i = 0; i < interval_amount; i++)
-	{
-		probabilities[i] = 0;
-	}
-	for (i = 0; i < 10000; i++)
-	{
-		temp = randomize_letter(ptr_struct[0], interval_amount, probabilities);
-		probabilities[temp]++;
-	}
-	for (i = 0; i < interval_amount; i++)
-	{
-		printf("Probability for %dth interval: %.3f\n", i+1, probabilities[i]/(double)10000);
-	}
-	*/
-	/*find_random(1.5, 2.5);*/
-	for (i = 0; i < letter_amount; free((ptr_struct+i)->probability),i++);
 	free(ptr_struct);
 	free(func);
-	free(probabilities);
+	free(int_struct);
+	free(str_post);
 	return 0;
 }
 
@@ -488,10 +542,12 @@ double solve_func(char *str_post, letter_struct *ptr_struct, int letter_amount, 
 {
 	double val_return;
 	int i;
+	printf("Entered the func\n");
 	for (i = 0; i < letter_amount; i++)
 	{
 		randomize_letter(ptr_struct+i, interval_amount);
 	}
+	printf("Done\n");
 	/*
 	printf("The values for this call are:");
 	for (i = 0; i < letter_amount; i++)
@@ -633,16 +689,16 @@ void randomize_letter(letter_struct *ptr_struct, int interval_amount)
 	min_last = MIN(ptr_struct)+interval_num*INT_DIFF(ptr_struct);
 	max_last = min_last + INT_DIFF(ptr_struct);
 	/*printf("Calling the func for %2.6f %d and %2.6f %d\n", min_last, (int)min_last, max_last, (int)max_last);*/
+	printf("Calling find_random\n");
 	result = find_random(min_last, max_last);
-	/*printf("Result is %2.6f for interval num %d \n", result, interval_num);*/
+	printf("Result is %2.6f for interval num %d \n", result, interval_num);
 	VALUE(ptr_struct) = result;
 }
 
 double find_random(double min, double max)
 {
 	int how_many1 = 0, how_many2 = 0, i, max_amount, rand_val, zero_side = 0;
-	double returnval, temp;
-	double min_start = min, max_start = max;
+	double returnval, temp, min_start = min, max_start = max;
 	/*printf("%1.6f and %1.6f are the val\n", min, max);*/
 	if (min > (-1)*(double)1/ERROR && min < (double)1/ERROR)
 	{
@@ -665,7 +721,7 @@ double find_random(double min, double max)
 			while (min-(int)min >= ((double)1/(ERROR)))
 			{
 				if (i < 10)
-				/*printf("For both positive, min is: %5.17f %d and start vals are: %2.10f and %2.10f and the diff is %2.7f\n", min, (int)min, min_start, max_start, min-(int)(min));*/
+				printf("For both positive, min is: %5.17f %d and start vals are: %2.10f and %2.10f and the diff is %2.7f\n", min, (int)min, min_start, max_start, min-(int)(min));
 				min *= 10;
 				how_many1++;
 				i++;
@@ -679,7 +735,7 @@ double find_random(double min, double max)
 		while (max-(int)max >= ((double)1/(ERROR)))
 		{
 			if (i < 10)
-			/*printf("For both positive, max is: %5.17f %d and start vals are: %2.10f and %2.10f and the diff is %2.7f\n", max, (int)max, min_start, max_start, max-(int)(max));*/
+			printf("For both positive, max is: %5.17f %d and start vals are: %2.10f and %2.10f and the diff is %2.7f\n", max, (int)max, min_start, max_start, max-(int)(max));
 			max *= 10;
 			how_many2++;
 			i++;
@@ -691,7 +747,6 @@ double find_random(double min, double max)
 		/*printf("The min and max at the end are %d %d\n", (int)min, (int)max);*/
 		if ((zero_side != -1) && (how_many2 > how_many1))
 		{
-			/*printf("Sea3\n");*/
 			max_amount = how_many2;
 			for (i = 0; i < (how_many2-how_many1); i++)
 			{
@@ -700,7 +755,6 @@ double find_random(double min, double max)
 		}
 		else if (how_many1 > how_many2)
 		{
-			/*printf("Sea4\n");*/
 			max_amount = how_many1;
 			for (i = 0; i < (how_many1-how_many2); i++)
 			{
@@ -709,7 +763,6 @@ double find_random(double min, double max)
 		}
 		else 
 		{
-			/*printf("Sea5\n");*/
 			max_amount = how_many2;
 		}
 		for (rand_val = (rand()%(int)max)+(int)min; rand_val >= (int)max; rand_val = (rand()%(int)max)+(int)min)
@@ -744,13 +797,11 @@ double find_random(double min, double max)
 		}
 		while (max-(int)max > ((double)1/(ERROR*(pow(10, how_many2)))))
 		{
-			/*printf("Sea2\n");*/
 			max *= 10;
 			how_many2++;
 		}
 		if (how_many2 > how_many1)
 		{
-			/*printf("Sea3\n");*/
 			max_amount = how_many2;
 			for (i = 0; i < (how_many2-how_many1); i++)
 			{
@@ -759,7 +810,6 @@ double find_random(double min, double max)
 		}
 		else if (how_many1 > how_many2)
 		{
-			/*printf("Sea4\n");*/
 			max_amount = how_many1;
 			for (i = 0; i < (how_many1-how_many2); i++)
 			{
@@ -773,7 +823,6 @@ double find_random(double min, double max)
 		rand_val = rand()%((int)max+(int)min);
 		if (rand_val < (int)min)
 		{
-			/*printf("Sol yarı çalıştı\n");*/
 			for (i = 0; i < max_amount; i++)
 			{
 				min /= 10;
@@ -784,7 +833,6 @@ double find_random(double min, double max)
 		}
 		else if (rand_val >= (int)min)
 		{
-			/*printf("Sağ yarı çalıştı\n");*/
 			for (i = 0; i < max_amount; i++)
 			{
 				max /= 10;
