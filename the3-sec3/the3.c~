@@ -56,7 +56,7 @@ int main()
 	int interval_amount, i, j, letter_amount, temp, flag, read_counter = 0;
 	long int experiment_amount, total_experiment_amount;
 	letter_struct *ptr_struct;
-	char *str, *str_post;
+	char *str_post;
 	char temp_char;
 	interval_struct * int_struct;
 	int *probabilities = malloc(20 * sizeof(int));
@@ -72,7 +72,6 @@ int main()
 	}
 	func[read_counter] = '\0';
 	letter_amount = how_many_chars(func);
-	str = removespaces(func);
 	ptr_struct = malloc(letter_amount * sizeof(letter_struct));
 	scanf("%d %ld", &interval_amount, &experiment_amount);
 	for (i = 0; i < letter_amount; i++)
@@ -91,7 +90,7 @@ int main()
 	}
 	set_intervals(ptr_struct, interval_amount, letter_amount);
 	int_struct = malloc(interval_amount * sizeof(interval_struct));
-	str_post = in_to_post(str);
+	str_post = in_to_post(func);
 	solve_func(str_post, ptr_struct, letter_amount, interval_amount);
 	/*
 	for (i = 0; i < letter_amount; i++)
@@ -116,7 +115,7 @@ int main()
 			abs_max = temp_def;
 		}
 	}
-	/*printf("Min and max values are %.4f %.4f \n", abs_min, abs_max);*/
+	printf("Min and max values are %.4f %.4f \n", abs_min, abs_max);
 	interval_diff = (abs_max-abs_min)/interval_amount;
 	for (i = 0; i < interval_amount; i++)
 	{

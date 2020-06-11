@@ -38,7 +38,6 @@ typedef struct result_intervals
 } interval_struct;
 
 char *in_to_post(char *str);
-char *removespaces(char *str);
 int how_many_chars(char *str);
 int which_func(char *str);
 int can_i_insert(char *temp, char *stack, char *stack_start);
@@ -56,7 +55,7 @@ int main()
 	int interval_amount, i, j, letter_amount, temp, flag, read_counter = 0;
 	long int experiment_amount, total_experiment_amount;
 	letter_struct *ptr_struct;
-	char *str, *str_post;
+	char *str_post;
 	char temp_char;
 	interval_struct * int_struct;
 	int *probabilities = malloc(20 * sizeof(int));
@@ -72,7 +71,6 @@ int main()
 	}
 	func[read_counter] = '\0';
 	letter_amount = how_many_chars(func);
-	str = removespaces(func);
 	ptr_struct = malloc(letter_amount * sizeof(letter_struct));
 	scanf("%d %ld", &interval_amount, &experiment_amount);
 	for (i = 0; i < letter_amount; i++)
@@ -91,7 +89,7 @@ int main()
 	}
 	set_intervals(ptr_struct, interval_amount, letter_amount);
 	int_struct = malloc(interval_amount * sizeof(interval_struct));
-	str_post = in_to_post(str);
+	str_post = in_to_post(func);
 	solve_func(str_post, ptr_struct, letter_amount, interval_amount);
 	/*
 	for (i = 0; i < letter_amount; i++)
@@ -211,43 +209,6 @@ int how_many_chars(char *str)
 		}
 	}
 	return result;
-}
-
-char *removespaces(char *str)
-{
-	/* This function removes the spaces on the string and also finds strlen */
-	int last_was_blank = 0, was_blank_before;
-	char *i = NULL;
-	char *j = str;
-	for (was_blank_before = 0; *j; j++)
-	{
-		if (*j == ' ')
-		{
-			last_was_blank = 1;
-			if (was_blank_before == 0)
-			{
-				was_blank_before = 1;
-				i = j;
-			}
-		}
-		else
-		{
-			if (last_was_blank)
-			{
-				last_was_blank = 0;
-			}
-			if (i)
-			{
-				*i = *j;
-				i++;
-			}
-		}
-	}
-	if (i)
-	{
-		*i = '\0';
-	}
-	return str;
 }
 
 int which_func(char *str)
