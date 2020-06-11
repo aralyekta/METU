@@ -1,0 +1,163 @@
+double find_random(double min, double max)
+{
+	int how_many1 = 0, how_many2 = 0, i, max_amount, rand_val, zero_side = 0;
+	double returnval, temp;
+	double min_start = min, max_start = max;
+	/*printf("%1.6f and %1.6f are the val\n", min, max);*/
+	if (min > (-1)*(double)1/ERROR && min < (double)1/ERROR)
+	{
+		zero_side = -1;
+	}
+	else if (max > (-1)*(double)1/ERROR && max < (double)1/ERROR)
+	{
+		zero_side = 1;
+	}
+	if ((zero_side == -1) || ((min > (double)1/ERROR) && (max > (double)1/ERROR)))
+	{
+		/*printf("Both positive\n");*/
+		/*printf("%d and %d\n", (int)min, (int)max);*/
+		min += 0.000000000000001;
+		max += 0.000000000000001;
+		/*printf("%5.17f and %5.17f heayo\n", min, max);*/
+		if (zero_side != -1)
+		{
+			i = 0;
+			while (min-(int)min >= ((double)1/(ERROR)))
+			{
+				if (i < 10)
+				/*printf("For both positive, min is: %5.17f %d and start vals are: %2.10f and %2.10f and the diff is %2.7f\n", min, (int)min, min_start, max_start, min-(int)(min));*/
+				min *= 10;
+				how_many1++;
+				i++;
+			}
+			if (how_many1 < 3)
+			{
+				for (; how_many1 < 3; min *= 10, how_many1++);
+			}
+		}
+		i = 0;
+		while (max-(int)max >= ((double)1/(ERROR)))
+		{
+			if (i < 10)
+			/*printf("For both positive, max is: %5.17f %d and start vals are: %2.10f and %2.10f and the diff is %2.7f\n", max, (int)max, min_start, max_start, max-(int)(max));*/
+			max *= 10;
+			how_many2++;
+			i++;
+		}
+		if (how_many2 < 3)
+		{
+			for (; how_many2 < 3; max *= 10, how_many2++);
+		}
+		/*printf("The min and max at the end are %d %d\n", (int)min, (int)max);*/
+		if ((zero_side != -1) && (how_many2 > how_many1))
+		{
+			/*printf("Sea3\n");*/
+			max_amount = how_many2;
+			for (i = 0; i < (how_many2-how_many1); i++)
+			{
+				min *= 10;
+			}
+		}
+		else if (how_many1 > how_many2)
+		{
+			/*printf("Sea4\n");*/
+			max_amount = how_many1;
+			for (i = 0; i < (how_many1-how_many2); i++)
+			{
+				max *= 10;
+			}
+		}
+		else 
+		{
+			/*printf("Sea5\n");*/
+			max_amount = how_many2;
+		}
+		for (rand_val = (rand()%(int)max)+(int)min; rand_val >= (int)max; rand_val = (rand()%(int)max)+(int)min)
+		{
+			/*printf("Entered loop for %d\n", rand_val);*/
+		}
+		returnval = rand_val;
+	}
+	else if ((zero_side == 1) || ((min < (-1)*(double)1/ERROR) && (max < (-1)*(double)1/ERROR)))
+	{
+		/*printf("Both negative\n");*/
+		temp = (-1)*min;
+		min = max;
+		if (zero_side != 1)
+		{
+			min *= -1;
+		}
+		max = temp;
+		returnval = find_random(min, max) * (-1);
+		/*printf("%1.6f Will be returned\n", returnval);*/
+		return returnval;
+	}
+	else 
+	{
+		/*printf("One negative one positive\n");*/
+		min *= -1;
+		while (min-(int)min > ((double)1/(ERROR*(pow(10, how_many1)))))
+		{
+			/*printf("Min is: %1.6f\n", min);*/
+			min *= 10;
+			how_many1++;
+		}
+		while (max-(int)max > ((double)1/(ERROR*(pow(10, how_many2)))))
+		{
+			/*printf("Sea2\n");*/
+			max *= 10;
+			how_many2++;
+		}
+		if (how_many2 > how_many1)
+		{
+			/*printf("Sea3\n");*/
+			max_amount = how_many2;
+			for (i = 0; i < (how_many2-how_many1); i++)
+			{
+				min *= 10;
+			}
+		}
+		else if (how_many1 > how_many2)
+		{
+			/*printf("Sea4\n");*/
+			max_amount = how_many1;
+			for (i = 0; i < (how_many1-how_many2); i++)
+			{
+				max *= 10;
+			}
+		}
+		else
+		{
+			max_amount = how_many1;
+		}
+		rand_val = rand()%((int)max+(int)min);
+		if (rand_val < (int)min)
+		{
+			/*printf("Sol yarı çalıştı\n");*/
+			for (i = 0; i < max_amount; i++)
+			{
+				min /= 10;
+			}
+			min *= -1;
+			returnval = find_random(min, 0);
+			return returnval;
+		}
+		else if (rand_val >= (int)min)
+		{
+			/*printf("Sağ yarı çalıştı\n");*/
+			for (i = 0; i < max_amount; i++)
+			{
+				max /= 10;
+			}
+			returnval = find_random(0, max);
+			return returnval;
+		}
+	}
+		/*printf("Exited loop for %d\n", rand_val);*/
+		for (i = 0; i < max_amount; i++)
+		{
+			returnval /= 10;
+		}		
+	/*printf("%1.6f ", returnval);*/
+	return returnval;
+}
