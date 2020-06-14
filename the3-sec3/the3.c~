@@ -6,15 +6,12 @@
 #include <time.h>
 #define ERROR 1000000
 #define MAX(ptr) ((ptr)->max)
-#define MAX_INT(ptr) ((ptr)->max_int)
 #define MIN(ptr) ((ptr)->min)
-#define MIN_INT(ptr) ((ptr)->min_int)
 #define INT_DIFF(ptr) ((ptr)->interval_diff)
 #define INT_DIFF_INT(ptr) ((ptr)->interval_diff_int)
 #define VALUE(ptr) ((ptr)->val)
 #define LETTER(ptr) ((ptr)->letter)
 #define PROB(ptr) ((ptr).probability)
-#define MOVE_AMOUNT(ptr) ((ptr)->move_amount)
 #define POWER(ptr) ((ptr)->power)
 #define UPPER(ptr) ((ptr)->upper_end)
 #define ENDS(ptr) ((ptr).lower_ends)
@@ -23,8 +20,8 @@ typedef struct letter_struct
 {
 	char letter;
 	long *probability;
-	double val, max, min, interval_diff, move_amount;
-	int max_int, min_int, power;
+	double val, max, min, interval_diff;
+	int power;
 	long interval_diff_int, upper_end;
 	long *lower_ends;
 } letter_struct;
@@ -44,7 +41,7 @@ double find_val(letter_struct *ptr_struct, char letter);
 double solve_func(char *str_post, letter_struct *ptr_struct, int letter_amount, int interval_amount);
 double find_random(letter_struct *ptr_struct, int interval_num);
 void set_intervals(letter_struct *ptr_struct, int interval_amount, int letter_amount);
-int randomize_letter(letter_struct *ptr_struct, int interval_amount);
+void randomize_letter(letter_struct *ptr_struct, int interval_amount);
 void set_int_probabilities(letter_struct *ptr_struct, double *probabilities, int interval_amount);
 
 void set_int_probabilities(letter_struct *ptr_struct, double *probabilities, int interval_amount)
@@ -77,7 +74,7 @@ void set_int_probabilities(letter_struct *ptr_struct, double *probabilities, int
 	free(power);
 }
 
-int randomize_letter(letter_struct *ptr_struct, int interval_amount)
+void randomize_letter(letter_struct *ptr_struct, int interval_amount)
 {
 	double result;
 	int i, interval_num = -1;
@@ -91,13 +88,8 @@ int randomize_letter(letter_struct *ptr_struct, int interval_amount)
 			break;
 		}
 	}
-	/*printf("Calling the func for %2.6f %d and %2.6f %d\n", min_last, (int)min_last, max_last, (int)max_last);*/
-	/*printf("Calling find random for interval %d\n", interval_num);*/
 	result = find_random(ptr_struct, interval_num);
-	/*printf("Result is %2.6f for interval num %d \n", result, interval_num);*/
 	VALUE(ptr_struct) = result;
-	/*printf("Value for %c for interval %d is %.3f\n", LETTER(ptr_struct), interval_num, result);*/
-	return interval_num;
 }
 
 double find_random(letter_struct *ptr_struct, int interval_num)
@@ -129,8 +121,8 @@ double solve_func(char *str_post, letter_struct *ptr_struct, int letter_amount, 
 int main()
 {
 	char *func = malloc(201 * sizeof(char));
-	int interval_amount, i, j, letter_amount, temp, flag, read_counter = 0, interval_num;
-	long int experiment_amount, total_experiment_amount, integer_randomized_val;
+	int interval_amount, i, j, letter_amount, temp, flag, read_counter = 0;
+	long int experiment_amount, total_experiment_amount;
 	letter_struct *ptr_struct;
 	char *str_post;
 	int *counter;
@@ -172,70 +164,6 @@ int main()
 	set_intervals(ptr_struct, interval_amount, letter_amount);
 	str_post = in_to_post(func);
 	int_struct = malloc(interval_amount * sizeof(interval_struct));
-	/*
-	printf("%ld\n", INT_DIFF_INT(ptr_struct));
-	for (i = 0; i < experiment_amount; i++)
-	{
-		integer_randomized_val = rand() % INT_DIFF_INT(ptr_struct);
-		temp_def = (double)integer_randomized_val/ pow(10, POWER(ptr_struct));
-		if (temp_def >= 0.9)
-			counter[9]++;
-		else if (temp_def >= 0.8)
-			counter[8]++;
-		else if (temp_def >= 0.7)
-			counter[7]++;
-		else if (temp_def >= 0.6)
-			counter[6]++;
-		else if (temp_def >= 0.5)
-			counter[5]++;
-		else if (temp_def >= 0.4)
-			counter[4]++;
-		else if (temp_def >= 0.3)
-			counter[3]++;
-		else if (temp_def >= 0.2)
-			counter[2]++;
-		else if (temp_def >= 0.1)
-			counter[1]++;
-		else
-			counter[0]++;
-	}
-	printf("\n");
-	for (i = 0; i < 10; i++)
-	{
-		printf("%.3f ", counter[i]/(double)experiment_amount);
-	}
-	printf("\n");
-	*/
-	/*
-	for (i = 0; i < experiment_amount; i++)
-	{
-		counter[randomize_letter(ptr_struct, interval_amount)]++;
-	}
-	printf("Now the results\n");
-	for (i = 0; i < interval_amount; i++)
-	{
-		printf("%.3f ", counter[i]/(double)experiment_amount);
-	}
-	printf("\n");
-	*/
-	/*
-	for (i = 0; i < letter_amount; i++)
-	{
-		printf("\nLetter %c ", LETTER(ptr_struct+i));
-		for (j = 0; j < interval_amount; j++)
-		{
-			printf("%d ", (ENDS(ptr_struct[i])[j]));
-		}
-
-	}
-	*/
-	/*solve_func(str_post, ptr_struct, letter_amount, interval_amount);*/
-	/*
-	for (i = 0; i < letter_amount; i++)
-	{
-		printf("Min is %d, max is %d, power is %d and int diff is %d\n", MIN_INT(ptr_struct+i), MAX_INT(ptr_struct+i), POWER(ptr_struct+i),  INT_DIFF_INT(ptr_struct+i));
-	}
-	*/
 	temp1 = solve_func(str_post, ptr_struct, letter_amount, interval_amount);
 	temp2 = solve_func(str_post, ptr_struct, letter_amount, interval_amount);
 	abs_max = (temp1 > temp2) ? temp1 : temp2;
@@ -260,7 +188,7 @@ int main()
 		(int_struct+i)->counter = 0;
 	}
 	total_experiment_amount = experiment_amount;
-	for (i = 0, flag = 0, interval_num = 0; i < experiment_amount; i++, flag = 0, interval_num = 0)
+	for (i = 0, flag = 0; i < experiment_amount; i++, flag = 0)
 	{
 		temp_def = solve_func(str_post, ptr_struct, letter_amount, interval_amount);
 		for (j = 0; j < interval_amount; j++)
@@ -283,34 +211,6 @@ int main()
 		printf("%.3f ", (((int_struct+i)->counter)/(double)total_experiment_amount));
 	}
 	printf("\n");
-	/*
-	for (i = 0; i < letter_amount; i++)
-	{
-		randomize_letter(ptr_struct+i, interval_amount);
-	}
-	printf("Values are\n");
-	for (i = 0; i < letter_amount; i++)
-	{
-		printf("%2.6f ", VALUE(ptr_struct+i));
-	}
-	printf("\n%f\n", solve_func(func, ptr_struct));
-	*/
-	/*
-	for (i = 0; i < interval_amount; i++)
-	{
-		probabilities[i] = 0;
-	}
-	for (i = 0; i < 10000; i++)
-	{
-		temp = randomize_letter(ptr_struct[0], interval_amount, probabilities);
-		probabilities[temp]++;
-	}
-	for (i = 0; i < interval_amount; i++)
-	{
-		printf("Probability for %dth interval: %.3f\n", i+1, probabilities[i]/(double)10000);
-	}
-	*/
-	/*find_random(1.5, 2.5);*/
 	free(counter);
 	free(int_struct);
 	for (i = 0; i < letter_amount; free((ptr_struct+i)->probability), free((ptr_struct+i)->lower_ends), i++);
@@ -681,50 +581,64 @@ double post_to_result(char *str, letter_struct *ptr_struct)
 
 void set_intervals(letter_struct *ptr_struct, int interval_amount, int letter_amount)
 {
-	int i, max_power, min_power, j;
-	double max_multiplied, min_multiplied, int_diff;
-	for (i = 0, max_power = 0, min_power = 0; i < letter_amount; i++, max_power = 0, min_power = 0)
+	int i, max_power, min_power, j, min_digits = 0, max_digits = 0, int_diff_digits = 0;
+	double max_multiplied, min_multiplied, int_diff, min_divided, max_divided, int_diff_divided, move_amount;
+	for (i = 0, max_power = 0, min_power = 0; i < letter_amount; i++, max_power = 0, min_power = 0, min_digits = 0, max_digits = 0, int_diff_digits = 0)
 	{
 		min_multiplied = MIN(ptr_struct+i);
 		max_multiplied = MAX(ptr_struct+i);
 		if ((MIN(ptr_struct+i) < 0) && (MAX(ptr_struct+i) < 0))
 		{
-			MOVE_AMOUNT(ptr_struct+i) = (-1) * min_multiplied;
-			min_multiplied += MOVE_AMOUNT(ptr_struct+i);
-			max_multiplied += MOVE_AMOUNT(ptr_struct+i);
+			move_amount = (-1) * min_multiplied;
+			min_multiplied += move_amount;
+			max_multiplied += move_amount;
 		}
 		else if ((MIN(ptr_struct+i) < 0) && (MAX(ptr_struct+i) == 0))
 		{
-			MOVE_AMOUNT(ptr_struct+i) = (-1) * min_multiplied;
-			min_multiplied += MOVE_AMOUNT(ptr_struct+i);
-			max_multiplied += MOVE_AMOUNT(ptr_struct+i);
+			move_amount = (-1) * min_multiplied;
+			min_multiplied += move_amount;
+			max_multiplied += move_amount;
 		}
 		else if ((MIN(ptr_struct+i) < 0) && (MAX(ptr_struct+i) > 0))
 		{
-			MOVE_AMOUNT(ptr_struct+i) = (-1) * min_multiplied;
-			min_multiplied += MOVE_AMOUNT(ptr_struct+i);
-			max_multiplied += MOVE_AMOUNT(ptr_struct+i);
+			move_amount = (-1) * min_multiplied;
+			min_multiplied += move_amount;
+			max_multiplied += move_amount;
 		}
 		if (min_multiplied != 0)
 		{
-			while (min_multiplied - (long)min_multiplied >= (double)1/(ERROR * pow(10, min_power)))
+			min_divided = min_multiplied;
+			while ((int)min_divided != 0)
+			{
+				min_divided /= 10;
+				min_digits++;
+			}
+			while ((min_multiplied - (long)min_multiplied >= (double)1/(ERROR * pow(10, min_power))) && (min_digits < 6))
 			{
 				min_multiplied *= 10;
 				min_power++;
+				min_digits++;
 			}
-			if (min_power < 3)
+			if ((min_power < 3) && (min_digits < 6))
 			{
-				for (; min_power < 4; min_multiplied *= 10, min_power++);
+				for (; (min_power < 3) && (min_digits < 6); min_multiplied *= 10, min_power++, min_digits++);
 			}
 		}
-		while (max_multiplied - (long)max_multiplied >= (double)1/(ERROR * pow(10, max_power)))
+		max_divided = max_multiplied;
+		while ((int)max_divided != 0)
+		{
+			max_divided /= 10;
+			max_digits++;
+		}
+		while ((max_multiplied - (long)max_multiplied >= (double)1/(ERROR * pow(10, max_power))) && (max_digits < 6))
 		{
 			max_multiplied *= 10;
 			max_power++;
+			max_digits++;
 		}
-		if (max_power < 3)
+		if ((max_power < 3) && (max_digits < 6))
 		{
-			for (; max_power < 4; max_multiplied *= 10, max_power++);
+			for (; (max_power < 3) && (max_digits < 6); max_multiplied *= 10, max_power++, max_digits++);
 		}
 		if (min_power > max_power)
 		{
@@ -740,12 +654,14 @@ void set_intervals(letter_struct *ptr_struct, int interval_amount, int letter_am
 		{
 			POWER(ptr_struct+i) = max_power;
 		}
-		MAX_INT(ptr_struct+i) = (long)max_multiplied;
-		MIN_INT(ptr_struct+i) = (long)min_multiplied;
 		int_diff = (((long)max_multiplied-(long)min_multiplied) / interval_amount);
-		for (j = 0; j < 3; j++, POWER(ptr_struct+i)++, int_diff *= 10);
+		int_diff_divided = int_diff;
+		while ((int)int_diff_divided != 0)
+		{
+			int_diff_divided /= 10;
+			int_diff_digits++;
+		}
+		for (;int_diff_digits < 8; int_diff *= 10, int_diff_digits++, POWER(ptr_struct+i)++);
 		INT_DIFF_INT(ptr_struct+i) = (long)int_diff;
 	}
 }
-
-
