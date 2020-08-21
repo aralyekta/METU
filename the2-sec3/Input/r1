@@ -1,0 +1,41 @@
+	char s1[] =  "-(A|B),C,D#E,F,G"; /* Okay */
+	char s2[] = "C,-(A|B),D#E,F,G"; /* Okay */
+	char s3[] = "C,D,-(A|B)#E,F,G"; /* Okay */
+	char s4[] = "A,B,C#-(A|B),E,F"; /* Okay */
+	char s5[] = "A,B,C#E,-(A|B),F"; /* Okay */
+	char s6[] = "A,B,C#E,F,-(A|B)"; /* Okay */
+	char s7[] = "-(A|B),C,D#E,F"; /* Okay */
+	char s8[] = "-(A|B)#E,F"; /* Okay */
+	char s9[] = "A,B,C#-(A|B)"; /* Okay */
+	char s10[] = "-(A|B),C#E,F"; /* Okay */
+	char s11[] = "C,-(A|B)#E,F"; /* Okay */
+	char s12[] = "C,A#-(A|B),F"; /* Okay */
+	char s13[] = "C,A#F,-(A|B)"; /* Okay */
+	char s14[] = "-(A|B)#F"; /* Okay */
+	char s15[] = "F#-(A|B)"; /* Okay */
+	char s16[] = "-(A|B),F#"; /* Okay */
+	char s17[] = "#F,-(A|B)"; /* Okay */
+	char s18[] = "-(A|B)#"; /* Okay */
+	char s19[] = "#-(A|B)"; /* Okay */
+	
+	char a1[] =  "-A,C,D#E,F,G"; /*  */
+	char a2[] = "C,-A,D#E,F,G"; /*  */
+	char a3[] = "C,D,-A#E,F,G"; /*  */
+	char a4[] = "A,B,C#-A,E,F"; /*  */
+	char a5[] = "A,B,C#E,-A,F"; /*  */
+	char a6[] = "A,B,C#E,F,-A"; /* Indexleme patladı, aynı harf oldukları için */
+	char a7[] = "-A,C,D#E,F"; /*  */
+	char a8[] = "-A#E,F"; /*  */
+	char a9[] = "A,B,C#-D"; /*  */
+	char a10[] = "-A,C#E,F"; /*  */
+	char a11[] = "C,-A#E,F"; /*  */
+	char a12[] = "C,A#-D,F"; /*  */
+	char a13[] = "C,A#F,-D"; /*  */
+	char a14[] = "-A#F"; /*  */
+	char a15[] = "F#-A"; /*  */
+	char a16[] = "-A,F#"; /*  */
+	char a17[] = "#F,-A"; /*  */
+	char a18[] = "-A#"; /*  */
+	char a19[] = "#-A"; /*  */
+
+Burası full okay

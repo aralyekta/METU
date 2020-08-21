@@ -1,0 +1,6 @@
+A,B#
+-A,B#
+
+start, arrow, end, index_of_operation
+
+arrow_index, char_index, ptr_forw, ptr_back

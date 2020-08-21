@@ -1,0 +1,24 @@
+Initial values
+0 - 15
+1 - 4
+2 - 8
+3 - 1
+4 - 8
+5 - 3
+6 - 7
+10 - 1
+12 - 2
+13 - 2
+14 - 4
+26 - 1
+28 - 1
+29 - 1
+30 - 2
+62 - 1
+Depth first search results:
+8 is at 4 in tree with root[0].
+8 is at 4 in tree with root[1].
+7 is at 6 in tree with root[0].
+1 is at 28 in tree with root[1].
+7 is at -1 in tree with root[10].
+35 is at -1 in tree with root[0].

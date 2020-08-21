@@ -1,0 +1,29 @@
+	char a1[] = "(-C&D),A#E,F";
+	char a2[] = "A,(-C&D)#E,F";
+	char a3[] = "A,C#(-E|D),F";
+	char a4[] = "A,C#F,(-E|D)";
+	char a5[] = "(-C&D)#F";
+	char a6[] = "(-C&D)#";
+	char a7[] = "(-C&D)#E,F";
+	char a8[] = "A#(-C|D)";
+	char a9[] = "#(-C|B)";
+	char a10[] = "#(-C|B),F";
+	char a11[] = "A,B#(-C|B)";
+
+	char b1[] = "-(C|D),A#E,F";
+	char b2[] = "A,-(C|D)#E,F";
+	char b3[] = "A,C#-(C&D),E";
+	char b4[] = "A,C#E,-(C&D)";
+	char b5[] = "-(C|D)#F";
+	char b6[] = "-(C|D)#";
+	char b7[] = "-(C|D)#E,F";
+	char b8[] = "A#-(C&D)";
+	char b9[] = "#-(C&B)";
+	char b10[] = "#-(C&B),F";
+	char b11[] = "A,B#-(C&B)";
+
+	char c1[] = "-(-A|B)#E,F";
+	char c2[] = "E#-(A&-B)";
+	char c3[] = "(A&-B),E#F,G";
+	char c4[] = "A,E#-(F&-B),G";
+	char c5[] = "A,E#--(F|-B),G";
