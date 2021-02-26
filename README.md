@@ -37,4 +37,4 @@ Here are my coursework for [Computer Engineering Department](https://ceng.metu.e
 * Take Home Exams
     * A Social Network Implementation Based on Linked Lists
     * A Movie Store Implementation Based on Binary Search Trees
-    * An Import-Export Graph Network of Countries Based on Hash Table
+    * An Import-Export Graph Network of Countries Based on Hash Tables
