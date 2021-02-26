@@ -2,7 +2,7 @@
 
 Here are my coursework for [Computer Engineering Department](https://ceng.metu.edu.tr/) in [METU](https://www.metu.edu.tr/).
 
-[CENG111, Introduction to Computer Engineering Concepts](https://github.com/aralyekta/CENG111-Intro-to-Programming-Concepts)
+[CENG111, Introduction to Computer Engineering Concepts](https://github.com/aralyekta/METU/tree/master/CENG111)
 ------------
 
 **Used Language:** *Python*<br>
@@ -15,7 +15,7 @@ Here are my coursework for [Computer Engineering Department](https://ceng.metu.e
 * Problems specifically solved with recursion
 * Other problems
 
-[CENG140, C Programming](https://github.com/aralyekta/CENG-140-C-Programming)
+[CENG140, C Programming](https://github.com/aralyekta/METU/tree/master/CENG140)
 -------------------
 
 **Used Language:** *C*<br>
@@ -26,7 +26,7 @@ Here are my coursework for [Computer Engineering Department](https://ceng.metu.e
 * Take Home Exams
 * Other problems
 
-[CENG213, Data Structures](https://github.com/aralyekta/CENG-140-C-Programming)
+[CENG213, Data Structures](https://github.com/aralyekta/METU/tree/master/CENG213)
 -------------------
 
 **Used Language:** *C++*<br>
@@ -35,4 +35,14 @@ Here are my coursework for [Computer Engineering Department](https://ceng.metu.e
 
 **Includes**:
 * Take Home Exams
+    * A Social Network Implementation Based on Linked Lists
+    * A Movie Store Implementation Based on Binary Search Trees
+    * An Import-Export Graph Network of Countries Based on Hash Table
 * Lab solutions
+    * Linked Lists
+    * Priority Queue and Heaps
+    * Stacks
+    * Queues
+    * Trees
+    * Hash Tables
+    * Graphs
