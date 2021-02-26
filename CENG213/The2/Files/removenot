@@ -1,0 +1,7 @@
+Key yoksa bir sey yapma
+Leaf ise sil, numNodes--
+Bir childi varsa onun yerine childi koy, ptrleri ayarla. numNodes--
+İki child varsa sagin ilk solunu bul. Silinecek nod yerine onu koy. Ptrleri ayarla. numNodes--
+
+Silme yaptıktan sonra parentta !isBalanced ise completeSubTree yap.
+
