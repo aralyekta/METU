@@ -1,4 +1,4 @@
-# CENG111, Introduction to Computer Engineering Concepts
+# CENG111 - Introduction to Computer Engineering Concepts
 
 **Used Language:** *Python*<br>
 **Instructor:** *Göktürk Üçoluk*<br>

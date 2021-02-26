@@ -1,4 +1,4 @@
-# CENG213, Data Structures
+# CENG213 - Data Structures
 
 **Used Language:** *C++*<br>
 **Instructor:** *Yusuf Sahillioğlu*<br>

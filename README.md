@@ -2,7 +2,7 @@
 
 Here are my coursework for [Computer Engineering Department](https://ceng.metu.edu.tr/) in [METU](https://www.metu.edu.tr/).
 
-[CENG111, Introduction to Computer Engineering Concepts](https://github.com/aralyekta/METU/tree/master/CENG111)
+[CENG111 - Introduction to Computer Engineering Concepts](https://github.com/aralyekta/METU/tree/master/CENG111)
 ------------
 
 **Used Language:** *Python*<br>
@@ -15,7 +15,7 @@ Here are my coursework for [Computer Engineering Department](https://ceng.metu.e
 * Problems specifically solved with recursion
 * Other problems
 
-[CENG140, C Programming](https://github.com/aralyekta/METU/tree/master/CENG140)
+[CENG140 - C Programming](https://github.com/aralyekta/METU/tree/master/CENG140)
 -------------------
 
 **Used Language:** *C*<br>
@@ -26,7 +26,7 @@ Here are my coursework for [Computer Engineering Department](https://ceng.metu.e
 * Take Home Exams
 * Other problems
 
-[CENG213, Data Structures](https://github.com/aralyekta/METU/tree/master/CENG213)
+[CENG213 - Data Structures](https://github.com/aralyekta/METU/tree/master/CENG213)
 -------------------
 
 **Used Language:** *C++*<br>

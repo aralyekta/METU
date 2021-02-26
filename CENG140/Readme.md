@@ -1,4 +1,4 @@
-# CENG140, C Programming
+# CENG140 - C Programming
 
 **Used Language:** *C*<br>
 **Instructor:** *Göktürk Üçoluk*<br>
