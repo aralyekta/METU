@@ -9,11 +9,3 @@
     * A Social Network Implementation Based on Linked Lists
     * A Movie Store Implementation Based on Binary Search Trees
     * An Import-Export Graph Network of Countries Based on Hash Table
-* Lab solutions
-    * Linked Lists
-    * Priority Queue and Heaps
-    * Stacks
-    * Queues
-    * Trees
-    * Hash Tables
-    * Graphs
