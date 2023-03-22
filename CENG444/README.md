@@ -13,6 +13,6 @@ This project reads a source code and separates it into tokens. The project can b
 This project reads a source code, separates it into tokens, creates an abstract syntax tree out of it, and finally generates the appropriate RISCV assembly code of it, resulting in an assembly file (.asm) that could be run with a RISCV emulator.
 The project can be run with
 
->python3 main.py
+>python3 parser/main.py
 
 Even though this stage of the project is not complete, it supports most of the functionalities of a programming language such as function calls (with stack preparations), variable accesses and modifications, type coercions etc.
