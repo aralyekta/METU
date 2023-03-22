@@ -1,0 +1,9 @@
+var x = 1;
+var y = 1.2;
+var z = 5;
+var res;
+
+res = y * x;
+res = res + z;
+res = 5.2 - 3.2;
+res = -res;

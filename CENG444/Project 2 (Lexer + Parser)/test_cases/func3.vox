@@ -1,0 +1,8 @@
+var res;
+fun fac(x)
+{
+    var x = x;
+    if x < 1 return 1; else return x * fac(x - 1);
+}
+
+res = fac(2);

@@ -1,0 +1,13 @@
+var x = true;
+var y = false;
+var z = 5;
+var res;
+
+fun f1(x, y, z)
+{
+    var x = 5;
+    var d = z;
+    return y + d * x;
+}
+
+res = f1(1, 2, 3);

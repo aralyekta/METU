@@ -1,0 +1,9 @@
+var x = 2;
+var y = 3;
+var z = 5;
+var res;
+
+res = x < 3 or z / 0 < 2;
+res = y < 2 and z / 0 < 2;
+
+res = x < 2 or y < 4; 

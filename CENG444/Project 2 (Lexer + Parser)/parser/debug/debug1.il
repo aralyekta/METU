@@ -1,0 +1,8 @@
+places: {'global': {{type:IntegerVariable, val: y}, {type:LogicalVariable, val: tmp2}, {type:IntegerVariable, val: tmp5}, {type:IntegerVariable, val: tmp3}, {type:IntegerVariable, val: tmp4}}, 'f1': {{type:IntegerVariable, val: tmp0}, {type:IntegerVariable, val: tmp1}, {type:IntegerVariable, val: c}}}
+
+IL:
+COPY {type:IntegerVariable, val: y}, {type:Integer, val: 1.0}
+FUN f1, {'code': [('BLOCK', [[('+', {type:IntegerVariable, val: tmp0}, {type:IntegerVariable, val: a}, {type:IntegerVariable, val: b}), ('COPY', {type:IntegerVariable, val: c}, {type:IntegerVariable, val: tmp0})]], [[('RETURN', {'place': {type:IntegerVariable, val: tmp1}, 'code': [('*', {type:IntegerVariable, val: tmp1}, {type:IntegerVariable, val: c}, {type:Integer, val: 2.0})]})]])]}
+IFELSE {'place': {type:LogicalVariable, val: tmp2}, 'code': [('<', {type:LogicalVariable, val: tmp2}, {type:IntegerVariable, val: y}, {type:Integer, val: 2.0})]}, {'place': {type:IntegerVariable, val: y}, 'code': [('CALL', {type:IntegerVariable, val: tmp3}, [{'place': {type:Integer, val: 1.0}, 'code': []}, {'place': {type:Integer, val: 1.0}, 'code': []}], 'f1'), ('COPY', {type:IntegerVariable, val: y}, {type:IntegerVariable, val: tmp3})]}, {'place': {type:IntegerVariable, val: y}, 'code': [('CALL', {type:IntegerVariable, val: tmp4}, [{'place': {type:Integer, val: 1.0}, 'code': []}, {'place': {type:Integer, val: 2.0}, 'code': []}], 'f1'), ('COPY', {type:IntegerVariable, val: y}, {type:IntegerVariable, val: tmp4})]}
+* {type:IntegerVariable, val: tmp5}, {type:IntegerVariable, val: y}, {type:Integer, val: 3.0}
+COPY {type:IntegerVariable, val: y}, {type:IntegerVariable, val: tmp5}
