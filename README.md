@@ -6,7 +6,7 @@ Here are my coursework for [Computer Engineering Department](https://ceng.metu.e
 ------------
 
 **Used Language:** *Python*<br>
-**Instructor:** *Göktürk Üçoluk*<br>
+**Instructor:** *Prof. Dr. Göktürk Üçoluk*<br>
 **Term:** *Fall 2019-2020*<br>
 
 **Includes**:
@@ -19,7 +19,7 @@ Here are my coursework for [Computer Engineering Department](https://ceng.metu.e
 -------------------
 
 **Used Language:** *C*<br>
-**Instructor:** *Göktürk Üçoluk*<br>
+**Instructor:** *Prof. Dr. Göktürk Üçoluk*<br>
 **Term:** *Spring 2019-2020*<br>
 
 **Includes**:
@@ -30,7 +30,7 @@ Here are my coursework for [Computer Engineering Department](https://ceng.metu.e
 -------------------
 
 **Used Language:** *C++*<br>
-**Instructor:** *Yusuf Sahillioğlu*<br>
+**Instructor:** *Prof. Dr. Yusuf Sahillioğlu*<br>
 **Term:** *Fall 2020-2021*<br>
 
 **Includes**:
@@ -38,6 +38,26 @@ Here are my coursework for [Computer Engineering Department](https://ceng.metu.e
     * A Social Network Implementation Based on Linked Lists
     * A Movie Store Implementation Based on Binary Search Trees
     * An Import-Export Graph Network of Countries Based on Hash Tables
+    
+[CENG242 - Programming Language Concepts](https://github.com/aralyekta/METU/tree/master/CENG242)
+-------------------
+
+**Used Languages:** *Haskell, C++, Prolog*<br>
+**Instructor:** *Dr. Onur Tolga Şehitoğlu*<br>
+**Term:** *Spring 2020-2021*<br>
+
+**Includes**:
+* Weekly programming exams
+
+[CENG315 - Algorithms](https://github.com/aralyekta/METU/tree/master/CENG315)
+-------------------
+
+**Used Languages:** *C++*<br>
+**Instructor:** *Prof. Dr. İsmail Hakkı Toroslu, Asst. Prof. Dr. Hakan Yıldız*<br>
+**Term:** *Fall 2021-2022*<br>
+
+**Includes**:
+* Weekly programming exams
     
 [CENG444 - Language Processors](https://github.com/aralyekta/METU/tree/master/CENG444)
 -------------------
