@@ -1,0 +1,1 @@
+energiseRobots [[Rock 3, Sand, Sand, Sand, Rock 2], [Sand, Sand, SpaceCraft 0, Sand, Sand], [Sand, Rock 4, Sand, Pit, Sand]] [Robot {name="Fetchy", location=(1,1), capacity=10, energy=0, storage=0}]

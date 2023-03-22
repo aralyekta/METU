@@ -1,0 +1,19 @@
+
+
+
+-------------------------TASK 3 ---------------------------------------------
+
+numContacts (Node [(Digit '2', Leaf "The One and Only")])
+1
+
+numContacts $ Node [(Digit '3', Leaf "Mr. Tee"), (Digit '4', Leaf "Ms. Lef")]
+2
+
+numContacts $ Node [(Digit '1',Node [(Digit '3',Leaf "Luke Unluke")]),(Digit '4',Node [(Digit '2',Leaf "Kozmos Fehmi"),(Digit '5',Leaf "Tim Time")])]
+3
+
+numContacts exampleTree
+7
+
+numContacts $ Node [(Digit '0',Node [(Digit '7',Leaf "Tynetta")]),(Digit '1', Leaf "Jonathan"),(Digit '2',Node [(Digit '0',Node [(Digit '3',Leaf "Diedre")]),(Digit '2',Node [(Digit '5',Leaf "Vesta")])]),(Digit '5',Node [(Digit '1',Leaf "Ilka")]),(Digit '6',Node [(Digit '0',Node [(Digit '9',Leaf "Farah")]),(Digit '5',Leaf "Clementine")]),(Digit '7',Node [(Digit '7',Leaf "Kenyatta")]),(Digit '8',Node [(Digit '3',Leaf "Athena")]),(Digit '9',Node [(Digit '7',Node [(Digit '8',Leaf "Lyndsie")])])]
+10

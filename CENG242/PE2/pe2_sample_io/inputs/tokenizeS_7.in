@@ -1,0 +1,1 @@
+tokenizeS "{{{{ 'wait': 'a minute' }}},\n    {{ 'it is': 'all recursion' }},\n    {{{{{ 'always': 'has' }}}}},\n    {'be':'en'},\n    {{{'okay': 'maybe' }}},\n    {'this is': 'a bit too much tryharding'}}      \n"

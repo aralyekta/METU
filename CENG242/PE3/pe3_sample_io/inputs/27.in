@@ -1,0 +1,1 @@
+applyMoves [[Rock 3, Sand, Sand, Sand, Rock 2], [Sand, Sand, SpaceCraft 0, Sand, Sand], [Sand, Rock 4, Sand, Pit, Sand]] Robot {name="Fetchy", location=(2,1), capacity=10, energy=3, storage=0} [West, West, North, PickUp, South, East, East, PutDown]

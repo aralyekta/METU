@@ -1,0 +1,62 @@
+Bir satır 4096'dan fazla karakter içerebilir mi?
+pbc içindeyken quit gelirse çıksın mı?
+Eğer stdin inputsa bunu tüm processlere yine kopyalamamız lazım di mi? -> Evet ama test edilmeyecek
+
+Dosyayı fopen fclose ile açsak sorun olur mu? -> AÇABİLİRSİN
+Unnamed pipe kullanmasak da olur mu? -> KULLANMAN LAZIM, FIFO KULLANAMAZSIN
+
+Bundle'ın içinde yer alan ve input gerektiren processler inputu terminalden mi alacak? 
+Mesela bundle içinde wc varsa bundle'ı input dosyasız açınca run esnasında terminale gelip input
+mu bekleyecek yoksa bir input verilmediği için empty string alıp mı devam edecek?
+
+Cases:
+    Tek bundle
+        Tek process
+            Input           OK
+            Output          OK
+            Input Output    OK
+            Boş             OK
+        Multiple process
+            Input           OK
+            Output          OK
+            Input Output    OK
+            Boş             OK
+    Multiple bundle
+        Tek process
+            Input           OK
+            Output          OK
+            Input Output    OK
+            Boş             OK
+        Multiple process
+            Input           OK
+            Output          OK
+            Input Output    OK
+            Boş             OK
+    Tanım - Exec - Exec yap                                 OK
+    Tanım - Exec - Exec - Exec yap                          OK
+    Tanım - Exec - Tanım - Exec yap                         OK
+    Tanım - Exec - Tanım - Exec - Exec yap                  OK
+    Tanım - Exec - Tanım - Exec - Exec - Tanım - Exec yap   OK
+    Aynı ismi reuse edebildim mi?                           OK
+    Tüm bundle'lar ve tüm processler concurrent mı?         OK
+    
+
+TODO:
+    Case'leri test et   OK
+
+    Wait'i hallet       OK
+    File i/o'yu hallet  OK
+    
+
+PROBLEMS:
+    2. pipe 3. pipe'a bir şey yollayamıyor
+
+SOLVED-PROBLEMS:
+    Pipe kendisine yazılanları okuyabiliyor, ama yollayamıyor ve EOF almıyor??
+        Yollayamıyor: Muhtemelen input pipe r/w uçları o noktaya kadar hayatta kalamıyor
+        Output EOF alabilmeye başlayınca çözüldü.
+        EOF almıyor: Muhtemelen outPipe w ucu açık kalıyor, newline aldığı için okumayı bırakıyor(?)
+        EVET, outPipe w ucu açık kalıyormuş. Ucu pipe creation sonrası kapatınca düzeldi.
+    Aynı dosyayı okuyan multiple process varsa mala bağlıyor        
+    
+Yazılacak dosya mevcut değilse oluştur

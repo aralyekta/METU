@@ -1,0 +1,23 @@
+pbc pb1
+ls
+echo "another message"
+echo "test" deneme message
+pbs
+pbc pb2
+grep message
+wc -l
+wc -w
+wc -c
+wc
+echo "Bundle 2 it is"
+pbs
+pbc pb3
+wc
+echo "Bundle 3 it is" 
+pbs
+pbc pb4
+wc
+echo "Bundle 4 it is"
+pbs
+pb1 | pb2 | pb3 | pb4 
+quit

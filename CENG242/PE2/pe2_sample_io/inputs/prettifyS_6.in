@@ -1,0 +1,1 @@
+prettifyS "{\n    'name': 'HasKelin Yeri',\n    'menu': { 'entree': 'purity', 'main dish': 'laziness', 'dessert': 'monads' },\n    'for the meager cost of': 'your sanity',\n    'structures': {\n        'list': 'sucks',\n'vector': 'hard to functional',\n        'map': 'guess it will do' }\n}\n"

@@ -1,0 +1,1 @@
+pthread_cond_timedwait yapabilmen için verdiğin mutexi o threadde ownlaman lazım.

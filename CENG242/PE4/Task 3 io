@@ -1,0 +1,39 @@
+
+
+
+------------------------- TASK 3 ---------------------------------------------
+
+numContacts (Node [(Digit '2', Leaf "The One and Only")])
+1
+
+numContacts $ Node [(Digit '3', Leaf "Mr. Tee"), (Digit '4', Leaf "Ms. Lef")]
+2
+
+numContacts $ Node [(Digit '1',Node [(Digit '3',Leaf "Luke Unluke")]),(Digit '4',Node [(Digit '2',Leaf "Kozmos Fehmi"),(Digit '5',Leaf "Tim Time")])]
+3
+
+numContacts exampleTree
+7
+
+numContacts $ Node [(Digit '0',Node [(Digit '7',Leaf "Tynetta")]),(Digit '1', Leaf "Jonathan"),(Digit '2',Node [(Digit '0',Node [(Digit '3',Leaf "Diedre")]),(Digit '2',Node [(Digit '5',Leaf "Vesta")])]),(Digit '5',Node [(Digit '1',Leaf "Ilka")]),(Digit '6',Node [(Digit '0',Node [(Digit '9',Leaf "Farah")]),(Digit '5',Leaf "Clementine")]),(Digit '7',Node [(Digit '7',Leaf "Kenyatta")]),(Digit '8',Node [(Digit '3',Leaf "Athena")]),(Digit '9',Node [(Digit '7',Node [(Digit '8',Leaf "Lyndsie")])])]
+10
+
+------------------------------------------- TASK 4 -------------------------------------------
+
+getContacts (Node [(Digit '0', Leaf "I, Me & Myself Co.")])
+
+getContacts $ Node [(Digit '1', Leaf "Reception"), (Digit '4', Leaf "Emergenc	y"), (Digit '5', Leaf "Bar")]
+
+getContacts $ Node [(Digit '3', Node [(Digit '2', Leaf "T"), (Digit '7', Node [(Digit '7', Leaf "Z")])])]
+
+getContacts exampleTree
+
+getContacts $ Node [(Digit '1',Node [(Digit '1',Node [(Digit '7',Node [(Digit '8',Leaf "Sassy")])])]),(Digit '2',Node [(Digit '6',Leaf "French Fry"),(Digit '8', Node [(Digit '3',Node [(Digit '1',Leaf "Junior")])])]),(Digit '3',Node [(Digit '9', Leaf "Frogger")]),(Digit '4',Node [(Digit '0',Leaf "Thor")]),(Digit '6',Node [(Digit '4',Node [(Digit '8',Node [(Digit '5',Leaf "Sunshine")])]),(Digit '5',Leaf "Doll"),(Digit '8',Node [(Digit '5',Leaf "Tomcat")])]),(Digit '7',Node [(Digit '3',Node [(Digit '3',Leaf "Pecan")]),(Digit '7',Node [(Digit '7',Node [(Digit '4',Leaf "Lulu")])])]),(Digit '8',Node [(Digit '6',Node [(Digit '2',Node [(Digit '5',Leaf "Tank")])])]),(Digit '9',Leaf "Bud")]
+
+Node [(Digit '2', Leaf "Adana"), (Digit '6', Leaf "Hatay"),(Digit '8', Leaf "Osmaniye")]
+
+[(Digit '1', Leaf "Reception"), (Digit '4', Leaf "Emergency"), (Digit '5', Leaf "Bar")]
+
+[(Digit '1', Leaf "Reception"), (Digit '4', Node [(Digit '9', Leaf "Anan")]), (Digit '5', Leaf "Bar")]
+
+Node [(Digit '1', Node [(Digit '3', Node [(Digit '7', Node [(Digit '8', Leaf "Jones")])]),(Digit '5', Leaf "Steele"),(Digit '9', Node [(Digit '1', Leaf "Marlow"),(Digit '2', Node [(Digit '3', Leaf "Stewart")])])]),(Digit '3', Leaf "Church"),(Digit '7', Node [(Digit '2', Leaf "Curry"),(Digit '7', Leaf "Hughes")])]

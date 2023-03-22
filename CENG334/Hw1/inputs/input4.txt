@@ -1,0 +1,5 @@
+pbc pb1
+echo "test Deneme message here"
+pbs
+pb1
+quit

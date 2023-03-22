@@ -1,0 +1,7 @@
+pbc pb1
+grep aloha
+grep aloha
+grep ali
+pbs
+pb1 < i.txt
+quit

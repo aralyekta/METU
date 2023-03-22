@@ -1,0 +1,14 @@
+2 2
+1 1
+1 0
+2
+0 1 2 3400 1
+0 0
+7 1 2 3000 1
+1 0
+5
+1500 break
+3000 continue
+4000 continue
+6500 break
+9000 continue

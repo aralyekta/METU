@@ -1,0 +1,28 @@
+si ve sj doğru mu kontrol et (OK)
+
+0- Default case (OK)
+1- Already cleared area (OK)
+2- Conflicting areas (OK)
+3- Orders 
+    continue break continue (OK)
+    stop continue, stop break (OK)
+    break continue (OK)
+    break stop (OK)
+    break continue break continue (OK)
+    break continue continue break continue (OK)
+    break continue break continue (With 1 ms between them) (OK)
+    break break continue (OK)
+    break continue continue (OK)
+    continue continue break continue (OK)
+    olası tüm üçlü break continue stop permütasyonları
+        break continue stop (OK)
+        break stop continue (OK)
+        continue break stop (OK)
+        continue stop break (OK)
+        stop continue break (OK)
+        stop break continue (OK)
+    stop break continue break break continue continue (OK)
+    tam çıkacakken break gelmesi (KINDA)
+    29- Üç private'ın alanlarının çakışması (OK)
+    Private alan beklerken emir gelmesi
+    

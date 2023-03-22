@@ -1,0 +1,5 @@
+pbc pb1
+grep ali
+pbs
+pb1 < i.txt
+quit

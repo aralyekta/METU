@@ -1,0 +1,7 @@
+pbc pb1
+echo "testMessage" and another one
+ls
+echo "mess"
+pbs
+pb1
+quit

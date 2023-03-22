@@ -1,0 +1,1 @@
+Threadi joinlemezsen data kaybolur.

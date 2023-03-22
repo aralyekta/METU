@@ -1,0 +1,1 @@
+prettifyS "{  \n    'a bunch of spaces': ' inside strings  '\n}\n"

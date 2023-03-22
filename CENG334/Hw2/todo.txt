@@ -1,0 +1,1 @@
+part2/break_continue_fast inputunda senkronizasyon overheadini düzelt

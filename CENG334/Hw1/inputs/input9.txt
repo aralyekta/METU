@@ -1,0 +1,8 @@
+pbc pb1
+grep aloha
+pbs
+pbc pb2
+wc -w
+pbs
+pb1 < i.txt | pb2
+quit

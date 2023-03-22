@@ -1,0 +1,1 @@
+numContacts $ Node [(Digit '7',Leaf "Easy")]

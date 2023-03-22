@@ -1,0 +1,1 @@
+[Robot {name = "Balboa", location = (0,3), capacity = 10, energy = 100, storage = 1},Robot {name = "Fetchy", location = (3,2), capacity = 10, energy = 20, storage = 0},Robot {name = "Roller", location = (3,2), capacity = 20, energy = 20, storage = 0}]

@@ -1,0 +1,11 @@
+-Set owner yaparken mevcut ownerdan çıkaracak mıyız? HAYIR
+
+-Hem class hem subclasslarda tanımlı olan fonkları sadece subclasslarda mı tanımlayacağız? EVET
+
+*Owner print_info ve property valuate'i boş bıraksak olur mu?
+
+*Boş constructorlarda name = "", area/balance = 0 ve owner = NULL yapsak olur mu? 
+
+*Sell ve buy'da NULL owner veya NULL property gelme ihtimali var mı?
+
+*Add property'de null property verilebilir mi?

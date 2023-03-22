@@ -1,0 +1,47 @@
+pbc pb1
+grep ali
+grep aloha
+pbs
+pbc pb2
+wc
+wc -c
+wc -l
+wc -w
+pbs
+pbc pb3
+wc
+echo "Firstexec finished"
+pbs
+pbc pb4
+echo "secondexec started"
+echo "yeah second exec really started"
+pbs
+pbc pb5
+grep started
+wc
+wc -w
+pbs
+pbc pb6 
+wc
+echo "Second" exec finished
+pbs 
+pbc pb7
+grep aloha
+grep aloha
+grep dalalo
+echo "test"
+pbs
+pbc pb8
+wc
+wc -c
+wc -l
+wc -w
+pbs
+pbc pb9
+wc
+ls
+pbs
+pb1 < i.txt | pb2 | pb3 > o.txt 
+pb4 | pb5 | pb6 
+pb7 < i.txt | pb8 | pb9 > o.txt
+quit 

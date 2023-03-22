@@ -1,0 +1,2 @@
+Memory alloc işini current state'e göre yap. Şu state'teysem şunlarım şunlarım vardır, o zaman bunları free'leyeyim
+calloc'u delete edemezsin, sadece free edebilirsin

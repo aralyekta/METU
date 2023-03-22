@@ -1,0 +1,13 @@
+pbc pb1
+grep aloha
+grep ali
+echo "test" deneme message
+pbs
+pbc pb2
+wc
+wc -l
+wc -w
+wc -c
+pbs
+pb1 < i.txt | pb2
+quit

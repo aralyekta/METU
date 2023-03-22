@@ -1,0 +1,11 @@
+pbc pb1
+ls
+pbs
+pbc pb2
+wc -w
+pbs
+pbc pb3
+wc
+pbs
+pb1 | pb2 | pb3 
+quit

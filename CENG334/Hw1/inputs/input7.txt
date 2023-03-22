@@ -1,0 +1,7 @@
+pbc pb1
+grep aloha
+ls
+wc -w
+pbs
+pb1 < i.txt > o.txt
+quit

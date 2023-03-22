@@ -1,0 +1,286 @@
+Line is: 3
+Line2 is: 2
+Iterating the areas of 0
+Calling isLocked for gid 0
+Will wait for lockedAreasMutex
+Waited for lockedAreasMutex
+Checking 0 0
+Checking 0 1
+isLocked returned Entered runSmoker
+Got the smokerptr
+Got the variables
+Notified that the smoker is created
+Will iterate cells of the smoker
+Smoker 0 will wait for the cell 2 1
+Called lockAreaForSmoker for sid 0
+0 for gid 0
+Private 0 has no overlap, they'll claim the area 
+Private 0 has no overlap, they claimed the area 
+No order, 0 will execute normally 
+	CheckIfClean is: 0
+Private 0 will start to collect cigbutts 
+Smoker 0 will claim the area 2 1
+Smoker lockArea returned 1 and 0
+Iterating the areas of 1
+Calling isLocked for gid 1
+Will wait for lockedAreasMutex
+Waited for lockedAreasMutex
+Checking 0 2
+Checking 0 3
+isLocked returned 0 for gid 1
+Private 1 has no overlap, they'll claim the area 
+Private 1 has no overlap, they claimed the area 
+Smoker Iterating the areas of 2
+Calling isLocked for gid 2
+Will wait for lockedAreasMutex
+Waited for lockedAreasMutex
+Checking 0 0
+isLocked returned 1 for gid 2
+Private 2 has an overlap so they'll wait
+0 will smoke normally
+No order, 1 will execute normally 
+	CheckIfClean is: 0
+Private 1 will start to collect cigbutts 
+Entered runSmoker
+Got the smokerptr
+Got the variables
+Notified that the smoker is created
+Will iterate cells of the smoker
+Smoker 1 will wait for the cell 2 1
+Called lockAreaForSmoker for sid 1
+Smoker 1 has an overlap so they'll wait
+waitMs returned 110 for gid 0 and the elapsed time is: 400
+		Came at decrementing for private 0
+		Decremented for private 0
+waitMs returned 110 for sid 0 and the elapsed time is: 400
+		Incremented the cell 1 0 for private
+waitMs returned 110 for gid 1 and the elapsed time is: 400
+		Came at decrementing for private 1
+		Decremented for private 1
+waitMs returned 110 for gid 0 and the elapsed time is: 400
+		Came at decrementing for private 0
+		Decremented for private 0
+waitMs returned 110 for sid 0 and the elapsed time is: 400
+		Incremented the cell 1 1 for privatewaitMs returned 110 for gid 1 and the elapsed time is: 400
+		Came at decrementing for private 1
+
+		Decremented for private 1
+The commander will broadcast the order incoming 1
+Set the global order as 1
+waitMs returned 0 for gid 1 and the elapsed time is: 190
+Incoming global order is: waitMs returned The commander broadcasted the order incoming
+	Will wait for the available privates. Ts: 1000
+waitMs returned 0 for sid 0 and the elapsed time is: 190
+Incoming global order is: 1
+Private 0 got available, but not last
+0 for gid 0 and the elapsed time is: 193
+Incoming global order is: 1
+Incoming order for gid: 0 is 1
+Private 0 will get the order 1
+Private 0 got available, but not last
+1
+Incoming order for gid: 1 is 1
+Private 1 will get the order 1
+Private 1 got available, but not last
+The private The smoker 1 woke up from area waiting
+Private 1 got available, but not last
+2 woke up from area waiting
+Incoming order for gid: 2 is 1
+Private 2 will get the order 1
+Private 2 is the last one being available
+Signalled give the order
+	Waited for the available privates. Ts: 1000
+The number of available privates is reset to 0
+Private Private Private 1 will get ready for the order 
+Smoker 10 will get ready for the order 
+Private 0 got the order 1
+Private 0 got ready, but not last
+Private 1 will get ready for the order 
+Private 1 got the order 1
+Private 1 got ready, but not last
+0 will get ready for the order 
+Private 0 got ready, but not last
+ got the order 1
+Private 1 got ready, but not last
+Private 2 will get ready for the order 
+Private 2 got the order 1
+Private 2 is the last one being ready
+Signalled everyoneIsReady
+	Will wait for the ready privates. Ts: 1000
+	Waited for the ready privates. Ts: 1000
+Private Private 0 will start executing the order 
+Private 0 will execute the order
+Private Private 0 will wait for a continue order
+Private 1 will start executing the order 
+Private 1 will execute the order
+2 will start executing the order 
+Private 2 will execute the order
+1Private 2 will wait for a continue order
+Private 1 will wait for a continue order
+Private 0 will start executing the order 
+ will start executing the order 
+Smoker 1 will execute the order
+Called lockAreaForSmoker for sid 1
+Smoker 1 has an overlap so they'll wait
+The number of ready privates is reset to 0
+Set the global order as 0
+waitMs returned 110 for sid 0 and the elapsed time is: 401
+		Incremented the cell 1 2 for private
+The commander will broadcast the order incoming 2
+Set the global order as 2
+The commander broadcasted the order incoming
+	Will wait for the available privates. Ts: 1500
+Private 2 got an order, it is: Private 1 got an order, it is: The smoker 1 woke up from area waiting
+Private 1 got available, but not last
+2
+Private 1 will get the continue order
+Private 1 got available, but not last
+2
+Private Private 0 got an order, it is: 2
+Private 0 will get the continue order
+Private 0 got available, but not last
+2 will get the continue order
+Private 2 got available, but not last
+waitMs returned 0 for sid 0 and the elapsed time is: 288
+Incoming global order is: 2
+Private 0 is the last one being available
+Signalled give the order
+	Waited for the available privates. Ts: 1500
+The number of available privates is reset to 0
+Private 1	Will wait for the ready privates. Ts: Private 1Private 0 will get ready for the order 
+Private 0 got ready, but not last
+ will get ready for the order 
+Smoker 1 got the order 2
+Private 1Private 0 will get ready for the order 1500
+
+Private 2 will get ready for the order 
+ will get ready for the order 
+ got ready, but not last
+Private 0 got ready, but not last
+Private 2 got ready, but not last
+Private 1 is the last one being ready
+Signalled everyoneIsReady	Waited for the ready privates. Ts: 1500
+
+Private 1 will start executing the order Private 0 will start executing the order 
+Private Iterating the areas of 1 will start executing the order 
+
+Iterating the areas of The number of ready privates is reset to 0
+Set the global order as 0
+0
+Calling isLocked for gid 0
+Will wait for lockedAreasMutex
+Waited for lockedAreasMutex
+Checking 0 0
+Checking 0 1
+isLocked returned Private 2 will start executing the order 
+Private 0 will start executing the order 
+Iterating the areas of 2
+Calling isLocked for gid 2
+0 for gid 0
+Private 0 has no overlap, they'll claim the area 
+Private 0 has no overlap, they claimed the area 
+Will wait for lockedAreasMutexSmoker 1 will execute the order
+Called lockAreaForSmoker for sid 1
+1
+No order, 0 will execute normally 
+	CheckIfClean is: 0
+Private 0 will start to collect cigbutts 
+
+Waited for lockedAreasMutex
+Checking 0 0
+isLocked returned 1 for gid 2
+Private 2 has an overlap so they'll wait
+Calling isLocked for gid 1
+Smoker 1 has an overlap so they'll wait
+Will wait for lockedAreasMutex
+Waited for lockedAreasMutex
+Checking 0 2
+Checking 0 3
+isLocked returned 0 for gid 1
+Private 1 has no overlap, they'll claim the area 
+Private 1 has no overlap, they claimed the area 
+No order, 1 will execute normally 
+	CheckIfClean is: 0
+Private 1 will start to collect cigbutts 
+waitMs returned 110 for sid 0 and the elapsed time is: 409
+		Incremented the cell 2 2 for private
+waitMs returned 110 for gid 0 and the elapsed time is: 400
+		Came at decrementing for private 0
+		Decremented for private 0
+waitMs returned 110 for gid 1 and the elapsed time is: 400
+		Came at decrementing for private 1
+		Decremented for private 1
+waitMs returned 110 for sid 0 and the elapsed time is: 400
+		Incremented the cell 3 2 for private
+waitMs returned 110 for gid 0 and the elapsed time is: 400
+		Came at decrementing for private 0
+		Decremented for private 0
+waitMs returned 110 for gid 1 and the elapsed time is: 400
+		Came at decrementing for private 1
+		Decremented for private 1
+waitMs returned 110 for sid 0 and the elapsed time is: 400
+		Incremented the cell 3 1 for private
+The commander will broadcast the order incoming 3
+Set the global order as 3
+The commander broadcasted the order incoming
+	Will wait for the available privates. Ts: 2500
+waitMs returned 0 for gid 1 and the elapsed time is: 190
+Incoming global order is: 3The private 2 woke up from area waiting
+Incoming order for gid: 2 is 3
+Private 2 will get the order 3
+Private 2 will get the stop order
+Private 2 got available, but not last
+The smoker 1 woke up from area waiting
+Stop order came to smoker 1 while they are smoking, returning from lockarea
+Smoker lockArea returned 1 and 0
+Smoker 1 will get the stop order 
+Private 1 got available, but not last
+waitMs returned 0 for gid 0 and the elapsed time is: 190
+Incoming global order is: 3
+waitMs returned 0 for sid 0 and the elapsed time is: 78
+Incoming global order is: 3
+Smoker 0 will get the stop order 
+Private 0 got available, but not last
+Incoming order for gid: 0 is 3
+Private 0 will get the order 3
+Private 0 will get the stop order
+Private 0 got available, but not last
+
+Incoming order for gid: 1 is 3
+Private 1 will get the order 3
+Private 1 will get the stop order
+Private 1 is the last one being available
+Signalled give the order	Waited for the available privates. Ts: 2500
+
+The number of available privates is reset to 0
+	Will wait for the ready privates. Ts: 2500Private Private 1 will get ready for the order Private 0 will get ready for the order 
+Private 0 got the stop order
+Private 0 got ready, but not last
+0 will get ready for the order 
+Smoker 0 got the stop order 
+Private 0 got ready, but not last
+
+Smoker 1 got the stop order 
+Private 1 got ready, but not last
+
+Private 1 will get ready for the order 
+Private 1 got the stop order
+Private 1 got ready, but not last
+Private 2 will get ready for the order 
+Private 2 got the stop order
+Private 2 is the last one being ready
+Signalled everyoneIsReady
+	Waited for the ready privates. Ts: 2500
+Private 0 will start executing the order 
+Smoker will execute the stop order 
+Private The number of ready privates is reset to 0
+Set the global order as 0
+Private 2 will start executing the order 
+Private Private 1 will start executing the order 
+Smoker will execute the stop order 
+1removeSmokerCell called for sid: removeSmokerCell called for sid: 0 will start executing the order 
+ will start executing the order 1 and x,y: 2 1
+0 and x,y: 2 1
+The smoker cell to be deleted is found: 1
+
+The smoker cell to be deleted is found: 0

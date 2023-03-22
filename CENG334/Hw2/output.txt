@@ -1,0 +1,39 @@
+t:       242 | (T139625583380224) G0 created.
+t:      3302 | (T139625494476544) G2 created.
+t:      4532 | (T139625486083840) S0 created.
+t:      5676 | (T139625583380224) G0 arrived at area (0, 0).
+t:      6439 | (T139625574987520) G1 created.
+t:      6609 | (T139625486083840) S0 arrived at cell (2, 1).
+t:      6871 | (T139625574987520) G1 arrived at area (0, 2).
+t:     15281 | (T139625477691136) S1 created.
+t:    406261 | (T139625583380224) G0 gathered a cigbutt from (0, 0).
+t:    409423 | (T139625486083840) S0 flicked a cigbutt towards (1, 0).
+t:    409484 | (T139625574987520) G1 gathered a cigbutt from (0, 2).
+t:    806431 | (T139625583380224) G0 gathered a cigbutt from (0, 0).
+t:    809561 | (T139625486083840) S0 flicked a cigbutt towards (1, 1).
+t:    809620 | (T139625574987520) G1 gathered a cigbutt from (0, 2).
+t:   1000471 | (T139625583384384) BREAK!
+t:   1000802 | (T139625583380224) G0 took a break.
+t:   1000860 | (T139625574987520) G1 took a break.
+t:   1000892 | (T139625494476544) G2 took a break.
+t:   1211085 | (T139625486083840) S0 flicked a cigbutt towards (1, 2).
+t:   1500418 | (T139625583384384) CONTINUE!
+t:   1508424 | (T139625583380224) G0 is continuing after a break.
+t:   1508476 | (T139625574987520) G1 is continuing after a break.
+t:   1508771 | (T139625494476544) G2 is continuing after a break.
+t:   1508992 | (T139625583380224) G0 arrived at area (0, 0).
+t:   1509569 | (T139625574987520) G1 arrived at area (0, 2).
+t:   1620923 | (T139625486083840) S0 flicked a cigbutt towards (2, 2).
+t:   1909374 | (T139625583380224) G0 gathered a cigbutt from (0, 0).
+t:   1909774 | (T139625574987520) G1 gathered a cigbutt from (0, 2).
+t:   2021041 | (T139625486083840) S0 flicked a cigbutt towards (3, 2).
+t:   2309534 | (T139625583380224) G0 gathered a cigbutt from (0, 0).
+t:   2309923 | (T139625574987520) G1 gathered a cigbutt from (0, 2).
+t:   2421207 | (T139625486083840) S0 flicked a cigbutt towards (3, 1).
+t:   2500181 | (T139625477691136) S1 arrived at cell (2, 1).
+t:   2500464 | (T139625583384384) STOP!
+t:   2500731 | (T139625486083840) S0 stopped as ordered.
+t:   2500821 | (T139625494476544) G2 stopped as ordered.
+t:   2500862 | (T139625477691136) S1 stopped as ordered.
+t:   2500885 | (T139625583380224) G0 stopped as ordered.
+t:   2500957 | (T139625574987520) G1 stopped as ordered.

@@ -1,0 +1,17 @@
+pbc pb1
+sleep 5
+sleep 3
+sleep 8
+pbs
+pbc pb2
+sleep 4
+sleep 5
+sleep 8
+pbs
+pbc pb3
+sleep 1
+sleep 1
+sleep 1
+pbs
+pb1 | pb2 | pb3 
+quit

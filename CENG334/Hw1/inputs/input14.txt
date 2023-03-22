@@ -1,0 +1,13 @@
+pbc pb1
+echo "testo" mesto hebo
+echo "test" deneme message
+lc
+pbs
+pbc pb2
+wc
+wc -l
+wc -w
+wc -c
+pbs
+pb1 | pb2 > o.txt
+quit

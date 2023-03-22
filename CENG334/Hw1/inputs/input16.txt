@@ -1,0 +1,23 @@
+pbc pb1
+grep aloha
+grep aloha
+grep ali
+echo "test" deneme message
+pbs
+pbc pb2
+wc
+wc -l
+wc -w
+wc -c
+echo "Bundle 2 it is"
+pbs
+pbc pb3
+wc
+echo "Bundle 3 it is" 
+pbs
+pbc pb4
+wc
+echo "Bundle 4 it is"
+pbs
+pb1 < i.txt | pb2 | pb3 | pb4
+quit

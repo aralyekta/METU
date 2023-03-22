@@ -1,0 +1,316 @@
+#include "helpers.cpp"
+#include <unistd.h>
+#include <cstring>
+#include <fcntl.h>
+#include <sys/wait.h>
+
+void repeaterFunc(int inputPipeRead, vector<int> outputPipesWrite, char *bundle)
+{
+    /*
+    Repeater process shall connect to the output pipes and copy the values it reads
+    From its input pipe to each output pipe
+    If the input pipe is closed, then close all connections to the output pipes
+    It is assumed that the pipe connections are already established
+    */
+
+    cerr << "Entered the repeater func. for bundle: " << bundle << ". Input pipe is: " << inputPipeRead << endl;
+
+    char buf[512];
+
+    vector<int>::iterator itr;
+
+    while (read(inputPipeRead, &buf, 1) > 0)
+    {
+        char chr = buf[0];
+        for (itr = outputPipesWrite.begin(); itr != outputPipesWrite.end(); itr++)
+        {
+            cerr << "Sending &" << chr << "& to one of the output pipes" << endl;
+            write(*itr, &chr, 1);
+        }
+    }
+
+    cerr << "Got EOF in repeater, will close everything" << endl;
+
+    // Close the write ends of the successor pipes
+    // for (itr = outputPipesWrite.begin(); itr != outputPipesWrite.end(); itr++)
+    // {
+    //     close(*itr);
+    // }
+
+    _exit(EXIT_SUCCESS);
+}
+
+class BundleExec
+{
+public:
+    Bundle *bundle;
+    char *input;
+    char *output;
+
+    BundleExec(Bundle *bundle, char *input, char *output)
+    {
+        this->bundle = bundle;
+        this->input = input;
+        this->output = output;
+    }
+
+    ~BundleExec()
+    {
+        delete bundle;
+        if (input)
+            delete[] input;
+        if (output)
+            delete[] output;
+    }
+};
+
+class BundleList
+{
+public:
+    vector<BundleExec *> bundleList;
+
+    ~BundleList()
+    {
+        vector<BundleExec *>::iterator itr;
+        for (itr = bundleList.begin(); itr != bundleList.end(); itr++)
+        {
+            delete *itr;
+        }
+    }
+
+    void insertBundle(BundleExec *bundle)
+    {
+        bundleList.push_back(bundle);
+    }
+
+    void executeBundles()
+    {
+        if (bundleList.size() == 1)
+        {
+            BundleExec *bundle = *(bundleList.begin());
+            vector<Process *> processes = bundle->bundle->processes;
+            vector<Process *>::iterator itr;
+            int i = 0;
+            // Iterate each process
+
+            int inputFile = -1;
+            int outputFile = -1;
+
+            int savedStdin = dup(0);
+            int savedStdout = dup(1);
+
+            for (itr = processes.begin(); itr != processes.end(); itr++, i++)
+            {
+                char **args = (*itr)->getArgs();
+
+                if (bundle->input)
+                {
+                    FILE *inputFile = fopen(bundle->input, "r");
+                    dup2(fileno(inputFile), 0);
+                    fclose(inputFile);
+                }
+
+                if (bundle->output)
+                {
+                    // O_APPEND mode of open() corrupts the file, thats why I use fopen() instead
+                    FILE *outputFile = fopen(bundle->output, "a");
+                    dup2(fileno(outputFile), 1);
+                    fclose(outputFile);
+                }
+
+                int forkRes = fork();
+                if (forkRes == 0)
+                {
+                    // Child
+                    // cerr << "Iteration #" << i << " and will execute " << args[0] << endl;
+
+                    execvp(args[0], args);
+                }
+                delete[] args;
+            }
+
+            // Reap the children
+            for (int j = 0; j < i; j++)
+            {
+                int var;
+                wait(&var);
+            }
+
+            dup2(savedStdin, 0);
+            dup2(savedStdout, 1);
+        }
+        else if (bundleList.size() > 1)
+        {
+            /*
+            ** 1- Iterate each bundle
+                Check if it has input/output file
+                Check if it has a successor bundle
+                    If no: Dont set anything (stdout)
+                    If yes: Create a new pipe (for the repeater), set the outputs to it
+                Check if it has a predecessor exists for echoessor bundle
+                    If no: The input is from a file, do nothing
+                    If yes: Create new input pipes for each process, connect them to the processes
+                            Fork and run the repeater process (provide the input pipes), exit when it is done
+                            Repeater process shall connect to the output pipes and copy the values it reads
+                            From its input pipe to each output pipe
+                            If the input pipe is closed, then close all connections to the output pipes
+                            Close unnecessary pipe descriptors in the parent before forking
+            ** 2- Iterate each process inside it
+            ** 3- Reap the children
+            */
+
+            int bundleCtr = 0;
+            int processCtr = 0;
+            vector<int *> pipeArrays;
+            vector<BundleExec *>::iterator bundleItr;
+            int savedStdin = dup(0);
+            int savedStdout = dup(1);
+            int prevOutputPipe[2] = {-1, -1};
+            for (bundleItr = bundleList.begin(); bundleItr != bundleList.end(); bundleItr++, bundleCtr++)
+            {
+                cerr << "Will execute bundle " << (*bundleItr)->bundle->bundleName << endl;
+                BundleExec *bundle = *bundleItr;
+                vector<Process *> processes = bundle->bundle->processes;
+                vector<Process *>::iterator itr;
+                int i = 0;
+
+                int inputFile = -1;
+                int outputFile = -1;
+
+                int outputPipe[2] = {-1, -1};
+                vector<int> inputPipes;
+                bool predecessorExists = false;
+                bool successorExists = false;
+
+                // The bundle has a predecessor bundle
+                if (bundleCtr > 0)
+                {
+                    predecessorExists = true;
+                }
+
+                // The bundle has a successor bundle
+                if (bundleItr + 1 != bundleList.end())
+                {
+                    successorExists = true;
+                }
+
+                for (itr = processes.begin(); itr != processes.end(); itr++, i++, processCtr++)
+                {
+                    cerr << "Process: " << (*itr)->argv[0] << endl;
+                    cerr << "Predecessor: " << predecessorExists << " and successor: " << successorExists << endl;
+                    vector<int> inputPipes;
+                    char **args = (*itr)->getArgs();
+
+                    int *pipeDescriptor = nullptr;
+
+                    if (bundle->input)
+                    {
+                        cerr << "Input exists for " << args[0] << endl;
+                        FILE *inputFile = fopen(bundle->input, "r");
+                        dup2(fileno(inputFile), 0);
+                        fclose(inputFile);
+                    }
+                    cerr << "Input checked " << args[0] << endl;
+
+                    if (bundle->output)
+                    {
+                        cerr << "Output exists for " << args[0] << endl;
+                        // O_APPEND mode of open() corrupts the file, thats why I use fopen() instead
+                        FILE *outputFile = fopen(bundle->output, "a");
+                        dup2(fileno(outputFile), 1);
+                        fclose(outputFile);
+                    }
+                    cerr << "Output checked " << args[0] << endl;
+
+                    // The output pipe exists
+                    if (successorExists)
+                    {
+                        pipe(outputPipe);
+                        cerr << "Successor exists for " << args[0] << endl;
+                        dup2(outputPipe[1], 1);
+                        close(outputPipe[1]);
+                        cerr << "Dup2 ran for successor case, new output pipe is: " << outputPipe[1] << endl;
+                    }
+                    cerr << "Successor checked " << args[0] << endl;
+
+                    if (predecessorExists)
+                    {
+                        cerr << "Predecessor exists for " << args[0] << endl;
+                        // TODO: Bu ne alaka?
+                        pipeDescriptor = new int[2];
+                        pipe(pipeDescriptor);
+                        pipeArrays.push_back(pipeDescriptor); // For deallocation
+                        inputPipes.push_back(pipeDescriptor[1]);
+                        dup2(pipeDescriptor[0], 0);
+                        close(pipeDescriptor[0]);
+                    }
+                    cerr << "Predecessor checked " << args[0] << endl;
+
+                    cerr << "Will fork " << args[0] << endl;
+
+                    int forkRes = fork();
+                    if (forkRes == 0)
+                    {
+                        // Child
+                        cerr << "Iteration #" << i << " and will execute " << args[0] << endl;
+                        // Close the unnecessary pipe ends
+                        // output read, input write
+                        // if (successorExists)
+                        close(outputPipe[0]);
+                        close(outputPipe[1]);
+                        // if (predecessorExists)
+                        close(pipeDescriptor[0]);
+                        close(pipeDescriptor[1]);
+
+                        execvp(args[0], args);
+                    }
+
+                    delete[] args;
+                }
+
+                dup2(savedStdin, 0);
+                dup2(savedStdout, 1);
+
+                if (successorExists && predecessorExists && fork() == 0)
+                {
+                    close(outputPipe[1]);
+                    repeaterFunc(prevOutputPipe[0], inputPipes, bundle->bundle->bundleName);
+                }
+                else
+                {
+                    vector<int>::iterator itr;
+                    for (itr = inputPipes.begin(); itr != inputPipes.end(); itr++)
+                    {
+                        close(*itr);
+                    }
+                    if (predecessorExists)
+                    {
+                        close(prevOutputPipe[0]);
+                        close(prevOutputPipe[1]);
+                    }
+                    if (!successorExists)
+                    {
+                        close(outputPipe[0]);
+                        close(outputPipe[1]);
+                    }
+                    else
+                    {
+                        prevOutputPipe[0] = outputPipe[0];
+                        prevOutputPipe[1] = outputPipe[1];
+                    }
+                }
+            }
+
+            for (int i = 0; i < processCtr; i++)
+            {
+                wait(NULL);
+            }
+
+            vector<int *>::iterator pipeDescriptorPtr;
+            for (pipeDescriptorPtr = pipeArrays.begin(); pipeDescriptorPtr != pipeArrays.end(); pipeDescriptorPtr++)
+            {
+                delete[] * pipeDescriptorPtr;
+            }
+        }
+    }
+};

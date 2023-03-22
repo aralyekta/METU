@@ -1,0 +1,4 @@
+1- crono.h ve semaphore.h kullanabiliyor muyuz?
+2- Orderlar hep zamana göre sıralı mı verilecek?
+    YES
+3- Sadece sigaracının içmek istediği spesifik cell temizleniyorsa yine beklemesi mi lazım?

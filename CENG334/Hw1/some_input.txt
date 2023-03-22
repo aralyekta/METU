@@ -1,0 +1,14 @@
+pbc pb1
+pwd
+pbs
+pbc pb2
+echo "pb2 test"
+ls -la
+pbs
+pbc pb3
+echo "pb3 Test"
+ls -olv
+pwd
+pbs
+pb1 < i.txt | pb2 | pb3 > o.txt
+quit

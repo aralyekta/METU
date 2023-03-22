@@ -1,0 +1,76 @@
+[
+[Sand, Sand, Rock 7, Sand],
+[Sand, Pit, Sand, Rock 2],
+[Sand, Sand, Sand, Sand],
+[SpaceCraft 0, Sand, Sand, Sand],
+[Sand, Rock 4, Sand, Rock 1],
+[Sand, Sand, Sand, Sand]
+]
+
+(5,3)
+
+1- Can we assume that the environment of the robot is a full MxN grid structure without any missing cells in it? That is, for example, can it be like this?
+X X X X X X
+X X X X
+X X X X X
+X X X X X X
+2- Can a dimension of the environment be 0? I guess the answer to this question can be predicted from the pdf, but I wanted to clarify.
+3- Is the environment represented as lists of columns or lists of rows? For example, for [[Sand, Rock 2], [Pit, Sand], [Rock 5, Sand]], which one is the correct environment?
+Sand Rock 2
+Pit Sand
+Rock 5 Sand
+
+OR
+
+Sand Pit Rock 5
+Rock 2 Sand Sand
+
+isInGrid [[ Rock 3 , Sand , Sand , Sand , Rock 2] , [ Sand , Sand , SpaceCraft 0 , Sand , Sand ] , [ Sand , Rock 4 , Sand , Pit , Sand ]] (0 ,2)
+
+totalCount [[ Sand , Sand , Sand , Sand , Pit ] , [ Sand , Sand , SpaceCraft 3 , Sand , Sand ] , [ Sand , Pit , Sand , Pit , Sand ]]
+
+totalCount [[ Rock 3 , Sand , Sand , Sand , Rock 2] , [ Sand , Sand ,SpaceCraft 0 , Sand , Sand ] , [ Sand , Rock 4 , Sand , Pit , Sand ]]
+
+totalCount [[ Rock 3 , Sand , Sand , Sand , Rock 2] , [ Sand , Sand ,SpaceCraft 3 , Sand , Sand ] , [ Sand , Rock 4 , Sand , Pit , Sand ]]
+
+coordinatesOfPits [[ Rock 3 , Sand , Sand , Sand , Pit ] ,[ Sand , Pit , SpaceCraft 3 , Sand , Sand ] , [ Sand , Pit , Sand , Pit , Sand ]]
+
+coordinatesOfPits [[ Rock 3 , Sand , Sand , Sand , Rock 2] , [ Sand , Sand, SpaceCraft 0 , Sand , Sand ] , [ Sand , Rock 4 , Sand , Pit , Sand ]]
+
+[[Sand, Rock 2], [Pit, Sand], [Rock 5, Sand]]
+
+[(0,[(0,Sand),(1,Rock 2)]),(1,[(0,Pit),(1,Sand)]),(2,[(0,Rock 5),(1,Sand)])]
+[(0,Sand),(1,Rock 2)]
+
+coordinatesOfPits [[Pit, Pit, Rock 7, Pit],[Sand, Pit, Sand, Rock 2],[Pit, Sand, Pit, Sand],[SpaceCraft 0, Pit, Sand, Pit],[Sand, Rock 4, Sand, Rock 1],[Pit, Sand, Sand, Pit]]
+
+[[Pit],[Sand],[Pit],[SpaceCraft 0],[Sand],[Pit]]
+
+[(0,[(0,Pit)]),(1,[(0,Sand)]),(2,[(0,Pit)]),(3,[(0,SpaceCraft 0)]),(4,[(0,Sand)]),(5,[(0,Pit)])]
+
+tracePath [[ Rock 3 , Sand , Sand , Sand , Rock 2] , [ Sand , Sand ,SpaceCraft 0 , Sand , Sand ] , [ Sand , Rock 4 , Sand , Pit , Sand ]] Robot {name = " Fetchy " , location =(2 ,1) , capacity =10 , energy =100 , storage =0} [West , West , North , PickUp , South , East , East , PutDown ]
+
+tracePath [[ Rock 3 , Sand , Sand , Sand , Rock 2] , [ Sand , Sand ,SpaceCraft 0 , Sand , Sand ] , [ Sand , Rock 4 , Sand , Pit , Sand ]] Robot {name = " Fetchy " , location =(2 ,1) , capacity =10 , energy =3 , storage =0} [West , West , North , PickUp , South , East , East , PutDown ]
+
+tracePath [[ Rock 3 , Sand , Sand , Sand , Rock 2] , [ Sand , Sand ,SpaceCraft 0 , Sand , Sand ] , [ Sand , Rock 4 , Sand , Pit , Sand ]] Robot {name = " Fetchy " , location =(2 ,1) , capacity =10 , energy =100 , storage =0} [East , South , North , North , South , East , East , West ]
+
+tracePath [
+[Sand, Sand, Rock 7, Sand],
+[Sand, Pit, Sand, Rock 2],
+[Sand, Sand, Sand, Sand],
+[SpaceCraft 0, Sand, Sand, Sand],
+[Sand, Rock 4, Sand, Rock 1],
+[Sand, Sand, Sand, Sand]] Robot {name="Fetchy", location=(1,1), capacity=10, energy=100, storage=0} [East,North,South,West]
+
+
+energiseRobots [[ Rock 3 , Sand , Sand , Sand , Rock 2] , [ Sand , Sand ,SpaceCraft 0 , Sand , Sand ] , [ Sand , Rock 4 , Sand , Pit , Sand ]] [ Robot {name = " Fetchy " , location =(1 ,1) , capacity =10 , energy =0 , storage =0}]
+
+energiseRobots [[ SpaceCraft 3 , Sand , Sand , Sand , Rock 2] , [ Sand ,Sand , Rock 3 , Sand , Sand ] , [ Sand , Rock 4 , Sand , Pit , Sand ]] [ Robot {name = " Balboa " , location =(0 ,2) , capacity =10 , energy =3 , storage =1} ,Robot { name = " Fetchy " , location =(4 ,2) , capacity =10 , energy =0 , storage=0}]
+
+Robot {name = " Fetchy " , location =(2 ,1) , capacity =10 , energy =100 , storage =0}
+
+applyMoves [[ Rock 3 , Sand , Sand , Sand , Rock 2] , [ Sand , Sand ,SpaceCraft 0 , Sand , Sand ] , [ Sand , Rock 4 , Sand , Pit , Sand ]] Robot {name = " Fetchy " , location =(2 ,1) , capacity =10 , energy =100 , storage =0} [West , West , North , PickUp , South , East , East , PutDown ]
+
+applyMoves [[ Rock 3 , Sand , Sand , Sand , Rock 2] , [ Sand , Sand ,SpaceCraft 0 , Sand , Sand ] , [ Sand , Rock 4 , Sand , Pit , Sand ]] Robot {name = " Fetchy " , location =(2 ,1) , capacity =10 , energy =3 , storage =0} [West , West , North , PickUp , South , East , East , PutDown ]
+
+applyMoves [[ Rock 3 , Sand , Sand , Sand , Rock 2] , [ Sand , Sand ,SpaceCraft 0 , Sand , Sand ] , [ Sand , Rock 4 , Sand , Pit , Sand ]] Robot {name = " Fetchy " , location =(2 ,1) , capacity =10 , energy =100 , storage =0} [East , South , North , North , South , East , East , West ]

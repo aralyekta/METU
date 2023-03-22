@@ -1,0 +1,8 @@
+pbc pb1
+ls
+pbs
+pbc pb2
+wc -w
+pbs
+pb1 | pb2 > o.txt
+quit

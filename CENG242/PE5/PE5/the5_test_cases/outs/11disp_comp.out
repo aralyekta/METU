@@ -1,0 +1,5 @@
+Final Position: [3,5] Displacement: 5.831 Distance: 5.8416
+Final Position: [1,2] Displacement: 2.2361 Distance: 2.2361
+pt1 == pt2: 0
+pt1 < pt2: 0
+pt1 > pt2: 1

@@ -1,0 +1,1 @@
+numContacts $ Node [(Digit '1',Node [(Digit '3',Node [(Digit '7',Node [(Digit '8',Leaf "Jones")])]),(Digit '5',Leaf "Steele"),(Digit '9',Node [(Digit '1',Leaf "Marlow"),(Digit '2',Node [(Digit '3',Leaf "Stewart")])])]),(Digit '3',Leaf "Church"),(Digit '7',Node [(Digit '2',Leaf "Curry"),(Digit '7',Leaf "Hughes")])]

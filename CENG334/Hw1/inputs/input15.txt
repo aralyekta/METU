@@ -1,0 +1,18 @@
+pbc pb1
+grep aloha
+grep aloha
+grep ali
+echo "test" deneme message
+pbs
+pbc pb2
+wc
+wc -l
+wc -w
+wc -c
+echo "bundle2 echo message"
+pbs
+pbc pb3
+grep bundle2
+pbs
+pb1 < i.txt | pb2 | pb3 > o.txt
+quit

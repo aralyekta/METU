@@ -1,0 +1,11 @@
+pbc pb1
+echo "aaa ddd"
+echo "bbb cc"
+grep heli
+pbs
+pbc pb2
+wc
+grep heli
+pbs
+pb1 < i.txt | pb2
+quit

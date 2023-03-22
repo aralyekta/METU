@@ -1,0 +1,1 @@
+getContacts $ Node [(Digit '0',Leaf "Contact")]

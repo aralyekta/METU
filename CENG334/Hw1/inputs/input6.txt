@@ -1,0 +1,7 @@
+pbc pb1
+echo "test deneme message hErE"
+ls -la
+echo " another message" and another one
+pbs
+pb1 > o.txt
+quit
