@@ -15,4 +15,4 @@ To generate an assembly file, the project can be run with
 
 >python3 parser/main.py
 
-Even though this stage of the project is not complete, it supports most of the functionalities of a programming language such as function calls (with stack preparations), variable accesses and modifications, type coercions etc.
+Even though this stage of the project is not complete, it supports most of the functionalities of a programming language such as function calls (with stack preparations), variable accesses and modifications, type coercions, while loops, if/else branches, variable declaration and definitions etc.
