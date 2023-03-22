@@ -90,7 +90,7 @@ Here are my coursework for [Computer Engineering Department](https://ceng.metu.e
 **Term:** *Fall 2022-2023*<br>
 
 **Includes**:
-* Vox Compiler
+* A compiler for a C-like language called Vox
    * Stage 1 - Lexer
    * Stage 2 - Lexer + Parser + RISCV code generator
 
@@ -116,4 +116,4 @@ Here are my coursework for [Computer Engineering Department](https://ceng.metu.e
 **Includes**:
 * A program that compares images based on their color histograms
 * Different implementations of the Harris Corner Detector
-* A deep learning model that adds appropriate colors to grayscale images
+* A deep learning model that learns to add appropriate colors to grayscale images
