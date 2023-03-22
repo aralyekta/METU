@@ -10,8 +10,8 @@ This project reads a source code and separates it into tokens. The project can b
 
 ## Project 2 (Lexer + Parser + RISCV Generator)
 
-This project reads a source code, separates it into tokens, creates an abstract syntax tree out of it, and finally generates the appropriate RISCV assembly code of it, resulting in an assembly file (.asm) that could be run with a RISCV emulator.
-The project can be run with
+This project reads a source code, separates it into tokens, creates an abstract syntax tree out of it, and finally generates the appropriate RISCV assembly code of it, resulting in an assembly file (.asm) that could be run with a RISCV emulator. So, it is a complete compiler for the Vox language.
+To generate an assembly file, the project can be run with
 
 >python3 parser/main.py
 
