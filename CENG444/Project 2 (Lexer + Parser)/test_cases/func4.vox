@@ -1,0 +1,1 @@
+var x = 1; var y = 2; fun f1(a, b){var c = a + b; return c * 2;} fun f2(){return true;} y = f1(f2(), 3) * y;

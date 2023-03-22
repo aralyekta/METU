@@ -1,0 +1,3671 @@
+Grammar:
+
+Rule 0     S' -> program
+Rule 1     program -> varDecls funDecls free_statements
+Rule 2     funDecls -> empty
+Rule 3     funDecls -> funDecls funDecl
+Rule 4     free_statements -> empty
+Rule 5     free_statements -> free_statements free_statement
+Rule 6     funDecl -> FUN function
+Rule 7     varDecl -> VAR identifier ASSIGN init ;
+Rule 8     varDecl -> VAR identifier ;
+Rule 9     free_statement -> error ;
+Rule 10    free_statement -> error }
+Rule 11    free_statement -> compoundStmt
+Rule 12    free_statement -> simpleStmt ;
+Rule 13    simpleStmt -> returnStmt
+Rule 14    simpleStmt -> printStmt
+Rule 15    simpleStmt -> asgnStmt
+Rule 16    compoundStmt -> forStmt
+Rule 17    compoundStmt -> whileStmt
+Rule 18    compoundStmt -> ifStmt
+Rule 19    statement -> block
+Rule 20    statement -> free_statement
+Rule 21    asgnStmt -> identifier [ aexpr ] ASSIGN expr
+Rule 22    asgnStmt -> identifier ASSIGN expr
+Rule 23    asgnStmt_opt -> empty
+Rule 24    asgnStmt_opt -> asgnStmt
+Rule 25    lexpr_opt -> empty
+Rule 26    lexpr_opt -> lexpr
+Rule 27    forStmt -> FOR ( asgnStmt_opt ; lexpr_opt ; asgnStmt_opt ) statement
+Rule 28    returnStmt -> RETURN expr
+Rule 29    whileStmt -> WHILE lexpr statement
+Rule 30    varDecls -> empty
+Rule 31    varDecls -> varDecls varDecl
+Rule 32    statements -> empty
+Rule 33    statements -> statements statement
+Rule 34    block -> { varDecls statements }
+Rule 35    printStmt -> PRINT expr
+Rule 36    ifStmt -> IF lexpr statement ELSE statement
+Rule 37    ifStmt -> IF lexpr statement
+Rule 38    init -> [ arguments ]
+Rule 39    init -> expr
+Rule 40    expr -> sexpr
+Rule 41    expr -> aexpr
+Rule 42    expr -> lexpr
+Rule 43    lexpr -> lterm
+Rule 44    lexpr -> lexpr OR lterm
+Rule 45    lterm -> lfact
+Rule 46    lterm -> lterm AND lfact
+Rule 47    lfact -> ( lexpr )
+Rule 48    lfact -> NOT lfact
+Rule 49    lfact -> # identifier
+Rule 50    lfact -> # getVector
+Rule 51    lfact -> # call
+Rule 52    lfact -> FALSE
+Rule 53    lfact -> TRUE
+Rule 54    lfact -> cexpr
+Rule 55    aexpr -> term
+Rule 56    aexpr -> aexpr MINUS term
+Rule 57    aexpr -> aexpr PLUS term
+Rule 58    term -> fact
+Rule 59    term -> term DIVIDE fact
+Rule 60    term -> term TIMES fact
+Rule 61    fact -> ( aexpr )
+Rule 62    fact -> getVector
+Rule 63    fact -> identifier
+Rule 64    fact -> NUMBER
+Rule 65    fact -> call
+Rule 66    fact -> MINUS fact
+Rule 67    cexpr -> aexpr GT aexpr
+Rule 68    cexpr -> aexpr LT aexpr
+Rule 69    cexpr -> aexpr NE aexpr
+Rule 70    cexpr -> aexpr GE aexpr
+Rule 71    cexpr -> aexpr LE aexpr
+Rule 72    cexpr -> aexpr EQ aexpr
+Rule 73    sexpr -> STRING
+Rule 74    arguments -> arguments , expr
+Rule 75    arguments -> expr
+Rule 76    parameters -> parameters , identifier
+Rule 77    parameters -> identifier
+Rule 78    function -> identifier ( parameters ) block
+Rule 79    function -> identifier ( ) block
+Rule 80    call -> identifier ( arguments )
+Rule 81    call -> identifier ( )
+Rule 82    getVector -> identifier [ aexpr ]
+Rule 83    identifier -> ID
+Rule 84    empty -> <empty>
+
+Terminals, with rules where they appear:
+
+#                    : 49 50 51
+(                    : 27 47 61 78 79 80 81
+)                    : 27 47 61 78 79 80 81
+,                    : 74 76
+;                    : 7 8 9 12 27 27
+AND                  : 46
+ASSIGN               : 7 21 22
+DIVIDE               : 59
+ELSE                 : 36
+EQ                   : 72
+FALSE                : 52
+FOR                  : 27
+FUN                  : 6
+GE                   : 70
+GT                   : 67
+ID                   : 83
+IF                   : 36 37
+LE                   : 71
+LT                   : 68
+MINUS                : 56 66
+NE                   : 69
+NOT                  : 48
+NUMBER               : 64
+OR                   : 44
+PLUS                 : 57
+PRINT                : 35
+RETURN               : 28
+STRING               : 73
+TIMES                : 60
+TRUE                 : 53
+VAR                  : 7 8
+WHILE                : 29
+[                    : 21 38 82
+]                    : 21 38 82
+error                : 9 10
+{                    : 34
+}                    : 10 34
+
+Nonterminals, with rules where they appear:
+
+aexpr                : 21 41 56 57 61 67 67 68 68 69 69 70 70 71 71 72 72 82
+arguments            : 38 74 80
+asgnStmt             : 15 24
+asgnStmt_opt         : 27 27
+block                : 19 78 79
+call                 : 51 65
+cexpr                : 54
+compoundStmt         : 11
+empty                : 2 4 23 25 30 32
+expr                 : 21 22 28 35 39 74 75
+fact                 : 58 59 60 66
+forStmt              : 16
+free_statement       : 5 20
+free_statements      : 1 5
+funDecl              : 3
+funDecls             : 1 3
+function             : 6
+getVector            : 50 62
+identifier           : 7 8 21 22 49 63 76 77 78 79 80 81 82
+ifStmt               : 18
+init                 : 7
+lexpr                : 26 29 36 37 42 44 47
+lexpr_opt            : 27
+lfact                : 45 46 48
+lterm                : 43 44 46
+parameters           : 76 78
+printStmt            : 14
+program              : 0
+returnStmt           : 13
+sexpr                : 40
+simpleStmt           : 12
+statement            : 27 29 33 36 36 37
+statements           : 33 34
+term                 : 55 56 57 59 60
+varDecl              : 31
+varDecls             : 1 31 34
+whileStmt            : 17
+
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . varDecls funDecls free_statements
+    (30) varDecls -> . empty
+    (31) varDecls -> . varDecls varDecl
+    (84) empty -> .
+    VAR             reduce using rule 84 (empty -> .)
+    FUN             reduce using rule 84 (empty -> .)
+    error           reduce using rule 84 (empty -> .)
+    FOR             reduce using rule 84 (empty -> .)
+    WHILE           reduce using rule 84 (empty -> .)
+    IF              reduce using rule 84 (empty -> .)
+    RETURN          reduce using rule 84 (empty -> .)
+    PRINT           reduce using rule 84 (empty -> .)
+    ID              reduce using rule 84 (empty -> .)
+    $end            reduce using rule 84 (empty -> .)
+
+    program                        shift and go to state 1
+    varDecls                       shift and go to state 2
+    empty                          shift and go to state 3
+
+state 1
+
+    (0) S' -> program .
+
+
+state 2
+
+    (1) program -> varDecls . funDecls free_statements
+    (31) varDecls -> varDecls . varDecl
+    (2) funDecls -> . empty
+    (3) funDecls -> . funDecls funDecl
+    (7) varDecl -> . VAR identifier ASSIGN init ;
+    (8) varDecl -> . VAR identifier ;
+    (84) empty -> .
+    VAR             shift and go to state 7
+    FUN             reduce using rule 84 (empty -> .)
+    error           reduce using rule 84 (empty -> .)
+    FOR             reduce using rule 84 (empty -> .)
+    WHILE           reduce using rule 84 (empty -> .)
+    IF              reduce using rule 84 (empty -> .)
+    RETURN          reduce using rule 84 (empty -> .)
+    PRINT           reduce using rule 84 (empty -> .)
+    ID              reduce using rule 84 (empty -> .)
+    $end            reduce using rule 84 (empty -> .)
+
+    funDecls                       shift and go to state 4
+    varDecl                        shift and go to state 5
+    empty                          shift and go to state 6
+
+state 3
+
+    (30) varDecls -> empty .
+    VAR             reduce using rule 30 (varDecls -> empty .)
+    FUN             reduce using rule 30 (varDecls -> empty .)
+    error           reduce using rule 30 (varDecls -> empty .)
+    FOR             reduce using rule 30 (varDecls -> empty .)
+    WHILE           reduce using rule 30 (varDecls -> empty .)
+    IF              reduce using rule 30 (varDecls -> empty .)
+    RETURN          reduce using rule 30 (varDecls -> empty .)
+    PRINT           reduce using rule 30 (varDecls -> empty .)
+    ID              reduce using rule 30 (varDecls -> empty .)
+    $end            reduce using rule 30 (varDecls -> empty .)
+    }               reduce using rule 30 (varDecls -> empty .)
+    {               reduce using rule 30 (varDecls -> empty .)
+
+
+state 4
+
+    (1) program -> varDecls funDecls . free_statements
+    (3) funDecls -> funDecls . funDecl
+    (4) free_statements -> . empty
+    (5) free_statements -> . free_statements free_statement
+    (6) funDecl -> . FUN function
+    (84) empty -> .
+    FUN             shift and go to state 11
+    error           reduce using rule 84 (empty -> .)
+    FOR             reduce using rule 84 (empty -> .)
+    WHILE           reduce using rule 84 (empty -> .)
+    IF              reduce using rule 84 (empty -> .)
+    RETURN          reduce using rule 84 (empty -> .)
+    PRINT           reduce using rule 84 (empty -> .)
+    ID              reduce using rule 84 (empty -> .)
+    $end            reduce using rule 84 (empty -> .)
+
+    free_statements                shift and go to state 8
+    funDecl                        shift and go to state 9
+    empty                          shift and go to state 10
+
+state 5
+
+    (31) varDecls -> varDecls varDecl .
+    VAR             reduce using rule 31 (varDecls -> varDecls varDecl .)
+    FUN             reduce using rule 31 (varDecls -> varDecls varDecl .)
+    error           reduce using rule 31 (varDecls -> varDecls varDecl .)
+    FOR             reduce using rule 31 (varDecls -> varDecls varDecl .)
+    WHILE           reduce using rule 31 (varDecls -> varDecls varDecl .)
+    IF              reduce using rule 31 (varDecls -> varDecls varDecl .)
+    RETURN          reduce using rule 31 (varDecls -> varDecls varDecl .)
+    PRINT           reduce using rule 31 (varDecls -> varDecls varDecl .)
+    ID              reduce using rule 31 (varDecls -> varDecls varDecl .)
+    $end            reduce using rule 31 (varDecls -> varDecls varDecl .)
+    }               reduce using rule 31 (varDecls -> varDecls varDecl .)
+    {               reduce using rule 31 (varDecls -> varDecls varDecl .)
+
+
+state 6
+
+    (2) funDecls -> empty .
+    FUN             reduce using rule 2 (funDecls -> empty .)
+    error           reduce using rule 2 (funDecls -> empty .)
+    FOR             reduce using rule 2 (funDecls -> empty .)
+    WHILE           reduce using rule 2 (funDecls -> empty .)
+    IF              reduce using rule 2 (funDecls -> empty .)
+    RETURN          reduce using rule 2 (funDecls -> empty .)
+    PRINT           reduce using rule 2 (funDecls -> empty .)
+    ID              reduce using rule 2 (funDecls -> empty .)
+    $end            reduce using rule 2 (funDecls -> empty .)
+
+
+state 7
+
+    (7) varDecl -> VAR . identifier ASSIGN init ;
+    (8) varDecl -> VAR . identifier ;
+    (83) identifier -> . ID
+    ID              shift and go to state 13
+
+    identifier                     shift and go to state 12
+
+state 8
+
+    (1) program -> varDecls funDecls free_statements .
+    (5) free_statements -> free_statements . free_statement
+    (9) free_statement -> . error ;
+    (10) free_statement -> . error }
+    (11) free_statement -> . compoundStmt
+    (12) free_statement -> . simpleStmt ;
+    (16) compoundStmt -> . forStmt
+    (17) compoundStmt -> . whileStmt
+    (18) compoundStmt -> . ifStmt
+    (13) simpleStmt -> . returnStmt
+    (14) simpleStmt -> . printStmt
+    (15) simpleStmt -> . asgnStmt
+    (27) forStmt -> . FOR ( asgnStmt_opt ; lexpr_opt ; asgnStmt_opt ) statement
+    (29) whileStmt -> . WHILE lexpr statement
+    (36) ifStmt -> . IF lexpr statement ELSE statement
+    (37) ifStmt -> . IF lexpr statement
+    (28) returnStmt -> . RETURN expr
+    (35) printStmt -> . PRINT expr
+    (21) asgnStmt -> . identifier [ aexpr ] ASSIGN expr
+    (22) asgnStmt -> . identifier ASSIGN expr
+    (83) identifier -> . ID
+    $end            reduce using rule 1 (program -> varDecls funDecls free_statements .)
+    error           shift and go to state 15
+    FOR             shift and go to state 24
+    WHILE           shift and go to state 25
+    IF              shift and go to state 26
+    RETURN          shift and go to state 27
+    PRINT           shift and go to state 28
+    ID              shift and go to state 13
+
+    free_statement                 shift and go to state 14
+    compoundStmt                   shift and go to state 16
+    simpleStmt                     shift and go to state 17
+    forStmt                        shift and go to state 18
+    whileStmt                      shift and go to state 19
+    ifStmt                         shift and go to state 20
+    returnStmt                     shift and go to state 21
+    printStmt                      shift and go to state 22
+    asgnStmt                       shift and go to state 23
+    identifier                     shift and go to state 29
+
+state 9
+
+    (3) funDecls -> funDecls funDecl .
+    FUN             reduce using rule 3 (funDecls -> funDecls funDecl .)
+    error           reduce using rule 3 (funDecls -> funDecls funDecl .)
+    FOR             reduce using rule 3 (funDecls -> funDecls funDecl .)
+    WHILE           reduce using rule 3 (funDecls -> funDecls funDecl .)
+    IF              reduce using rule 3 (funDecls -> funDecls funDecl .)
+    RETURN          reduce using rule 3 (funDecls -> funDecls funDecl .)
+    PRINT           reduce using rule 3 (funDecls -> funDecls funDecl .)
+    ID              reduce using rule 3 (funDecls -> funDecls funDecl .)
+    $end            reduce using rule 3 (funDecls -> funDecls funDecl .)
+
+
+state 10
+
+    (4) free_statements -> empty .
+    error           reduce using rule 4 (free_statements -> empty .)
+    FOR             reduce using rule 4 (free_statements -> empty .)
+    WHILE           reduce using rule 4 (free_statements -> empty .)
+    IF              reduce using rule 4 (free_statements -> empty .)
+    RETURN          reduce using rule 4 (free_statements -> empty .)
+    PRINT           reduce using rule 4 (free_statements -> empty .)
+    ID              reduce using rule 4 (free_statements -> empty .)
+    $end            reduce using rule 4 (free_statements -> empty .)
+
+
+state 11
+
+    (6) funDecl -> FUN . function
+    (78) function -> . identifier ( parameters ) block
+    (79) function -> . identifier ( ) block
+    (83) identifier -> . ID
+    ID              shift and go to state 13
+
+    function                       shift and go to state 30
+    identifier                     shift and go to state 31
+
+state 12
+
+    (7) varDecl -> VAR identifier . ASSIGN init ;
+    (8) varDecl -> VAR identifier . ;
+    ASSIGN          shift and go to state 32
+    ;               shift and go to state 33
+
+
+state 13
+
+    (83) identifier -> ID .
+    ASSIGN          reduce using rule 83 (identifier -> ID .)
+    ;               reduce using rule 83 (identifier -> ID .)
+    [               reduce using rule 83 (identifier -> ID .)
+    (               reduce using rule 83 (identifier -> ID .)
+    DIVIDE          reduce using rule 83 (identifier -> ID .)
+    TIMES           reduce using rule 83 (identifier -> ID .)
+    GT              reduce using rule 83 (identifier -> ID .)
+    LT              reduce using rule 83 (identifier -> ID .)
+    NE              reduce using rule 83 (identifier -> ID .)
+    GE              reduce using rule 83 (identifier -> ID .)
+    LE              reduce using rule 83 (identifier -> ID .)
+    EQ              reduce using rule 83 (identifier -> ID .)
+    MINUS           reduce using rule 83 (identifier -> ID .)
+    PLUS            reduce using rule 83 (identifier -> ID .)
+    )               reduce using rule 83 (identifier -> ID .)
+    AND             reduce using rule 83 (identifier -> ID .)
+    OR              reduce using rule 83 (identifier -> ID .)
+    {               reduce using rule 83 (identifier -> ID .)
+    error           reduce using rule 83 (identifier -> ID .)
+    FOR             reduce using rule 83 (identifier -> ID .)
+    WHILE           reduce using rule 83 (identifier -> ID .)
+    IF              reduce using rule 83 (identifier -> ID .)
+    RETURN          reduce using rule 83 (identifier -> ID .)
+    PRINT           reduce using rule 83 (identifier -> ID .)
+    ID              reduce using rule 83 (identifier -> ID .)
+    ]               reduce using rule 83 (identifier -> ID .)
+    ,               reduce using rule 83 (identifier -> ID .)
+
+
+state 14
+
+    (5) free_statements -> free_statements free_statement .
+    error           reduce using rule 5 (free_statements -> free_statements free_statement .)
+    FOR             reduce using rule 5 (free_statements -> free_statements free_statement .)
+    WHILE           reduce using rule 5 (free_statements -> free_statements free_statement .)
+    IF              reduce using rule 5 (free_statements -> free_statements free_statement .)
+    RETURN          reduce using rule 5 (free_statements -> free_statements free_statement .)
+    PRINT           reduce using rule 5 (free_statements -> free_statements free_statement .)
+    ID              reduce using rule 5 (free_statements -> free_statements free_statement .)
+    $end            reduce using rule 5 (free_statements -> free_statements free_statement .)
+
+
+state 15
+
+    (9) free_statement -> error . ;
+    (10) free_statement -> error . }
+    ;               shift and go to state 34
+    }               shift and go to state 35
+
+
+state 16
+
+    (11) free_statement -> compoundStmt .
+    error           reduce using rule 11 (free_statement -> compoundStmt .)
+    FOR             reduce using rule 11 (free_statement -> compoundStmt .)
+    WHILE           reduce using rule 11 (free_statement -> compoundStmt .)
+    IF              reduce using rule 11 (free_statement -> compoundStmt .)
+    RETURN          reduce using rule 11 (free_statement -> compoundStmt .)
+    PRINT           reduce using rule 11 (free_statement -> compoundStmt .)
+    ID              reduce using rule 11 (free_statement -> compoundStmt .)
+    $end            reduce using rule 11 (free_statement -> compoundStmt .)
+    ELSE            reduce using rule 11 (free_statement -> compoundStmt .)
+    }               reduce using rule 11 (free_statement -> compoundStmt .)
+    {               reduce using rule 11 (free_statement -> compoundStmt .)
+
+
+state 17
+
+    (12) free_statement -> simpleStmt . ;
+    ;               shift and go to state 36
+
+
+state 18
+
+    (16) compoundStmt -> forStmt .
+    error           reduce using rule 16 (compoundStmt -> forStmt .)
+    FOR             reduce using rule 16 (compoundStmt -> forStmt .)
+    WHILE           reduce using rule 16 (compoundStmt -> forStmt .)
+    IF              reduce using rule 16 (compoundStmt -> forStmt .)
+    RETURN          reduce using rule 16 (compoundStmt -> forStmt .)
+    PRINT           reduce using rule 16 (compoundStmt -> forStmt .)
+    ID              reduce using rule 16 (compoundStmt -> forStmt .)
+    $end            reduce using rule 16 (compoundStmt -> forStmt .)
+    ELSE            reduce using rule 16 (compoundStmt -> forStmt .)
+    }               reduce using rule 16 (compoundStmt -> forStmt .)
+    {               reduce using rule 16 (compoundStmt -> forStmt .)
+
+
+state 19
+
+    (17) compoundStmt -> whileStmt .
+    error           reduce using rule 17 (compoundStmt -> whileStmt .)
+    FOR             reduce using rule 17 (compoundStmt -> whileStmt .)
+    WHILE           reduce using rule 17 (compoundStmt -> whileStmt .)
+    IF              reduce using rule 17 (compoundStmt -> whileStmt .)
+    RETURN          reduce using rule 17 (compoundStmt -> whileStmt .)
+    PRINT           reduce using rule 17 (compoundStmt -> whileStmt .)
+    ID              reduce using rule 17 (compoundStmt -> whileStmt .)
+    $end            reduce using rule 17 (compoundStmt -> whileStmt .)
+    ELSE            reduce using rule 17 (compoundStmt -> whileStmt .)
+    }               reduce using rule 17 (compoundStmt -> whileStmt .)
+    {               reduce using rule 17 (compoundStmt -> whileStmt .)
+
+
+state 20
+
+    (18) compoundStmt -> ifStmt .
+    error           reduce using rule 18 (compoundStmt -> ifStmt .)
+    FOR             reduce using rule 18 (compoundStmt -> ifStmt .)
+    WHILE           reduce using rule 18 (compoundStmt -> ifStmt .)
+    IF              reduce using rule 18 (compoundStmt -> ifStmt .)
+    RETURN          reduce using rule 18 (compoundStmt -> ifStmt .)
+    PRINT           reduce using rule 18 (compoundStmt -> ifStmt .)
+    ID              reduce using rule 18 (compoundStmt -> ifStmt .)
+    $end            reduce using rule 18 (compoundStmt -> ifStmt .)
+    ELSE            reduce using rule 18 (compoundStmt -> ifStmt .)
+    }               reduce using rule 18 (compoundStmt -> ifStmt .)
+    {               reduce using rule 18 (compoundStmt -> ifStmt .)
+
+
+state 21
+
+    (13) simpleStmt -> returnStmt .
+    ;               reduce using rule 13 (simpleStmt -> returnStmt .)
+
+
+state 22
+
+    (14) simpleStmt -> printStmt .
+    ;               reduce using rule 14 (simpleStmt -> printStmt .)
+
+
+state 23
+
+    (15) simpleStmt -> asgnStmt .
+    ;               reduce using rule 15 (simpleStmt -> asgnStmt .)
+
+
+state 24
+
+    (27) forStmt -> FOR . ( asgnStmt_opt ; lexpr_opt ; asgnStmt_opt ) statement
+    (               shift and go to state 37
+
+
+state 25
+
+    (29) whileStmt -> WHILE . lexpr statement
+    (43) lexpr -> . lterm
+    (44) lexpr -> . lexpr OR lterm
+    (45) lterm -> . lfact
+    (46) lterm -> . lterm AND lfact
+    (47) lfact -> . ( lexpr )
+    (48) lfact -> . NOT lfact
+    (49) lfact -> . # identifier
+    (50) lfact -> . # getVector
+    (51) lfact -> . # call
+    (52) lfact -> . FALSE
+    (53) lfact -> . TRUE
+    (54) lfact -> . cexpr
+    (67) cexpr -> . aexpr GT aexpr
+    (68) cexpr -> . aexpr LT aexpr
+    (69) cexpr -> . aexpr NE aexpr
+    (70) cexpr -> . aexpr GE aexpr
+    (71) cexpr -> . aexpr LE aexpr
+    (72) cexpr -> . aexpr EQ aexpr
+    (55) aexpr -> . term
+    (56) aexpr -> . aexpr MINUS term
+    (57) aexpr -> . aexpr PLUS term
+    (58) term -> . fact
+    (59) term -> . term DIVIDE fact
+    (60) term -> . term TIMES fact
+    (61) fact -> . ( aexpr )
+    (62) fact -> . getVector
+    (63) fact -> . identifier
+    (64) fact -> . NUMBER
+    (65) fact -> . call
+    (66) fact -> . MINUS fact
+    (82) getVector -> . identifier [ aexpr ]
+    (83) identifier -> . ID
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    (               shift and go to state 41
+    NOT             shift and go to state 42
+    #               shift and go to state 43
+    FALSE           shift and go to state 47
+    TRUE            shift and go to state 48
+    NUMBER          shift and go to state 54
+    MINUS           shift and go to state 52
+    ID              shift and go to state 13
+
+    lexpr                          shift and go to state 38
+    lterm                          shift and go to state 39
+    lfact                          shift and go to state 40
+    identifier                     shift and go to state 44
+    getVector                      shift and go to state 45
+    call                           shift and go to state 46
+    cexpr                          shift and go to state 49
+    aexpr                          shift and go to state 50
+    term                           shift and go to state 51
+    fact                           shift and go to state 53
+
+state 26
+
+    (36) ifStmt -> IF . lexpr statement ELSE statement
+    (37) ifStmt -> IF . lexpr statement
+    (43) lexpr -> . lterm
+    (44) lexpr -> . lexpr OR lterm
+    (45) lterm -> . lfact
+    (46) lterm -> . lterm AND lfact
+    (47) lfact -> . ( lexpr )
+    (48) lfact -> . NOT lfact
+    (49) lfact -> . # identifier
+    (50) lfact -> . # getVector
+    (51) lfact -> . # call
+    (52) lfact -> . FALSE
+    (53) lfact -> . TRUE
+    (54) lfact -> . cexpr
+    (67) cexpr -> . aexpr GT aexpr
+    (68) cexpr -> . aexpr LT aexpr
+    (69) cexpr -> . aexpr NE aexpr
+    (70) cexpr -> . aexpr GE aexpr
+    (71) cexpr -> . aexpr LE aexpr
+    (72) cexpr -> . aexpr EQ aexpr
+    (55) aexpr -> . term
+    (56) aexpr -> . aexpr MINUS term
+    (57) aexpr -> . aexpr PLUS term
+    (58) term -> . fact
+    (59) term -> . term DIVIDE fact
+    (60) term -> . term TIMES fact
+    (61) fact -> . ( aexpr )
+    (62) fact -> . getVector
+    (63) fact -> . identifier
+    (64) fact -> . NUMBER
+    (65) fact -> . call
+    (66) fact -> . MINUS fact
+    (82) getVector -> . identifier [ aexpr ]
+    (83) identifier -> . ID
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    (               shift and go to state 41
+    NOT             shift and go to state 42
+    #               shift and go to state 43
+    FALSE           shift and go to state 47
+    TRUE            shift and go to state 48
+    NUMBER          shift and go to state 54
+    MINUS           shift and go to state 52
+    ID              shift and go to state 13
+
+    lexpr                          shift and go to state 55
+    lterm                          shift and go to state 39
+    lfact                          shift and go to state 40
+    identifier                     shift and go to state 44
+    getVector                      shift and go to state 45
+    call                           shift and go to state 46
+    cexpr                          shift and go to state 49
+    aexpr                          shift and go to state 50
+    term                           shift and go to state 51
+    fact                           shift and go to state 53
+
+state 27
+
+    (28) returnStmt -> RETURN . expr
+    (40) expr -> . sexpr
+    (41) expr -> . aexpr
+    (42) expr -> . lexpr
+    (73) sexpr -> . STRING
+    (55) aexpr -> . term
+    (56) aexpr -> . aexpr MINUS term
+    (57) aexpr -> . aexpr PLUS term
+    (43) lexpr -> . lterm
+    (44) lexpr -> . lexpr OR lterm
+    (58) term -> . fact
+    (59) term -> . term DIVIDE fact
+    (60) term -> . term TIMES fact
+    (45) lterm -> . lfact
+    (46) lterm -> . lterm AND lfact
+    (61) fact -> . ( aexpr )
+    (62) fact -> . getVector
+    (63) fact -> . identifier
+    (64) fact -> . NUMBER
+    (65) fact -> . call
+    (66) fact -> . MINUS fact
+    (47) lfact -> . ( lexpr )
+    (48) lfact -> . NOT lfact
+    (49) lfact -> . # identifier
+    (50) lfact -> . # getVector
+    (51) lfact -> . # call
+    (52) lfact -> . FALSE
+    (53) lfact -> . TRUE
+    (54) lfact -> . cexpr
+    (82) getVector -> . identifier [ aexpr ]
+    (83) identifier -> . ID
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    (67) cexpr -> . aexpr GT aexpr
+    (68) cexpr -> . aexpr LT aexpr
+    (69) cexpr -> . aexpr NE aexpr
+    (70) cexpr -> . aexpr GE aexpr
+    (71) cexpr -> . aexpr LE aexpr
+    (72) cexpr -> . aexpr EQ aexpr
+    STRING          shift and go to state 60
+    (               shift and go to state 61
+    NUMBER          shift and go to state 54
+    MINUS           shift and go to state 52
+    NOT             shift and go to state 42
+    #               shift and go to state 43
+    FALSE           shift and go to state 47
+    TRUE            shift and go to state 48
+    ID              shift and go to state 13
+
+    expr                           shift and go to state 56
+    sexpr                          shift and go to state 57
+    aexpr                          shift and go to state 58
+    lexpr                          shift and go to state 59
+    term                           shift and go to state 51
+    lterm                          shift and go to state 39
+    fact                           shift and go to state 53
+    lfact                          shift and go to state 40
+    getVector                      shift and go to state 45
+    identifier                     shift and go to state 44
+    call                           shift and go to state 46
+    cexpr                          shift and go to state 49
+
+state 28
+
+    (35) printStmt -> PRINT . expr
+    (40) expr -> . sexpr
+    (41) expr -> . aexpr
+    (42) expr -> . lexpr
+    (73) sexpr -> . STRING
+    (55) aexpr -> . term
+    (56) aexpr -> . aexpr MINUS term
+    (57) aexpr -> . aexpr PLUS term
+    (43) lexpr -> . lterm
+    (44) lexpr -> . lexpr OR lterm
+    (58) term -> . fact
+    (59) term -> . term DIVIDE fact
+    (60) term -> . term TIMES fact
+    (45) lterm -> . lfact
+    (46) lterm -> . lterm AND lfact
+    (61) fact -> . ( aexpr )
+    (62) fact -> . getVector
+    (63) fact -> . identifier
+    (64) fact -> . NUMBER
+    (65) fact -> . call
+    (66) fact -> . MINUS fact
+    (47) lfact -> . ( lexpr )
+    (48) lfact -> . NOT lfact
+    (49) lfact -> . # identifier
+    (50) lfact -> . # getVector
+    (51) lfact -> . # call
+    (52) lfact -> . FALSE
+    (53) lfact -> . TRUE
+    (54) lfact -> . cexpr
+    (82) getVector -> . identifier [ aexpr ]
+    (83) identifier -> . ID
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    (67) cexpr -> . aexpr GT aexpr
+    (68) cexpr -> . aexpr LT aexpr
+    (69) cexpr -> . aexpr NE aexpr
+    (70) cexpr -> . aexpr GE aexpr
+    (71) cexpr -> . aexpr LE aexpr
+    (72) cexpr -> . aexpr EQ aexpr
+    STRING          shift and go to state 60
+    (               shift and go to state 61
+    NUMBER          shift and go to state 54
+    MINUS           shift and go to state 52
+    NOT             shift and go to state 42
+    #               shift and go to state 43
+    FALSE           shift and go to state 47
+    TRUE            shift and go to state 48
+    ID              shift and go to state 13
+
+    expr                           shift and go to state 62
+    sexpr                          shift and go to state 57
+    aexpr                          shift and go to state 58
+    lexpr                          shift and go to state 59
+    term                           shift and go to state 51
+    lterm                          shift and go to state 39
+    fact                           shift and go to state 53
+    lfact                          shift and go to state 40
+    getVector                      shift and go to state 45
+    identifier                     shift and go to state 44
+    call                           shift and go to state 46
+    cexpr                          shift and go to state 49
+
+state 29
+
+    (21) asgnStmt -> identifier . [ aexpr ] ASSIGN expr
+    (22) asgnStmt -> identifier . ASSIGN expr
+    [               shift and go to state 63
+    ASSIGN          shift and go to state 64
+
+
+state 30
+
+    (6) funDecl -> FUN function .
+    FUN             reduce using rule 6 (funDecl -> FUN function .)
+    error           reduce using rule 6 (funDecl -> FUN function .)
+    FOR             reduce using rule 6 (funDecl -> FUN function .)
+    WHILE           reduce using rule 6 (funDecl -> FUN function .)
+    IF              reduce using rule 6 (funDecl -> FUN function .)
+    RETURN          reduce using rule 6 (funDecl -> FUN function .)
+    PRINT           reduce using rule 6 (funDecl -> FUN function .)
+    ID              reduce using rule 6 (funDecl -> FUN function .)
+    $end            reduce using rule 6 (funDecl -> FUN function .)
+
+
+state 31
+
+    (78) function -> identifier . ( parameters ) block
+    (79) function -> identifier . ( ) block
+    (               shift and go to state 65
+
+
+state 32
+
+    (7) varDecl -> VAR identifier ASSIGN . init ;
+    (38) init -> . [ arguments ]
+    (39) init -> . expr
+    (40) expr -> . sexpr
+    (41) expr -> . aexpr
+    (42) expr -> . lexpr
+    (73) sexpr -> . STRING
+    (55) aexpr -> . term
+    (56) aexpr -> . aexpr MINUS term
+    (57) aexpr -> . aexpr PLUS term
+    (43) lexpr -> . lterm
+    (44) lexpr -> . lexpr OR lterm
+    (58) term -> . fact
+    (59) term -> . term DIVIDE fact
+    (60) term -> . term TIMES fact
+    (45) lterm -> . lfact
+    (46) lterm -> . lterm AND lfact
+    (61) fact -> . ( aexpr )
+    (62) fact -> . getVector
+    (63) fact -> . identifier
+    (64) fact -> . NUMBER
+    (65) fact -> . call
+    (66) fact -> . MINUS fact
+    (47) lfact -> . ( lexpr )
+    (48) lfact -> . NOT lfact
+    (49) lfact -> . # identifier
+    (50) lfact -> . # getVector
+    (51) lfact -> . # call
+    (52) lfact -> . FALSE
+    (53) lfact -> . TRUE
+    (54) lfact -> . cexpr
+    (82) getVector -> . identifier [ aexpr ]
+    (83) identifier -> . ID
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    (67) cexpr -> . aexpr GT aexpr
+    (68) cexpr -> . aexpr LT aexpr
+    (69) cexpr -> . aexpr NE aexpr
+    (70) cexpr -> . aexpr GE aexpr
+    (71) cexpr -> . aexpr LE aexpr
+    (72) cexpr -> . aexpr EQ aexpr
+    [               shift and go to state 67
+    STRING          shift and go to state 60
+    (               shift and go to state 61
+    NUMBER          shift and go to state 54
+    MINUS           shift and go to state 52
+    NOT             shift and go to state 42
+    #               shift and go to state 43
+    FALSE           shift and go to state 47
+    TRUE            shift and go to state 48
+    ID              shift and go to state 13
+
+    identifier                     shift and go to state 44
+    init                           shift and go to state 66
+    expr                           shift and go to state 68
+    sexpr                          shift and go to state 57
+    aexpr                          shift and go to state 58
+    lexpr                          shift and go to state 59
+    term                           shift and go to state 51
+    lterm                          shift and go to state 39
+    fact                           shift and go to state 53
+    lfact                          shift and go to state 40
+    getVector                      shift and go to state 45
+    call                           shift and go to state 46
+    cexpr                          shift and go to state 49
+
+state 33
+
+    (8) varDecl -> VAR identifier ; .
+    VAR             reduce using rule 8 (varDecl -> VAR identifier ; .)
+    FUN             reduce using rule 8 (varDecl -> VAR identifier ; .)
+    error           reduce using rule 8 (varDecl -> VAR identifier ; .)
+    FOR             reduce using rule 8 (varDecl -> VAR identifier ; .)
+    WHILE           reduce using rule 8 (varDecl -> VAR identifier ; .)
+    IF              reduce using rule 8 (varDecl -> VAR identifier ; .)
+    RETURN          reduce using rule 8 (varDecl -> VAR identifier ; .)
+    PRINT           reduce using rule 8 (varDecl -> VAR identifier ; .)
+    ID              reduce using rule 8 (varDecl -> VAR identifier ; .)
+    $end            reduce using rule 8 (varDecl -> VAR identifier ; .)
+    }               reduce using rule 8 (varDecl -> VAR identifier ; .)
+    {               reduce using rule 8 (varDecl -> VAR identifier ; .)
+
+
+state 34
+
+    (9) free_statement -> error ; .
+    error           reduce using rule 9 (free_statement -> error ; .)
+    FOR             reduce using rule 9 (free_statement -> error ; .)
+    WHILE           reduce using rule 9 (free_statement -> error ; .)
+    IF              reduce using rule 9 (free_statement -> error ; .)
+    RETURN          reduce using rule 9 (free_statement -> error ; .)
+    PRINT           reduce using rule 9 (free_statement -> error ; .)
+    ID              reduce using rule 9 (free_statement -> error ; .)
+    $end            reduce using rule 9 (free_statement -> error ; .)
+    ELSE            reduce using rule 9 (free_statement -> error ; .)
+    }               reduce using rule 9 (free_statement -> error ; .)
+    {               reduce using rule 9 (free_statement -> error ; .)
+
+
+state 35
+
+    (10) free_statement -> error } .
+    error           reduce using rule 10 (free_statement -> error } .)
+    FOR             reduce using rule 10 (free_statement -> error } .)
+    WHILE           reduce using rule 10 (free_statement -> error } .)
+    IF              reduce using rule 10 (free_statement -> error } .)
+    RETURN          reduce using rule 10 (free_statement -> error } .)
+    PRINT           reduce using rule 10 (free_statement -> error } .)
+    ID              reduce using rule 10 (free_statement -> error } .)
+    $end            reduce using rule 10 (free_statement -> error } .)
+    ELSE            reduce using rule 10 (free_statement -> error } .)
+    }               reduce using rule 10 (free_statement -> error } .)
+    {               reduce using rule 10 (free_statement -> error } .)
+
+
+state 36
+
+    (12) free_statement -> simpleStmt ; .
+    error           reduce using rule 12 (free_statement -> simpleStmt ; .)
+    FOR             reduce using rule 12 (free_statement -> simpleStmt ; .)
+    WHILE           reduce using rule 12 (free_statement -> simpleStmt ; .)
+    IF              reduce using rule 12 (free_statement -> simpleStmt ; .)
+    RETURN          reduce using rule 12 (free_statement -> simpleStmt ; .)
+    PRINT           reduce using rule 12 (free_statement -> simpleStmt ; .)
+    ID              reduce using rule 12 (free_statement -> simpleStmt ; .)
+    $end            reduce using rule 12 (free_statement -> simpleStmt ; .)
+    ELSE            reduce using rule 12 (free_statement -> simpleStmt ; .)
+    }               reduce using rule 12 (free_statement -> simpleStmt ; .)
+    {               reduce using rule 12 (free_statement -> simpleStmt ; .)
+
+
+state 37
+
+    (27) forStmt -> FOR ( . asgnStmt_opt ; lexpr_opt ; asgnStmt_opt ) statement
+    (23) asgnStmt_opt -> . empty
+    (24) asgnStmt_opt -> . asgnStmt
+    (84) empty -> .
+    (21) asgnStmt -> . identifier [ aexpr ] ASSIGN expr
+    (22) asgnStmt -> . identifier ASSIGN expr
+    (83) identifier -> . ID
+    ;               reduce using rule 84 (empty -> .)
+    ID              shift and go to state 13
+
+    asgnStmt_opt                   shift and go to state 69
+    empty                          shift and go to state 70
+    asgnStmt                       shift and go to state 71
+    identifier                     shift and go to state 29
+
+state 38
+
+    (29) whileStmt -> WHILE lexpr . statement
+    (44) lexpr -> lexpr . OR lterm
+    (19) statement -> . block
+    (20) statement -> . free_statement
+    (34) block -> . { varDecls statements }
+    (9) free_statement -> . error ;
+    (10) free_statement -> . error }
+    (11) free_statement -> . compoundStmt
+    (12) free_statement -> . simpleStmt ;
+    (16) compoundStmt -> . forStmt
+    (17) compoundStmt -> . whileStmt
+    (18) compoundStmt -> . ifStmt
+    (13) simpleStmt -> . returnStmt
+    (14) simpleStmt -> . printStmt
+    (15) simpleStmt -> . asgnStmt
+    (27) forStmt -> . FOR ( asgnStmt_opt ; lexpr_opt ; asgnStmt_opt ) statement
+    (29) whileStmt -> . WHILE lexpr statement
+    (36) ifStmt -> . IF lexpr statement ELSE statement
+    (37) ifStmt -> . IF lexpr statement
+    (28) returnStmt -> . RETURN expr
+    (35) printStmt -> . PRINT expr
+    (21) asgnStmt -> . identifier [ aexpr ] ASSIGN expr
+    (22) asgnStmt -> . identifier ASSIGN expr
+    (83) identifier -> . ID
+    OR              shift and go to state 73
+    {               shift and go to state 76
+    error           shift and go to state 15
+    FOR             shift and go to state 24
+    WHILE           shift and go to state 25
+    IF              shift and go to state 26
+    RETURN          shift and go to state 27
+    PRINT           shift and go to state 28
+    ID              shift and go to state 13
+
+    statement                      shift and go to state 72
+    block                          shift and go to state 74
+    free_statement                 shift and go to state 75
+    compoundStmt                   shift and go to state 16
+    simpleStmt                     shift and go to state 17
+    forStmt                        shift and go to state 18
+    whileStmt                      shift and go to state 19
+    ifStmt                         shift and go to state 20
+    returnStmt                     shift and go to state 21
+    printStmt                      shift and go to state 22
+    asgnStmt                       shift and go to state 23
+    identifier                     shift and go to state 29
+
+state 39
+
+    (43) lexpr -> lterm .
+    (46) lterm -> lterm . AND lfact
+    OR              reduce using rule 43 (lexpr -> lterm .)
+    {               reduce using rule 43 (lexpr -> lterm .)
+    error           reduce using rule 43 (lexpr -> lterm .)
+    FOR             reduce using rule 43 (lexpr -> lterm .)
+    WHILE           reduce using rule 43 (lexpr -> lterm .)
+    IF              reduce using rule 43 (lexpr -> lterm .)
+    RETURN          reduce using rule 43 (lexpr -> lterm .)
+    PRINT           reduce using rule 43 (lexpr -> lterm .)
+    ID              reduce using rule 43 (lexpr -> lterm .)
+    ;               reduce using rule 43 (lexpr -> lterm .)
+    )               reduce using rule 43 (lexpr -> lterm .)
+    ]               reduce using rule 43 (lexpr -> lterm .)
+    ,               reduce using rule 43 (lexpr -> lterm .)
+    AND             shift and go to state 77
+
+
+state 40
+
+    (45) lterm -> lfact .
+    AND             reduce using rule 45 (lterm -> lfact .)
+    OR              reduce using rule 45 (lterm -> lfact .)
+    {               reduce using rule 45 (lterm -> lfact .)
+    error           reduce using rule 45 (lterm -> lfact .)
+    FOR             reduce using rule 45 (lterm -> lfact .)
+    WHILE           reduce using rule 45 (lterm -> lfact .)
+    IF              reduce using rule 45 (lterm -> lfact .)
+    RETURN          reduce using rule 45 (lterm -> lfact .)
+    PRINT           reduce using rule 45 (lterm -> lfact .)
+    ID              reduce using rule 45 (lterm -> lfact .)
+    ;               reduce using rule 45 (lterm -> lfact .)
+    )               reduce using rule 45 (lterm -> lfact .)
+    ]               reduce using rule 45 (lterm -> lfact .)
+    ,               reduce using rule 45 (lterm -> lfact .)
+
+
+state 41
+
+    (47) lfact -> ( . lexpr )
+    (61) fact -> ( . aexpr )
+    (43) lexpr -> . lterm
+    (44) lexpr -> . lexpr OR lterm
+    (55) aexpr -> . term
+    (56) aexpr -> . aexpr MINUS term
+    (57) aexpr -> . aexpr PLUS term
+    (45) lterm -> . lfact
+    (46) lterm -> . lterm AND lfact
+    (58) term -> . fact
+    (59) term -> . term DIVIDE fact
+    (60) term -> . term TIMES fact
+    (47) lfact -> . ( lexpr )
+    (48) lfact -> . NOT lfact
+    (49) lfact -> . # identifier
+    (50) lfact -> . # getVector
+    (51) lfact -> . # call
+    (52) lfact -> . FALSE
+    (53) lfact -> . TRUE
+    (54) lfact -> . cexpr
+    (61) fact -> . ( aexpr )
+    (62) fact -> . getVector
+    (63) fact -> . identifier
+    (64) fact -> . NUMBER
+    (65) fact -> . call
+    (66) fact -> . MINUS fact
+    (67) cexpr -> . aexpr GT aexpr
+    (68) cexpr -> . aexpr LT aexpr
+    (69) cexpr -> . aexpr NE aexpr
+    (70) cexpr -> . aexpr GE aexpr
+    (71) cexpr -> . aexpr LE aexpr
+    (72) cexpr -> . aexpr EQ aexpr
+    (82) getVector -> . identifier [ aexpr ]
+    (83) identifier -> . ID
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    (               shift and go to state 41
+    NOT             shift and go to state 42
+    #               shift and go to state 43
+    FALSE           shift and go to state 47
+    TRUE            shift and go to state 48
+    NUMBER          shift and go to state 54
+    MINUS           shift and go to state 52
+    ID              shift and go to state 13
+
+    lexpr                          shift and go to state 78
+    aexpr                          shift and go to state 79
+    lterm                          shift and go to state 39
+    term                           shift and go to state 51
+    lfact                          shift and go to state 40
+    fact                           shift and go to state 53
+    identifier                     shift and go to state 44
+    getVector                      shift and go to state 45
+    call                           shift and go to state 46
+    cexpr                          shift and go to state 49
+
+state 42
+
+    (48) lfact -> NOT . lfact
+    (47) lfact -> . ( lexpr )
+    (48) lfact -> . NOT lfact
+    (49) lfact -> . # identifier
+    (50) lfact -> . # getVector
+    (51) lfact -> . # call
+    (52) lfact -> . FALSE
+    (53) lfact -> . TRUE
+    (54) lfact -> . cexpr
+    (67) cexpr -> . aexpr GT aexpr
+    (68) cexpr -> . aexpr LT aexpr
+    (69) cexpr -> . aexpr NE aexpr
+    (70) cexpr -> . aexpr GE aexpr
+    (71) cexpr -> . aexpr LE aexpr
+    (72) cexpr -> . aexpr EQ aexpr
+    (55) aexpr -> . term
+    (56) aexpr -> . aexpr MINUS term
+    (57) aexpr -> . aexpr PLUS term
+    (58) term -> . fact
+    (59) term -> . term DIVIDE fact
+    (60) term -> . term TIMES fact
+    (61) fact -> . ( aexpr )
+    (62) fact -> . getVector
+    (63) fact -> . identifier
+    (64) fact -> . NUMBER
+    (65) fact -> . call
+    (66) fact -> . MINUS fact
+    (82) getVector -> . identifier [ aexpr ]
+    (83) identifier -> . ID
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    (               shift and go to state 41
+    NOT             shift and go to state 42
+    #               shift and go to state 43
+    FALSE           shift and go to state 47
+    TRUE            shift and go to state 48
+    NUMBER          shift and go to state 54
+    MINUS           shift and go to state 52
+    ID              shift and go to state 13
+
+    lfact                          shift and go to state 80
+    identifier                     shift and go to state 44
+    getVector                      shift and go to state 45
+    call                           shift and go to state 46
+    cexpr                          shift and go to state 49
+    aexpr                          shift and go to state 50
+    term                           shift and go to state 51
+    fact                           shift and go to state 53
+
+state 43
+
+    (49) lfact -> # . identifier
+    (50) lfact -> # . getVector
+    (51) lfact -> # . call
+    (83) identifier -> . ID
+    (82) getVector -> . identifier [ aexpr ]
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    ID              shift and go to state 13
+
+    identifier                     shift and go to state 81
+    getVector                      shift and go to state 82
+    call                           shift and go to state 83
+
+state 44
+
+    (63) fact -> identifier .
+    (82) getVector -> identifier . [ aexpr ]
+    (80) call -> identifier . ( arguments )
+    (81) call -> identifier . ( )
+    DIVIDE          reduce using rule 63 (fact -> identifier .)
+    TIMES           reduce using rule 63 (fact -> identifier .)
+    GT              reduce using rule 63 (fact -> identifier .)
+    LT              reduce using rule 63 (fact -> identifier .)
+    NE              reduce using rule 63 (fact -> identifier .)
+    GE              reduce using rule 63 (fact -> identifier .)
+    LE              reduce using rule 63 (fact -> identifier .)
+    EQ              reduce using rule 63 (fact -> identifier .)
+    MINUS           reduce using rule 63 (fact -> identifier .)
+    PLUS            reduce using rule 63 (fact -> identifier .)
+    ;               reduce using rule 63 (fact -> identifier .)
+    )               reduce using rule 63 (fact -> identifier .)
+    ]               reduce using rule 63 (fact -> identifier .)
+    ,               reduce using rule 63 (fact -> identifier .)
+    AND             reduce using rule 63 (fact -> identifier .)
+    OR              reduce using rule 63 (fact -> identifier .)
+    {               reduce using rule 63 (fact -> identifier .)
+    error           reduce using rule 63 (fact -> identifier .)
+    FOR             reduce using rule 63 (fact -> identifier .)
+    WHILE           reduce using rule 63 (fact -> identifier .)
+    IF              reduce using rule 63 (fact -> identifier .)
+    RETURN          reduce using rule 63 (fact -> identifier .)
+    PRINT           reduce using rule 63 (fact -> identifier .)
+    ID              reduce using rule 63 (fact -> identifier .)
+    [               shift and go to state 84
+    (               shift and go to state 85
+
+
+state 45
+
+    (62) fact -> getVector .
+    DIVIDE          reduce using rule 62 (fact -> getVector .)
+    TIMES           reduce using rule 62 (fact -> getVector .)
+    GT              reduce using rule 62 (fact -> getVector .)
+    LT              reduce using rule 62 (fact -> getVector .)
+    NE              reduce using rule 62 (fact -> getVector .)
+    GE              reduce using rule 62 (fact -> getVector .)
+    LE              reduce using rule 62 (fact -> getVector .)
+    EQ              reduce using rule 62 (fact -> getVector .)
+    MINUS           reduce using rule 62 (fact -> getVector .)
+    PLUS            reduce using rule 62 (fact -> getVector .)
+    ;               reduce using rule 62 (fact -> getVector .)
+    )               reduce using rule 62 (fact -> getVector .)
+    ]               reduce using rule 62 (fact -> getVector .)
+    ,               reduce using rule 62 (fact -> getVector .)
+    AND             reduce using rule 62 (fact -> getVector .)
+    OR              reduce using rule 62 (fact -> getVector .)
+    {               reduce using rule 62 (fact -> getVector .)
+    error           reduce using rule 62 (fact -> getVector .)
+    FOR             reduce using rule 62 (fact -> getVector .)
+    WHILE           reduce using rule 62 (fact -> getVector .)
+    IF              reduce using rule 62 (fact -> getVector .)
+    RETURN          reduce using rule 62 (fact -> getVector .)
+    PRINT           reduce using rule 62 (fact -> getVector .)
+    ID              reduce using rule 62 (fact -> getVector .)
+
+
+state 46
+
+    (65) fact -> call .
+    DIVIDE          reduce using rule 65 (fact -> call .)
+    TIMES           reduce using rule 65 (fact -> call .)
+    GT              reduce using rule 65 (fact -> call .)
+    LT              reduce using rule 65 (fact -> call .)
+    NE              reduce using rule 65 (fact -> call .)
+    GE              reduce using rule 65 (fact -> call .)
+    LE              reduce using rule 65 (fact -> call .)
+    EQ              reduce using rule 65 (fact -> call .)
+    MINUS           reduce using rule 65 (fact -> call .)
+    PLUS            reduce using rule 65 (fact -> call .)
+    ;               reduce using rule 65 (fact -> call .)
+    )               reduce using rule 65 (fact -> call .)
+    ]               reduce using rule 65 (fact -> call .)
+    ,               reduce using rule 65 (fact -> call .)
+    AND             reduce using rule 65 (fact -> call .)
+    OR              reduce using rule 65 (fact -> call .)
+    {               reduce using rule 65 (fact -> call .)
+    error           reduce using rule 65 (fact -> call .)
+    FOR             reduce using rule 65 (fact -> call .)
+    WHILE           reduce using rule 65 (fact -> call .)
+    IF              reduce using rule 65 (fact -> call .)
+    RETURN          reduce using rule 65 (fact -> call .)
+    PRINT           reduce using rule 65 (fact -> call .)
+    ID              reduce using rule 65 (fact -> call .)
+
+
+state 47
+
+    (52) lfact -> FALSE .
+    AND             reduce using rule 52 (lfact -> FALSE .)
+    OR              reduce using rule 52 (lfact -> FALSE .)
+    {               reduce using rule 52 (lfact -> FALSE .)
+    error           reduce using rule 52 (lfact -> FALSE .)
+    FOR             reduce using rule 52 (lfact -> FALSE .)
+    WHILE           reduce using rule 52 (lfact -> FALSE .)
+    IF              reduce using rule 52 (lfact -> FALSE .)
+    RETURN          reduce using rule 52 (lfact -> FALSE .)
+    PRINT           reduce using rule 52 (lfact -> FALSE .)
+    ID              reduce using rule 52 (lfact -> FALSE .)
+    ;               reduce using rule 52 (lfact -> FALSE .)
+    )               reduce using rule 52 (lfact -> FALSE .)
+    ]               reduce using rule 52 (lfact -> FALSE .)
+    ,               reduce using rule 52 (lfact -> FALSE .)
+
+
+state 48
+
+    (53) lfact -> TRUE .
+    AND             reduce using rule 53 (lfact -> TRUE .)
+    OR              reduce using rule 53 (lfact -> TRUE .)
+    {               reduce using rule 53 (lfact -> TRUE .)
+    error           reduce using rule 53 (lfact -> TRUE .)
+    FOR             reduce using rule 53 (lfact -> TRUE .)
+    WHILE           reduce using rule 53 (lfact -> TRUE .)
+    IF              reduce using rule 53 (lfact -> TRUE .)
+    RETURN          reduce using rule 53 (lfact -> TRUE .)
+    PRINT           reduce using rule 53 (lfact -> TRUE .)
+    ID              reduce using rule 53 (lfact -> TRUE .)
+    ;               reduce using rule 53 (lfact -> TRUE .)
+    )               reduce using rule 53 (lfact -> TRUE .)
+    ]               reduce using rule 53 (lfact -> TRUE .)
+    ,               reduce using rule 53 (lfact -> TRUE .)
+
+
+state 49
+
+    (54) lfact -> cexpr .
+    AND             reduce using rule 54 (lfact -> cexpr .)
+    OR              reduce using rule 54 (lfact -> cexpr .)
+    {               reduce using rule 54 (lfact -> cexpr .)
+    error           reduce using rule 54 (lfact -> cexpr .)
+    FOR             reduce using rule 54 (lfact -> cexpr .)
+    WHILE           reduce using rule 54 (lfact -> cexpr .)
+    IF              reduce using rule 54 (lfact -> cexpr .)
+    RETURN          reduce using rule 54 (lfact -> cexpr .)
+    PRINT           reduce using rule 54 (lfact -> cexpr .)
+    ID              reduce using rule 54 (lfact -> cexpr .)
+    ;               reduce using rule 54 (lfact -> cexpr .)
+    )               reduce using rule 54 (lfact -> cexpr .)
+    ]               reduce using rule 54 (lfact -> cexpr .)
+    ,               reduce using rule 54 (lfact -> cexpr .)
+
+
+state 50
+
+    (67) cexpr -> aexpr . GT aexpr
+    (68) cexpr -> aexpr . LT aexpr
+    (69) cexpr -> aexpr . NE aexpr
+    (70) cexpr -> aexpr . GE aexpr
+    (71) cexpr -> aexpr . LE aexpr
+    (72) cexpr -> aexpr . EQ aexpr
+    (56) aexpr -> aexpr . MINUS term
+    (57) aexpr -> aexpr . PLUS term
+    GT              shift and go to state 86
+    LT              shift and go to state 87
+    NE              shift and go to state 88
+    GE              shift and go to state 89
+    LE              shift and go to state 90
+    EQ              shift and go to state 91
+    MINUS           shift and go to state 92
+    PLUS            shift and go to state 93
+
+
+state 51
+
+    (55) aexpr -> term .
+    (59) term -> term . DIVIDE fact
+    (60) term -> term . TIMES fact
+    GT              reduce using rule 55 (aexpr -> term .)
+    LT              reduce using rule 55 (aexpr -> term .)
+    NE              reduce using rule 55 (aexpr -> term .)
+    GE              reduce using rule 55 (aexpr -> term .)
+    LE              reduce using rule 55 (aexpr -> term .)
+    EQ              reduce using rule 55 (aexpr -> term .)
+    MINUS           reduce using rule 55 (aexpr -> term .)
+    PLUS            reduce using rule 55 (aexpr -> term .)
+    ;               reduce using rule 55 (aexpr -> term .)
+    )               reduce using rule 55 (aexpr -> term .)
+    ]               reduce using rule 55 (aexpr -> term .)
+    ,               reduce using rule 55 (aexpr -> term .)
+    AND             reduce using rule 55 (aexpr -> term .)
+    OR              reduce using rule 55 (aexpr -> term .)
+    {               reduce using rule 55 (aexpr -> term .)
+    error           reduce using rule 55 (aexpr -> term .)
+    FOR             reduce using rule 55 (aexpr -> term .)
+    WHILE           reduce using rule 55 (aexpr -> term .)
+    IF              reduce using rule 55 (aexpr -> term .)
+    RETURN          reduce using rule 55 (aexpr -> term .)
+    PRINT           reduce using rule 55 (aexpr -> term .)
+    ID              reduce using rule 55 (aexpr -> term .)
+    DIVIDE          shift and go to state 94
+    TIMES           shift and go to state 95
+
+
+state 52
+
+    (66) fact -> MINUS . fact
+    (61) fact -> . ( aexpr )
+    (62) fact -> . getVector
+    (63) fact -> . identifier
+    (64) fact -> . NUMBER
+    (65) fact -> . call
+    (66) fact -> . MINUS fact
+    (82) getVector -> . identifier [ aexpr ]
+    (83) identifier -> . ID
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    (               shift and go to state 97
+    NUMBER          shift and go to state 54
+    MINUS           shift and go to state 52
+    ID              shift and go to state 13
+
+    fact                           shift and go to state 96
+    getVector                      shift and go to state 45
+    identifier                     shift and go to state 44
+    call                           shift and go to state 46
+
+state 53
+
+    (58) term -> fact .
+    DIVIDE          reduce using rule 58 (term -> fact .)
+    TIMES           reduce using rule 58 (term -> fact .)
+    GT              reduce using rule 58 (term -> fact .)
+    LT              reduce using rule 58 (term -> fact .)
+    NE              reduce using rule 58 (term -> fact .)
+    GE              reduce using rule 58 (term -> fact .)
+    LE              reduce using rule 58 (term -> fact .)
+    EQ              reduce using rule 58 (term -> fact .)
+    MINUS           reduce using rule 58 (term -> fact .)
+    PLUS            reduce using rule 58 (term -> fact .)
+    ;               reduce using rule 58 (term -> fact .)
+    )               reduce using rule 58 (term -> fact .)
+    ]               reduce using rule 58 (term -> fact .)
+    ,               reduce using rule 58 (term -> fact .)
+    AND             reduce using rule 58 (term -> fact .)
+    OR              reduce using rule 58 (term -> fact .)
+    {               reduce using rule 58 (term -> fact .)
+    error           reduce using rule 58 (term -> fact .)
+    FOR             reduce using rule 58 (term -> fact .)
+    WHILE           reduce using rule 58 (term -> fact .)
+    IF              reduce using rule 58 (term -> fact .)
+    RETURN          reduce using rule 58 (term -> fact .)
+    PRINT           reduce using rule 58 (term -> fact .)
+    ID              reduce using rule 58 (term -> fact .)
+
+
+state 54
+
+    (64) fact -> NUMBER .
+    DIVIDE          reduce using rule 64 (fact -> NUMBER .)
+    TIMES           reduce using rule 64 (fact -> NUMBER .)
+    GT              reduce using rule 64 (fact -> NUMBER .)
+    LT              reduce using rule 64 (fact -> NUMBER .)
+    NE              reduce using rule 64 (fact -> NUMBER .)
+    GE              reduce using rule 64 (fact -> NUMBER .)
+    LE              reduce using rule 64 (fact -> NUMBER .)
+    EQ              reduce using rule 64 (fact -> NUMBER .)
+    MINUS           reduce using rule 64 (fact -> NUMBER .)
+    PLUS            reduce using rule 64 (fact -> NUMBER .)
+    ;               reduce using rule 64 (fact -> NUMBER .)
+    )               reduce using rule 64 (fact -> NUMBER .)
+    ]               reduce using rule 64 (fact -> NUMBER .)
+    ,               reduce using rule 64 (fact -> NUMBER .)
+    AND             reduce using rule 64 (fact -> NUMBER .)
+    OR              reduce using rule 64 (fact -> NUMBER .)
+    {               reduce using rule 64 (fact -> NUMBER .)
+    error           reduce using rule 64 (fact -> NUMBER .)
+    FOR             reduce using rule 64 (fact -> NUMBER .)
+    WHILE           reduce using rule 64 (fact -> NUMBER .)
+    IF              reduce using rule 64 (fact -> NUMBER .)
+    RETURN          reduce using rule 64 (fact -> NUMBER .)
+    PRINT           reduce using rule 64 (fact -> NUMBER .)
+    ID              reduce using rule 64 (fact -> NUMBER .)
+
+
+state 55
+
+    (36) ifStmt -> IF lexpr . statement ELSE statement
+    (37) ifStmt -> IF lexpr . statement
+    (44) lexpr -> lexpr . OR lterm
+    (19) statement -> . block
+    (20) statement -> . free_statement
+    (34) block -> . { varDecls statements }
+    (9) free_statement -> . error ;
+    (10) free_statement -> . error }
+    (11) free_statement -> . compoundStmt
+    (12) free_statement -> . simpleStmt ;
+    (16) compoundStmt -> . forStmt
+    (17) compoundStmt -> . whileStmt
+    (18) compoundStmt -> . ifStmt
+    (13) simpleStmt -> . returnStmt
+    (14) simpleStmt -> . printStmt
+    (15) simpleStmt -> . asgnStmt
+    (27) forStmt -> . FOR ( asgnStmt_opt ; lexpr_opt ; asgnStmt_opt ) statement
+    (29) whileStmt -> . WHILE lexpr statement
+    (36) ifStmt -> . IF lexpr statement ELSE statement
+    (37) ifStmt -> . IF lexpr statement
+    (28) returnStmt -> . RETURN expr
+    (35) printStmt -> . PRINT expr
+    (21) asgnStmt -> . identifier [ aexpr ] ASSIGN expr
+    (22) asgnStmt -> . identifier ASSIGN expr
+    (83) identifier -> . ID
+    OR              shift and go to state 73
+    {               shift and go to state 76
+    error           shift and go to state 15
+    FOR             shift and go to state 24
+    WHILE           shift and go to state 25
+    IF              shift and go to state 26
+    RETURN          shift and go to state 27
+    PRINT           shift and go to state 28
+    ID              shift and go to state 13
+
+    statement                      shift and go to state 98
+    block                          shift and go to state 74
+    free_statement                 shift and go to state 75
+    compoundStmt                   shift and go to state 16
+    simpleStmt                     shift and go to state 17
+    forStmt                        shift and go to state 18
+    whileStmt                      shift and go to state 19
+    ifStmt                         shift and go to state 20
+    returnStmt                     shift and go to state 21
+    printStmt                      shift and go to state 22
+    asgnStmt                       shift and go to state 23
+    identifier                     shift and go to state 29
+
+state 56
+
+    (28) returnStmt -> RETURN expr .
+    ;               reduce using rule 28 (returnStmt -> RETURN expr .)
+
+
+state 57
+
+    (40) expr -> sexpr .
+    ;               reduce using rule 40 (expr -> sexpr .)
+    )               reduce using rule 40 (expr -> sexpr .)
+    ]               reduce using rule 40 (expr -> sexpr .)
+    ,               reduce using rule 40 (expr -> sexpr .)
+
+
+state 58
+
+    (41) expr -> aexpr .
+    (56) aexpr -> aexpr . MINUS term
+    (57) aexpr -> aexpr . PLUS term
+    (67) cexpr -> aexpr . GT aexpr
+    (68) cexpr -> aexpr . LT aexpr
+    (69) cexpr -> aexpr . NE aexpr
+    (70) cexpr -> aexpr . GE aexpr
+    (71) cexpr -> aexpr . LE aexpr
+    (72) cexpr -> aexpr . EQ aexpr
+    ;               reduce using rule 41 (expr -> aexpr .)
+    )               reduce using rule 41 (expr -> aexpr .)
+    ]               reduce using rule 41 (expr -> aexpr .)
+    ,               reduce using rule 41 (expr -> aexpr .)
+    MINUS           shift and go to state 92
+    PLUS            shift and go to state 93
+    GT              shift and go to state 86
+    LT              shift and go to state 87
+    NE              shift and go to state 88
+    GE              shift and go to state 89
+    LE              shift and go to state 90
+    EQ              shift and go to state 91
+
+
+state 59
+
+    (42) expr -> lexpr .
+    (44) lexpr -> lexpr . OR lterm
+    ;               reduce using rule 42 (expr -> lexpr .)
+    )               reduce using rule 42 (expr -> lexpr .)
+    ]               reduce using rule 42 (expr -> lexpr .)
+    ,               reduce using rule 42 (expr -> lexpr .)
+    OR              shift and go to state 73
+
+
+state 60
+
+    (73) sexpr -> STRING .
+    ;               reduce using rule 73 (sexpr -> STRING .)
+    )               reduce using rule 73 (sexpr -> STRING .)
+    ]               reduce using rule 73 (sexpr -> STRING .)
+    ,               reduce using rule 73 (sexpr -> STRING .)
+
+
+state 61
+
+    (61) fact -> ( . aexpr )
+    (47) lfact -> ( . lexpr )
+    (55) aexpr -> . term
+    (56) aexpr -> . aexpr MINUS term
+    (57) aexpr -> . aexpr PLUS term
+    (43) lexpr -> . lterm
+    (44) lexpr -> . lexpr OR lterm
+    (58) term -> . fact
+    (59) term -> . term DIVIDE fact
+    (60) term -> . term TIMES fact
+    (45) lterm -> . lfact
+    (46) lterm -> . lterm AND lfact
+    (61) fact -> . ( aexpr )
+    (62) fact -> . getVector
+    (63) fact -> . identifier
+    (64) fact -> . NUMBER
+    (65) fact -> . call
+    (66) fact -> . MINUS fact
+    (47) lfact -> . ( lexpr )
+    (48) lfact -> . NOT lfact
+    (49) lfact -> . # identifier
+    (50) lfact -> . # getVector
+    (51) lfact -> . # call
+    (52) lfact -> . FALSE
+    (53) lfact -> . TRUE
+    (54) lfact -> . cexpr
+    (82) getVector -> . identifier [ aexpr ]
+    (83) identifier -> . ID
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    (67) cexpr -> . aexpr GT aexpr
+    (68) cexpr -> . aexpr LT aexpr
+    (69) cexpr -> . aexpr NE aexpr
+    (70) cexpr -> . aexpr GE aexpr
+    (71) cexpr -> . aexpr LE aexpr
+    (72) cexpr -> . aexpr EQ aexpr
+    (               shift and go to state 61
+    NUMBER          shift and go to state 54
+    MINUS           shift and go to state 52
+    NOT             shift and go to state 42
+    #               shift and go to state 43
+    FALSE           shift and go to state 47
+    TRUE            shift and go to state 48
+    ID              shift and go to state 13
+
+    aexpr                          shift and go to state 79
+    lexpr                          shift and go to state 78
+    term                           shift and go to state 51
+    lterm                          shift and go to state 39
+    fact                           shift and go to state 53
+    lfact                          shift and go to state 40
+    getVector                      shift and go to state 45
+    identifier                     shift and go to state 44
+    call                           shift and go to state 46
+    cexpr                          shift and go to state 49
+
+state 62
+
+    (35) printStmt -> PRINT expr .
+    ;               reduce using rule 35 (printStmt -> PRINT expr .)
+
+
+state 63
+
+    (21) asgnStmt -> identifier [ . aexpr ] ASSIGN expr
+    (55) aexpr -> . term
+    (56) aexpr -> . aexpr MINUS term
+    (57) aexpr -> . aexpr PLUS term
+    (58) term -> . fact
+    (59) term -> . term DIVIDE fact
+    (60) term -> . term TIMES fact
+    (61) fact -> . ( aexpr )
+    (62) fact -> . getVector
+    (63) fact -> . identifier
+    (64) fact -> . NUMBER
+    (65) fact -> . call
+    (66) fact -> . MINUS fact
+    (82) getVector -> . identifier [ aexpr ]
+    (83) identifier -> . ID
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    (               shift and go to state 97
+    NUMBER          shift and go to state 54
+    MINUS           shift and go to state 52
+    ID              shift and go to state 13
+
+    identifier                     shift and go to state 44
+    aexpr                          shift and go to state 99
+    term                           shift and go to state 51
+    fact                           shift and go to state 53
+    getVector                      shift and go to state 45
+    call                           shift and go to state 46
+
+state 64
+
+    (22) asgnStmt -> identifier ASSIGN . expr
+    (40) expr -> . sexpr
+    (41) expr -> . aexpr
+    (42) expr -> . lexpr
+    (73) sexpr -> . STRING
+    (55) aexpr -> . term
+    (56) aexpr -> . aexpr MINUS term
+    (57) aexpr -> . aexpr PLUS term
+    (43) lexpr -> . lterm
+    (44) lexpr -> . lexpr OR lterm
+    (58) term -> . fact
+    (59) term -> . term DIVIDE fact
+    (60) term -> . term TIMES fact
+    (45) lterm -> . lfact
+    (46) lterm -> . lterm AND lfact
+    (61) fact -> . ( aexpr )
+    (62) fact -> . getVector
+    (63) fact -> . identifier
+    (64) fact -> . NUMBER
+    (65) fact -> . call
+    (66) fact -> . MINUS fact
+    (47) lfact -> . ( lexpr )
+    (48) lfact -> . NOT lfact
+    (49) lfact -> . # identifier
+    (50) lfact -> . # getVector
+    (51) lfact -> . # call
+    (52) lfact -> . FALSE
+    (53) lfact -> . TRUE
+    (54) lfact -> . cexpr
+    (82) getVector -> . identifier [ aexpr ]
+    (83) identifier -> . ID
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    (67) cexpr -> . aexpr GT aexpr
+    (68) cexpr -> . aexpr LT aexpr
+    (69) cexpr -> . aexpr NE aexpr
+    (70) cexpr -> . aexpr GE aexpr
+    (71) cexpr -> . aexpr LE aexpr
+    (72) cexpr -> . aexpr EQ aexpr
+    STRING          shift and go to state 60
+    (               shift and go to state 61
+    NUMBER          shift and go to state 54
+    MINUS           shift and go to state 52
+    NOT             shift and go to state 42
+    #               shift and go to state 43
+    FALSE           shift and go to state 47
+    TRUE            shift and go to state 48
+    ID              shift and go to state 13
+
+    identifier                     shift and go to state 44
+    expr                           shift and go to state 100
+    sexpr                          shift and go to state 57
+    aexpr                          shift and go to state 58
+    lexpr                          shift and go to state 59
+    term                           shift and go to state 51
+    lterm                          shift and go to state 39
+    fact                           shift and go to state 53
+    lfact                          shift and go to state 40
+    getVector                      shift and go to state 45
+    call                           shift and go to state 46
+    cexpr                          shift and go to state 49
+
+state 65
+
+    (78) function -> identifier ( . parameters ) block
+    (79) function -> identifier ( . ) block
+    (76) parameters -> . parameters , identifier
+    (77) parameters -> . identifier
+    (83) identifier -> . ID
+    )               shift and go to state 103
+    ID              shift and go to state 13
+
+    identifier                     shift and go to state 101
+    parameters                     shift and go to state 102
+
+state 66
+
+    (7) varDecl -> VAR identifier ASSIGN init . ;
+    ;               shift and go to state 104
+
+
+state 67
+
+    (38) init -> [ . arguments ]
+    (74) arguments -> . arguments , expr
+    (75) arguments -> . expr
+    (40) expr -> . sexpr
+    (41) expr -> . aexpr
+    (42) expr -> . lexpr
+    (73) sexpr -> . STRING
+    (55) aexpr -> . term
+    (56) aexpr -> . aexpr MINUS term
+    (57) aexpr -> . aexpr PLUS term
+    (43) lexpr -> . lterm
+    (44) lexpr -> . lexpr OR lterm
+    (58) term -> . fact
+    (59) term -> . term DIVIDE fact
+    (60) term -> . term TIMES fact
+    (45) lterm -> . lfact
+    (46) lterm -> . lterm AND lfact
+    (61) fact -> . ( aexpr )
+    (62) fact -> . getVector
+    (63) fact -> . identifier
+    (64) fact -> . NUMBER
+    (65) fact -> . call
+    (66) fact -> . MINUS fact
+    (47) lfact -> . ( lexpr )
+    (48) lfact -> . NOT lfact
+    (49) lfact -> . # identifier
+    (50) lfact -> . # getVector
+    (51) lfact -> . # call
+    (52) lfact -> . FALSE
+    (53) lfact -> . TRUE
+    (54) lfact -> . cexpr
+    (82) getVector -> . identifier [ aexpr ]
+    (83) identifier -> . ID
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    (67) cexpr -> . aexpr GT aexpr
+    (68) cexpr -> . aexpr LT aexpr
+    (69) cexpr -> . aexpr NE aexpr
+    (70) cexpr -> . aexpr GE aexpr
+    (71) cexpr -> . aexpr LE aexpr
+    (72) cexpr -> . aexpr EQ aexpr
+    STRING          shift and go to state 60
+    (               shift and go to state 61
+    NUMBER          shift and go to state 54
+    MINUS           shift and go to state 52
+    NOT             shift and go to state 42
+    #               shift and go to state 43
+    FALSE           shift and go to state 47
+    TRUE            shift and go to state 48
+    ID              shift and go to state 13
+
+    arguments                      shift and go to state 105
+    expr                           shift and go to state 106
+    sexpr                          shift and go to state 57
+    aexpr                          shift and go to state 58
+    lexpr                          shift and go to state 59
+    term                           shift and go to state 51
+    lterm                          shift and go to state 39
+    fact                           shift and go to state 53
+    lfact                          shift and go to state 40
+    getVector                      shift and go to state 45
+    identifier                     shift and go to state 44
+    call                           shift and go to state 46
+    cexpr                          shift and go to state 49
+
+state 68
+
+    (39) init -> expr .
+    ;               reduce using rule 39 (init -> expr .)
+
+
+state 69
+
+    (27) forStmt -> FOR ( asgnStmt_opt . ; lexpr_opt ; asgnStmt_opt ) statement
+    ;               shift and go to state 107
+
+
+state 70
+
+    (23) asgnStmt_opt -> empty .
+    ;               reduce using rule 23 (asgnStmt_opt -> empty .)
+    )               reduce using rule 23 (asgnStmt_opt -> empty .)
+
+
+state 71
+
+    (24) asgnStmt_opt -> asgnStmt .
+    ;               reduce using rule 24 (asgnStmt_opt -> asgnStmt .)
+    )               reduce using rule 24 (asgnStmt_opt -> asgnStmt .)
+
+
+state 72
+
+    (29) whileStmt -> WHILE lexpr statement .
+    error           reduce using rule 29 (whileStmt -> WHILE lexpr statement .)
+    FOR             reduce using rule 29 (whileStmt -> WHILE lexpr statement .)
+    WHILE           reduce using rule 29 (whileStmt -> WHILE lexpr statement .)
+    IF              reduce using rule 29 (whileStmt -> WHILE lexpr statement .)
+    RETURN          reduce using rule 29 (whileStmt -> WHILE lexpr statement .)
+    PRINT           reduce using rule 29 (whileStmt -> WHILE lexpr statement .)
+    ID              reduce using rule 29 (whileStmt -> WHILE lexpr statement .)
+    $end            reduce using rule 29 (whileStmt -> WHILE lexpr statement .)
+    ELSE            reduce using rule 29 (whileStmt -> WHILE lexpr statement .)
+    }               reduce using rule 29 (whileStmt -> WHILE lexpr statement .)
+    {               reduce using rule 29 (whileStmt -> WHILE lexpr statement .)
+
+
+state 73
+
+    (44) lexpr -> lexpr OR . lterm
+    (45) lterm -> . lfact
+    (46) lterm -> . lterm AND lfact
+    (47) lfact -> . ( lexpr )
+    (48) lfact -> . NOT lfact
+    (49) lfact -> . # identifier
+    (50) lfact -> . # getVector
+    (51) lfact -> . # call
+    (52) lfact -> . FALSE
+    (53) lfact -> . TRUE
+    (54) lfact -> . cexpr
+    (67) cexpr -> . aexpr GT aexpr
+    (68) cexpr -> . aexpr LT aexpr
+    (69) cexpr -> . aexpr NE aexpr
+    (70) cexpr -> . aexpr GE aexpr
+    (71) cexpr -> . aexpr LE aexpr
+    (72) cexpr -> . aexpr EQ aexpr
+    (55) aexpr -> . term
+    (56) aexpr -> . aexpr MINUS term
+    (57) aexpr -> . aexpr PLUS term
+    (58) term -> . fact
+    (59) term -> . term DIVIDE fact
+    (60) term -> . term TIMES fact
+    (61) fact -> . ( aexpr )
+    (62) fact -> . getVector
+    (63) fact -> . identifier
+    (64) fact -> . NUMBER
+    (65) fact -> . call
+    (66) fact -> . MINUS fact
+    (82) getVector -> . identifier [ aexpr ]
+    (83) identifier -> . ID
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    (               shift and go to state 41
+    NOT             shift and go to state 42
+    #               shift and go to state 43
+    FALSE           shift and go to state 47
+    TRUE            shift and go to state 48
+    NUMBER          shift and go to state 54
+    MINUS           shift and go to state 52
+    ID              shift and go to state 13
+
+    lterm                          shift and go to state 108
+    lfact                          shift and go to state 40
+    identifier                     shift and go to state 44
+    getVector                      shift and go to state 45
+    call                           shift and go to state 46
+    cexpr                          shift and go to state 49
+    aexpr                          shift and go to state 50
+    term                           shift and go to state 51
+    fact                           shift and go to state 53
+
+state 74
+
+    (19) statement -> block .
+    error           reduce using rule 19 (statement -> block .)
+    FOR             reduce using rule 19 (statement -> block .)
+    WHILE           reduce using rule 19 (statement -> block .)
+    IF              reduce using rule 19 (statement -> block .)
+    RETURN          reduce using rule 19 (statement -> block .)
+    PRINT           reduce using rule 19 (statement -> block .)
+    ID              reduce using rule 19 (statement -> block .)
+    $end            reduce using rule 19 (statement -> block .)
+    ELSE            reduce using rule 19 (statement -> block .)
+    }               reduce using rule 19 (statement -> block .)
+    {               reduce using rule 19 (statement -> block .)
+
+
+state 75
+
+    (20) statement -> free_statement .
+    error           reduce using rule 20 (statement -> free_statement .)
+    FOR             reduce using rule 20 (statement -> free_statement .)
+    WHILE           reduce using rule 20 (statement -> free_statement .)
+    IF              reduce using rule 20 (statement -> free_statement .)
+    RETURN          reduce using rule 20 (statement -> free_statement .)
+    PRINT           reduce using rule 20 (statement -> free_statement .)
+    ID              reduce using rule 20 (statement -> free_statement .)
+    $end            reduce using rule 20 (statement -> free_statement .)
+    ELSE            reduce using rule 20 (statement -> free_statement .)
+    }               reduce using rule 20 (statement -> free_statement .)
+    {               reduce using rule 20 (statement -> free_statement .)
+
+
+state 76
+
+    (34) block -> { . varDecls statements }
+    (30) varDecls -> . empty
+    (31) varDecls -> . varDecls varDecl
+    (84) empty -> .
+    VAR             reduce using rule 84 (empty -> .)
+    }               reduce using rule 84 (empty -> .)
+    {               reduce using rule 84 (empty -> .)
+    error           reduce using rule 84 (empty -> .)
+    FOR             reduce using rule 84 (empty -> .)
+    WHILE           reduce using rule 84 (empty -> .)
+    IF              reduce using rule 84 (empty -> .)
+    RETURN          reduce using rule 84 (empty -> .)
+    PRINT           reduce using rule 84 (empty -> .)
+    ID              reduce using rule 84 (empty -> .)
+
+    varDecls                       shift and go to state 109
+    empty                          shift and go to state 3
+
+state 77
+
+    (46) lterm -> lterm AND . lfact
+    (47) lfact -> . ( lexpr )
+    (48) lfact -> . NOT lfact
+    (49) lfact -> . # identifier
+    (50) lfact -> . # getVector
+    (51) lfact -> . # call
+    (52) lfact -> . FALSE
+    (53) lfact -> . TRUE
+    (54) lfact -> . cexpr
+    (67) cexpr -> . aexpr GT aexpr
+    (68) cexpr -> . aexpr LT aexpr
+    (69) cexpr -> . aexpr NE aexpr
+    (70) cexpr -> . aexpr GE aexpr
+    (71) cexpr -> . aexpr LE aexpr
+    (72) cexpr -> . aexpr EQ aexpr
+    (55) aexpr -> . term
+    (56) aexpr -> . aexpr MINUS term
+    (57) aexpr -> . aexpr PLUS term
+    (58) term -> . fact
+    (59) term -> . term DIVIDE fact
+    (60) term -> . term TIMES fact
+    (61) fact -> . ( aexpr )
+    (62) fact -> . getVector
+    (63) fact -> . identifier
+    (64) fact -> . NUMBER
+    (65) fact -> . call
+    (66) fact -> . MINUS fact
+    (82) getVector -> . identifier [ aexpr ]
+    (83) identifier -> . ID
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    (               shift and go to state 41
+    NOT             shift and go to state 42
+    #               shift and go to state 43
+    FALSE           shift and go to state 47
+    TRUE            shift and go to state 48
+    NUMBER          shift and go to state 54
+    MINUS           shift and go to state 52
+    ID              shift and go to state 13
+
+    lfact                          shift and go to state 110
+    identifier                     shift and go to state 44
+    getVector                      shift and go to state 45
+    call                           shift and go to state 46
+    cexpr                          shift and go to state 49
+    aexpr                          shift and go to state 50
+    term                           shift and go to state 51
+    fact                           shift and go to state 53
+
+state 78
+
+    (47) lfact -> ( lexpr . )
+    (44) lexpr -> lexpr . OR lterm
+    )               shift and go to state 111
+    OR              shift and go to state 73
+
+
+state 79
+
+    (61) fact -> ( aexpr . )
+    (56) aexpr -> aexpr . MINUS term
+    (57) aexpr -> aexpr . PLUS term
+    (67) cexpr -> aexpr . GT aexpr
+    (68) cexpr -> aexpr . LT aexpr
+    (69) cexpr -> aexpr . NE aexpr
+    (70) cexpr -> aexpr . GE aexpr
+    (71) cexpr -> aexpr . LE aexpr
+    (72) cexpr -> aexpr . EQ aexpr
+    )               shift and go to state 112
+    MINUS           shift and go to state 92
+    PLUS            shift and go to state 93
+    GT              shift and go to state 86
+    LT              shift and go to state 87
+    NE              shift and go to state 88
+    GE              shift and go to state 89
+    LE              shift and go to state 90
+    EQ              shift and go to state 91
+
+
+state 80
+
+    (48) lfact -> NOT lfact .
+    AND             reduce using rule 48 (lfact -> NOT lfact .)
+    OR              reduce using rule 48 (lfact -> NOT lfact .)
+    {               reduce using rule 48 (lfact -> NOT lfact .)
+    error           reduce using rule 48 (lfact -> NOT lfact .)
+    FOR             reduce using rule 48 (lfact -> NOT lfact .)
+    WHILE           reduce using rule 48 (lfact -> NOT lfact .)
+    IF              reduce using rule 48 (lfact -> NOT lfact .)
+    RETURN          reduce using rule 48 (lfact -> NOT lfact .)
+    PRINT           reduce using rule 48 (lfact -> NOT lfact .)
+    ID              reduce using rule 48 (lfact -> NOT lfact .)
+    ;               reduce using rule 48 (lfact -> NOT lfact .)
+    )               reduce using rule 48 (lfact -> NOT lfact .)
+    ]               reduce using rule 48 (lfact -> NOT lfact .)
+    ,               reduce using rule 48 (lfact -> NOT lfact .)
+
+
+state 81
+
+    (49) lfact -> # identifier .
+    (82) getVector -> identifier . [ aexpr ]
+    (80) call -> identifier . ( arguments )
+    (81) call -> identifier . ( )
+    AND             reduce using rule 49 (lfact -> # identifier .)
+    OR              reduce using rule 49 (lfact -> # identifier .)
+    {               reduce using rule 49 (lfact -> # identifier .)
+    error           reduce using rule 49 (lfact -> # identifier .)
+    FOR             reduce using rule 49 (lfact -> # identifier .)
+    WHILE           reduce using rule 49 (lfact -> # identifier .)
+    IF              reduce using rule 49 (lfact -> # identifier .)
+    RETURN          reduce using rule 49 (lfact -> # identifier .)
+    PRINT           reduce using rule 49 (lfact -> # identifier .)
+    ID              reduce using rule 49 (lfact -> # identifier .)
+    ;               reduce using rule 49 (lfact -> # identifier .)
+    )               reduce using rule 49 (lfact -> # identifier .)
+    ]               reduce using rule 49 (lfact -> # identifier .)
+    ,               reduce using rule 49 (lfact -> # identifier .)
+    [               shift and go to state 84
+    (               shift and go to state 85
+
+
+state 82
+
+    (50) lfact -> # getVector .
+    AND             reduce using rule 50 (lfact -> # getVector .)
+    OR              reduce using rule 50 (lfact -> # getVector .)
+    {               reduce using rule 50 (lfact -> # getVector .)
+    error           reduce using rule 50 (lfact -> # getVector .)
+    FOR             reduce using rule 50 (lfact -> # getVector .)
+    WHILE           reduce using rule 50 (lfact -> # getVector .)
+    IF              reduce using rule 50 (lfact -> # getVector .)
+    RETURN          reduce using rule 50 (lfact -> # getVector .)
+    PRINT           reduce using rule 50 (lfact -> # getVector .)
+    ID              reduce using rule 50 (lfact -> # getVector .)
+    ;               reduce using rule 50 (lfact -> # getVector .)
+    )               reduce using rule 50 (lfact -> # getVector .)
+    ]               reduce using rule 50 (lfact -> # getVector .)
+    ,               reduce using rule 50 (lfact -> # getVector .)
+
+
+state 83
+
+    (51) lfact -> # call .
+    AND             reduce using rule 51 (lfact -> # call .)
+    OR              reduce using rule 51 (lfact -> # call .)
+    {               reduce using rule 51 (lfact -> # call .)
+    error           reduce using rule 51 (lfact -> # call .)
+    FOR             reduce using rule 51 (lfact -> # call .)
+    WHILE           reduce using rule 51 (lfact -> # call .)
+    IF              reduce using rule 51 (lfact -> # call .)
+    RETURN          reduce using rule 51 (lfact -> # call .)
+    PRINT           reduce using rule 51 (lfact -> # call .)
+    ID              reduce using rule 51 (lfact -> # call .)
+    ;               reduce using rule 51 (lfact -> # call .)
+    )               reduce using rule 51 (lfact -> # call .)
+    ]               reduce using rule 51 (lfact -> # call .)
+    ,               reduce using rule 51 (lfact -> # call .)
+
+
+state 84
+
+    (82) getVector -> identifier [ . aexpr ]
+    (55) aexpr -> . term
+    (56) aexpr -> . aexpr MINUS term
+    (57) aexpr -> . aexpr PLUS term
+    (58) term -> . fact
+    (59) term -> . term DIVIDE fact
+    (60) term -> . term TIMES fact
+    (61) fact -> . ( aexpr )
+    (62) fact -> . getVector
+    (63) fact -> . identifier
+    (64) fact -> . NUMBER
+    (65) fact -> . call
+    (66) fact -> . MINUS fact
+    (82) getVector -> . identifier [ aexpr ]
+    (83) identifier -> . ID
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    (               shift and go to state 97
+    NUMBER          shift and go to state 54
+    MINUS           shift and go to state 52
+    ID              shift and go to state 13
+
+    identifier                     shift and go to state 44
+    aexpr                          shift and go to state 113
+    term                           shift and go to state 51
+    fact                           shift and go to state 53
+    getVector                      shift and go to state 45
+    call                           shift and go to state 46
+
+state 85
+
+    (80) call -> identifier ( . arguments )
+    (81) call -> identifier ( . )
+    (74) arguments -> . arguments , expr
+    (75) arguments -> . expr
+    (40) expr -> . sexpr
+    (41) expr -> . aexpr
+    (42) expr -> . lexpr
+    (73) sexpr -> . STRING
+    (55) aexpr -> . term
+    (56) aexpr -> . aexpr MINUS term
+    (57) aexpr -> . aexpr PLUS term
+    (43) lexpr -> . lterm
+    (44) lexpr -> . lexpr OR lterm
+    (58) term -> . fact
+    (59) term -> . term DIVIDE fact
+    (60) term -> . term TIMES fact
+    (45) lterm -> . lfact
+    (46) lterm -> . lterm AND lfact
+    (61) fact -> . ( aexpr )
+    (62) fact -> . getVector
+    (63) fact -> . identifier
+    (64) fact -> . NUMBER
+    (65) fact -> . call
+    (66) fact -> . MINUS fact
+    (47) lfact -> . ( lexpr )
+    (48) lfact -> . NOT lfact
+    (49) lfact -> . # identifier
+    (50) lfact -> . # getVector
+    (51) lfact -> . # call
+    (52) lfact -> . FALSE
+    (53) lfact -> . TRUE
+    (54) lfact -> . cexpr
+    (82) getVector -> . identifier [ aexpr ]
+    (83) identifier -> . ID
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    (67) cexpr -> . aexpr GT aexpr
+    (68) cexpr -> . aexpr LT aexpr
+    (69) cexpr -> . aexpr NE aexpr
+    (70) cexpr -> . aexpr GE aexpr
+    (71) cexpr -> . aexpr LE aexpr
+    (72) cexpr -> . aexpr EQ aexpr
+    )               shift and go to state 115
+    STRING          shift and go to state 60
+    (               shift and go to state 61
+    NUMBER          shift and go to state 54
+    MINUS           shift and go to state 52
+    NOT             shift and go to state 42
+    #               shift and go to state 43
+    FALSE           shift and go to state 47
+    TRUE            shift and go to state 48
+    ID              shift and go to state 13
+
+    identifier                     shift and go to state 44
+    arguments                      shift and go to state 114
+    expr                           shift and go to state 106
+    sexpr                          shift and go to state 57
+    aexpr                          shift and go to state 58
+    lexpr                          shift and go to state 59
+    term                           shift and go to state 51
+    lterm                          shift and go to state 39
+    fact                           shift and go to state 53
+    lfact                          shift and go to state 40
+    getVector                      shift and go to state 45
+    call                           shift and go to state 46
+    cexpr                          shift and go to state 49
+
+state 86
+
+    (67) cexpr -> aexpr GT . aexpr
+    (55) aexpr -> . term
+    (56) aexpr -> . aexpr MINUS term
+    (57) aexpr -> . aexpr PLUS term
+    (58) term -> . fact
+    (59) term -> . term DIVIDE fact
+    (60) term -> . term TIMES fact
+    (61) fact -> . ( aexpr )
+    (62) fact -> . getVector
+    (63) fact -> . identifier
+    (64) fact -> . NUMBER
+    (65) fact -> . call
+    (66) fact -> . MINUS fact
+    (82) getVector -> . identifier [ aexpr ]
+    (83) identifier -> . ID
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    (               shift and go to state 97
+    NUMBER          shift and go to state 54
+    MINUS           shift and go to state 52
+    ID              shift and go to state 13
+
+    aexpr                          shift and go to state 116
+    term                           shift and go to state 51
+    fact                           shift and go to state 53
+    getVector                      shift and go to state 45
+    identifier                     shift and go to state 44
+    call                           shift and go to state 46
+
+state 87
+
+    (68) cexpr -> aexpr LT . aexpr
+    (55) aexpr -> . term
+    (56) aexpr -> . aexpr MINUS term
+    (57) aexpr -> . aexpr PLUS term
+    (58) term -> . fact
+    (59) term -> . term DIVIDE fact
+    (60) term -> . term TIMES fact
+    (61) fact -> . ( aexpr )
+    (62) fact -> . getVector
+    (63) fact -> . identifier
+    (64) fact -> . NUMBER
+    (65) fact -> . call
+    (66) fact -> . MINUS fact
+    (82) getVector -> . identifier [ aexpr ]
+    (83) identifier -> . ID
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    (               shift and go to state 97
+    NUMBER          shift and go to state 54
+    MINUS           shift and go to state 52
+    ID              shift and go to state 13
+
+    aexpr                          shift and go to state 117
+    term                           shift and go to state 51
+    fact                           shift and go to state 53
+    getVector                      shift and go to state 45
+    identifier                     shift and go to state 44
+    call                           shift and go to state 46
+
+state 88
+
+    (69) cexpr -> aexpr NE . aexpr
+    (55) aexpr -> . term
+    (56) aexpr -> . aexpr MINUS term
+    (57) aexpr -> . aexpr PLUS term
+    (58) term -> . fact
+    (59) term -> . term DIVIDE fact
+    (60) term -> . term TIMES fact
+    (61) fact -> . ( aexpr )
+    (62) fact -> . getVector
+    (63) fact -> . identifier
+    (64) fact -> . NUMBER
+    (65) fact -> . call
+    (66) fact -> . MINUS fact
+    (82) getVector -> . identifier [ aexpr ]
+    (83) identifier -> . ID
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    (               shift and go to state 97
+    NUMBER          shift and go to state 54
+    MINUS           shift and go to state 52
+    ID              shift and go to state 13
+
+    aexpr                          shift and go to state 118
+    term                           shift and go to state 51
+    fact                           shift and go to state 53
+    getVector                      shift and go to state 45
+    identifier                     shift and go to state 44
+    call                           shift and go to state 46
+
+state 89
+
+    (70) cexpr -> aexpr GE . aexpr
+    (55) aexpr -> . term
+    (56) aexpr -> . aexpr MINUS term
+    (57) aexpr -> . aexpr PLUS term
+    (58) term -> . fact
+    (59) term -> . term DIVIDE fact
+    (60) term -> . term TIMES fact
+    (61) fact -> . ( aexpr )
+    (62) fact -> . getVector
+    (63) fact -> . identifier
+    (64) fact -> . NUMBER
+    (65) fact -> . call
+    (66) fact -> . MINUS fact
+    (82) getVector -> . identifier [ aexpr ]
+    (83) identifier -> . ID
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    (               shift and go to state 97
+    NUMBER          shift and go to state 54
+    MINUS           shift and go to state 52
+    ID              shift and go to state 13
+
+    aexpr                          shift and go to state 119
+    term                           shift and go to state 51
+    fact                           shift and go to state 53
+    getVector                      shift and go to state 45
+    identifier                     shift and go to state 44
+    call                           shift and go to state 46
+
+state 90
+
+    (71) cexpr -> aexpr LE . aexpr
+    (55) aexpr -> . term
+    (56) aexpr -> . aexpr MINUS term
+    (57) aexpr -> . aexpr PLUS term
+    (58) term -> . fact
+    (59) term -> . term DIVIDE fact
+    (60) term -> . term TIMES fact
+    (61) fact -> . ( aexpr )
+    (62) fact -> . getVector
+    (63) fact -> . identifier
+    (64) fact -> . NUMBER
+    (65) fact -> . call
+    (66) fact -> . MINUS fact
+    (82) getVector -> . identifier [ aexpr ]
+    (83) identifier -> . ID
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    (               shift and go to state 97
+    NUMBER          shift and go to state 54
+    MINUS           shift and go to state 52
+    ID              shift and go to state 13
+
+    aexpr                          shift and go to state 120
+    term                           shift and go to state 51
+    fact                           shift and go to state 53
+    getVector                      shift and go to state 45
+    identifier                     shift and go to state 44
+    call                           shift and go to state 46
+
+state 91
+
+    (72) cexpr -> aexpr EQ . aexpr
+    (55) aexpr -> . term
+    (56) aexpr -> . aexpr MINUS term
+    (57) aexpr -> . aexpr PLUS term
+    (58) term -> . fact
+    (59) term -> . term DIVIDE fact
+    (60) term -> . term TIMES fact
+    (61) fact -> . ( aexpr )
+    (62) fact -> . getVector
+    (63) fact -> . identifier
+    (64) fact -> . NUMBER
+    (65) fact -> . call
+    (66) fact -> . MINUS fact
+    (82) getVector -> . identifier [ aexpr ]
+    (83) identifier -> . ID
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    (               shift and go to state 97
+    NUMBER          shift and go to state 54
+    MINUS           shift and go to state 52
+    ID              shift and go to state 13
+
+    aexpr                          shift and go to state 121
+    term                           shift and go to state 51
+    fact                           shift and go to state 53
+    getVector                      shift and go to state 45
+    identifier                     shift and go to state 44
+    call                           shift and go to state 46
+
+state 92
+
+    (56) aexpr -> aexpr MINUS . term
+    (58) term -> . fact
+    (59) term -> . term DIVIDE fact
+    (60) term -> . term TIMES fact
+    (61) fact -> . ( aexpr )
+    (62) fact -> . getVector
+    (63) fact -> . identifier
+    (64) fact -> . NUMBER
+    (65) fact -> . call
+    (66) fact -> . MINUS fact
+    (82) getVector -> . identifier [ aexpr ]
+    (83) identifier -> . ID
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    (               shift and go to state 97
+    NUMBER          shift and go to state 54
+    MINUS           shift and go to state 52
+    ID              shift and go to state 13
+
+    term                           shift and go to state 122
+    fact                           shift and go to state 53
+    getVector                      shift and go to state 45
+    identifier                     shift and go to state 44
+    call                           shift and go to state 46
+
+state 93
+
+    (57) aexpr -> aexpr PLUS . term
+    (58) term -> . fact
+    (59) term -> . term DIVIDE fact
+    (60) term -> . term TIMES fact
+    (61) fact -> . ( aexpr )
+    (62) fact -> . getVector
+    (63) fact -> . identifier
+    (64) fact -> . NUMBER
+    (65) fact -> . call
+    (66) fact -> . MINUS fact
+    (82) getVector -> . identifier [ aexpr ]
+    (83) identifier -> . ID
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    (               shift and go to state 97
+    NUMBER          shift and go to state 54
+    MINUS           shift and go to state 52
+    ID              shift and go to state 13
+
+    term                           shift and go to state 123
+    fact                           shift and go to state 53
+    getVector                      shift and go to state 45
+    identifier                     shift and go to state 44
+    call                           shift and go to state 46
+
+state 94
+
+    (59) term -> term DIVIDE . fact
+    (61) fact -> . ( aexpr )
+    (62) fact -> . getVector
+    (63) fact -> . identifier
+    (64) fact -> . NUMBER
+    (65) fact -> . call
+    (66) fact -> . MINUS fact
+    (82) getVector -> . identifier [ aexpr ]
+    (83) identifier -> . ID
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    (               shift and go to state 97
+    NUMBER          shift and go to state 54
+    MINUS           shift and go to state 52
+    ID              shift and go to state 13
+
+    fact                           shift and go to state 124
+    getVector                      shift and go to state 45
+    identifier                     shift and go to state 44
+    call                           shift and go to state 46
+
+state 95
+
+    (60) term -> term TIMES . fact
+    (61) fact -> . ( aexpr )
+    (62) fact -> . getVector
+    (63) fact -> . identifier
+    (64) fact -> . NUMBER
+    (65) fact -> . call
+    (66) fact -> . MINUS fact
+    (82) getVector -> . identifier [ aexpr ]
+    (83) identifier -> . ID
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    (               shift and go to state 97
+    NUMBER          shift and go to state 54
+    MINUS           shift and go to state 52
+    ID              shift and go to state 13
+
+    fact                           shift and go to state 125
+    getVector                      shift and go to state 45
+    identifier                     shift and go to state 44
+    call                           shift and go to state 46
+
+state 96
+
+    (66) fact -> MINUS fact .
+    DIVIDE          reduce using rule 66 (fact -> MINUS fact .)
+    TIMES           reduce using rule 66 (fact -> MINUS fact .)
+    GT              reduce using rule 66 (fact -> MINUS fact .)
+    LT              reduce using rule 66 (fact -> MINUS fact .)
+    NE              reduce using rule 66 (fact -> MINUS fact .)
+    GE              reduce using rule 66 (fact -> MINUS fact .)
+    LE              reduce using rule 66 (fact -> MINUS fact .)
+    EQ              reduce using rule 66 (fact -> MINUS fact .)
+    MINUS           reduce using rule 66 (fact -> MINUS fact .)
+    PLUS            reduce using rule 66 (fact -> MINUS fact .)
+    ;               reduce using rule 66 (fact -> MINUS fact .)
+    )               reduce using rule 66 (fact -> MINUS fact .)
+    ]               reduce using rule 66 (fact -> MINUS fact .)
+    ,               reduce using rule 66 (fact -> MINUS fact .)
+    AND             reduce using rule 66 (fact -> MINUS fact .)
+    OR              reduce using rule 66 (fact -> MINUS fact .)
+    {               reduce using rule 66 (fact -> MINUS fact .)
+    error           reduce using rule 66 (fact -> MINUS fact .)
+    FOR             reduce using rule 66 (fact -> MINUS fact .)
+    WHILE           reduce using rule 66 (fact -> MINUS fact .)
+    IF              reduce using rule 66 (fact -> MINUS fact .)
+    RETURN          reduce using rule 66 (fact -> MINUS fact .)
+    PRINT           reduce using rule 66 (fact -> MINUS fact .)
+    ID              reduce using rule 66 (fact -> MINUS fact .)
+
+
+state 97
+
+    (61) fact -> ( . aexpr )
+    (55) aexpr -> . term
+    (56) aexpr -> . aexpr MINUS term
+    (57) aexpr -> . aexpr PLUS term
+    (58) term -> . fact
+    (59) term -> . term DIVIDE fact
+    (60) term -> . term TIMES fact
+    (61) fact -> . ( aexpr )
+    (62) fact -> . getVector
+    (63) fact -> . identifier
+    (64) fact -> . NUMBER
+    (65) fact -> . call
+    (66) fact -> . MINUS fact
+    (82) getVector -> . identifier [ aexpr ]
+    (83) identifier -> . ID
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    (               shift and go to state 97
+    NUMBER          shift and go to state 54
+    MINUS           shift and go to state 52
+    ID              shift and go to state 13
+
+    aexpr                          shift and go to state 126
+    term                           shift and go to state 51
+    fact                           shift and go to state 53
+    getVector                      shift and go to state 45
+    identifier                     shift and go to state 44
+    call                           shift and go to state 46
+
+state 98
+
+    (36) ifStmt -> IF lexpr statement . ELSE statement
+    (37) ifStmt -> IF lexpr statement .
+  ! shift/reduce conflict for ELSE resolved as shift
+    ELSE            shift and go to state 127
+    error           reduce using rule 37 (ifStmt -> IF lexpr statement .)
+    FOR             reduce using rule 37 (ifStmt -> IF lexpr statement .)
+    WHILE           reduce using rule 37 (ifStmt -> IF lexpr statement .)
+    IF              reduce using rule 37 (ifStmt -> IF lexpr statement .)
+    RETURN          reduce using rule 37 (ifStmt -> IF lexpr statement .)
+    PRINT           reduce using rule 37 (ifStmt -> IF lexpr statement .)
+    ID              reduce using rule 37 (ifStmt -> IF lexpr statement .)
+    $end            reduce using rule 37 (ifStmt -> IF lexpr statement .)
+    }               reduce using rule 37 (ifStmt -> IF lexpr statement .)
+    {               reduce using rule 37 (ifStmt -> IF lexpr statement .)
+
+
+state 99
+
+    (21) asgnStmt -> identifier [ aexpr . ] ASSIGN expr
+    (56) aexpr -> aexpr . MINUS term
+    (57) aexpr -> aexpr . PLUS term
+    ]               shift and go to state 128
+    MINUS           shift and go to state 92
+    PLUS            shift and go to state 93
+
+
+state 100
+
+    (22) asgnStmt -> identifier ASSIGN expr .
+    ;               reduce using rule 22 (asgnStmt -> identifier ASSIGN expr .)
+    )               reduce using rule 22 (asgnStmt -> identifier ASSIGN expr .)
+
+
+state 101
+
+    (77) parameters -> identifier .
+    )               reduce using rule 77 (parameters -> identifier .)
+    ,               reduce using rule 77 (parameters -> identifier .)
+
+
+state 102
+
+    (78) function -> identifier ( parameters . ) block
+    (76) parameters -> parameters . , identifier
+    )               shift and go to state 129
+    ,               shift and go to state 130
+
+
+state 103
+
+    (79) function -> identifier ( ) . block
+    (34) block -> . { varDecls statements }
+    {               shift and go to state 76
+
+    block                          shift and go to state 131
+
+state 104
+
+    (7) varDecl -> VAR identifier ASSIGN init ; .
+    VAR             reduce using rule 7 (varDecl -> VAR identifier ASSIGN init ; .)
+    FUN             reduce using rule 7 (varDecl -> VAR identifier ASSIGN init ; .)
+    error           reduce using rule 7 (varDecl -> VAR identifier ASSIGN init ; .)
+    FOR             reduce using rule 7 (varDecl -> VAR identifier ASSIGN init ; .)
+    WHILE           reduce using rule 7 (varDecl -> VAR identifier ASSIGN init ; .)
+    IF              reduce using rule 7 (varDecl -> VAR identifier ASSIGN init ; .)
+    RETURN          reduce using rule 7 (varDecl -> VAR identifier ASSIGN init ; .)
+    PRINT           reduce using rule 7 (varDecl -> VAR identifier ASSIGN init ; .)
+    ID              reduce using rule 7 (varDecl -> VAR identifier ASSIGN init ; .)
+    $end            reduce using rule 7 (varDecl -> VAR identifier ASSIGN init ; .)
+    }               reduce using rule 7 (varDecl -> VAR identifier ASSIGN init ; .)
+    {               reduce using rule 7 (varDecl -> VAR identifier ASSIGN init ; .)
+
+
+state 105
+
+    (38) init -> [ arguments . ]
+    (74) arguments -> arguments . , expr
+    ]               shift and go to state 132
+    ,               shift and go to state 133
+
+
+state 106
+
+    (75) arguments -> expr .
+    ]               reduce using rule 75 (arguments -> expr .)
+    ,               reduce using rule 75 (arguments -> expr .)
+    )               reduce using rule 75 (arguments -> expr .)
+
+
+state 107
+
+    (27) forStmt -> FOR ( asgnStmt_opt ; . lexpr_opt ; asgnStmt_opt ) statement
+    (25) lexpr_opt -> . empty
+    (26) lexpr_opt -> . lexpr
+    (84) empty -> .
+    (43) lexpr -> . lterm
+    (44) lexpr -> . lexpr OR lterm
+    (45) lterm -> . lfact
+    (46) lterm -> . lterm AND lfact
+    (47) lfact -> . ( lexpr )
+    (48) lfact -> . NOT lfact
+    (49) lfact -> . # identifier
+    (50) lfact -> . # getVector
+    (51) lfact -> . # call
+    (52) lfact -> . FALSE
+    (53) lfact -> . TRUE
+    (54) lfact -> . cexpr
+    (67) cexpr -> . aexpr GT aexpr
+    (68) cexpr -> . aexpr LT aexpr
+    (69) cexpr -> . aexpr NE aexpr
+    (70) cexpr -> . aexpr GE aexpr
+    (71) cexpr -> . aexpr LE aexpr
+    (72) cexpr -> . aexpr EQ aexpr
+    (55) aexpr -> . term
+    (56) aexpr -> . aexpr MINUS term
+    (57) aexpr -> . aexpr PLUS term
+    (58) term -> . fact
+    (59) term -> . term DIVIDE fact
+    (60) term -> . term TIMES fact
+    (61) fact -> . ( aexpr )
+    (62) fact -> . getVector
+    (63) fact -> . identifier
+    (64) fact -> . NUMBER
+    (65) fact -> . call
+    (66) fact -> . MINUS fact
+    (82) getVector -> . identifier [ aexpr ]
+    (83) identifier -> . ID
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    ;               reduce using rule 84 (empty -> .)
+    (               shift and go to state 41
+    NOT             shift and go to state 42
+    #               shift and go to state 43
+    FALSE           shift and go to state 47
+    TRUE            shift and go to state 48
+    NUMBER          shift and go to state 54
+    MINUS           shift and go to state 52
+    ID              shift and go to state 13
+
+    lexpr_opt                      shift and go to state 134
+    empty                          shift and go to state 135
+    lexpr                          shift and go to state 136
+    lterm                          shift and go to state 39
+    lfact                          shift and go to state 40
+    identifier                     shift and go to state 44
+    getVector                      shift and go to state 45
+    call                           shift and go to state 46
+    cexpr                          shift and go to state 49
+    aexpr                          shift and go to state 50
+    term                           shift and go to state 51
+    fact                           shift and go to state 53
+
+state 108
+
+    (44) lexpr -> lexpr OR lterm .
+    (46) lterm -> lterm . AND lfact
+    OR              reduce using rule 44 (lexpr -> lexpr OR lterm .)
+    {               reduce using rule 44 (lexpr -> lexpr OR lterm .)
+    error           reduce using rule 44 (lexpr -> lexpr OR lterm .)
+    FOR             reduce using rule 44 (lexpr -> lexpr OR lterm .)
+    WHILE           reduce using rule 44 (lexpr -> lexpr OR lterm .)
+    IF              reduce using rule 44 (lexpr -> lexpr OR lterm .)
+    RETURN          reduce using rule 44 (lexpr -> lexpr OR lterm .)
+    PRINT           reduce using rule 44 (lexpr -> lexpr OR lterm .)
+    ID              reduce using rule 44 (lexpr -> lexpr OR lterm .)
+    ;               reduce using rule 44 (lexpr -> lexpr OR lterm .)
+    )               reduce using rule 44 (lexpr -> lexpr OR lterm .)
+    ]               reduce using rule 44 (lexpr -> lexpr OR lterm .)
+    ,               reduce using rule 44 (lexpr -> lexpr OR lterm .)
+    AND             shift and go to state 77
+
+
+state 109
+
+    (34) block -> { varDecls . statements }
+    (31) varDecls -> varDecls . varDecl
+    (32) statements -> . empty
+    (33) statements -> . statements statement
+    (7) varDecl -> . VAR identifier ASSIGN init ;
+    (8) varDecl -> . VAR identifier ;
+    (84) empty -> .
+    VAR             shift and go to state 7
+    }               reduce using rule 84 (empty -> .)
+    {               reduce using rule 84 (empty -> .)
+    error           reduce using rule 84 (empty -> .)
+    FOR             reduce using rule 84 (empty -> .)
+    WHILE           reduce using rule 84 (empty -> .)
+    IF              reduce using rule 84 (empty -> .)
+    RETURN          reduce using rule 84 (empty -> .)
+    PRINT           reduce using rule 84 (empty -> .)
+    ID              reduce using rule 84 (empty -> .)
+
+    statements                     shift and go to state 137
+    varDecl                        shift and go to state 5
+    empty                          shift and go to state 138
+
+state 110
+
+    (46) lterm -> lterm AND lfact .
+    AND             reduce using rule 46 (lterm -> lterm AND lfact .)
+    OR              reduce using rule 46 (lterm -> lterm AND lfact .)
+    {               reduce using rule 46 (lterm -> lterm AND lfact .)
+    error           reduce using rule 46 (lterm -> lterm AND lfact .)
+    FOR             reduce using rule 46 (lterm -> lterm AND lfact .)
+    WHILE           reduce using rule 46 (lterm -> lterm AND lfact .)
+    IF              reduce using rule 46 (lterm -> lterm AND lfact .)
+    RETURN          reduce using rule 46 (lterm -> lterm AND lfact .)
+    PRINT           reduce using rule 46 (lterm -> lterm AND lfact .)
+    ID              reduce using rule 46 (lterm -> lterm AND lfact .)
+    ;               reduce using rule 46 (lterm -> lterm AND lfact .)
+    )               reduce using rule 46 (lterm -> lterm AND lfact .)
+    ]               reduce using rule 46 (lterm -> lterm AND lfact .)
+    ,               reduce using rule 46 (lterm -> lterm AND lfact .)
+
+
+state 111
+
+    (47) lfact -> ( lexpr ) .
+    AND             reduce using rule 47 (lfact -> ( lexpr ) .)
+    OR              reduce using rule 47 (lfact -> ( lexpr ) .)
+    {               reduce using rule 47 (lfact -> ( lexpr ) .)
+    error           reduce using rule 47 (lfact -> ( lexpr ) .)
+    FOR             reduce using rule 47 (lfact -> ( lexpr ) .)
+    WHILE           reduce using rule 47 (lfact -> ( lexpr ) .)
+    IF              reduce using rule 47 (lfact -> ( lexpr ) .)
+    RETURN          reduce using rule 47 (lfact -> ( lexpr ) .)
+    PRINT           reduce using rule 47 (lfact -> ( lexpr ) .)
+    ID              reduce using rule 47 (lfact -> ( lexpr ) .)
+    ;               reduce using rule 47 (lfact -> ( lexpr ) .)
+    )               reduce using rule 47 (lfact -> ( lexpr ) .)
+    ]               reduce using rule 47 (lfact -> ( lexpr ) .)
+    ,               reduce using rule 47 (lfact -> ( lexpr ) .)
+
+
+state 112
+
+    (61) fact -> ( aexpr ) .
+    DIVIDE          reduce using rule 61 (fact -> ( aexpr ) .)
+    TIMES           reduce using rule 61 (fact -> ( aexpr ) .)
+    GT              reduce using rule 61 (fact -> ( aexpr ) .)
+    LT              reduce using rule 61 (fact -> ( aexpr ) .)
+    NE              reduce using rule 61 (fact -> ( aexpr ) .)
+    GE              reduce using rule 61 (fact -> ( aexpr ) .)
+    LE              reduce using rule 61 (fact -> ( aexpr ) .)
+    EQ              reduce using rule 61 (fact -> ( aexpr ) .)
+    MINUS           reduce using rule 61 (fact -> ( aexpr ) .)
+    PLUS            reduce using rule 61 (fact -> ( aexpr ) .)
+    ;               reduce using rule 61 (fact -> ( aexpr ) .)
+    )               reduce using rule 61 (fact -> ( aexpr ) .)
+    ]               reduce using rule 61 (fact -> ( aexpr ) .)
+    ,               reduce using rule 61 (fact -> ( aexpr ) .)
+    AND             reduce using rule 61 (fact -> ( aexpr ) .)
+    OR              reduce using rule 61 (fact -> ( aexpr ) .)
+    {               reduce using rule 61 (fact -> ( aexpr ) .)
+    error           reduce using rule 61 (fact -> ( aexpr ) .)
+    FOR             reduce using rule 61 (fact -> ( aexpr ) .)
+    WHILE           reduce using rule 61 (fact -> ( aexpr ) .)
+    IF              reduce using rule 61 (fact -> ( aexpr ) .)
+    RETURN          reduce using rule 61 (fact -> ( aexpr ) .)
+    PRINT           reduce using rule 61 (fact -> ( aexpr ) .)
+    ID              reduce using rule 61 (fact -> ( aexpr ) .)
+
+
+state 113
+
+    (82) getVector -> identifier [ aexpr . ]
+    (56) aexpr -> aexpr . MINUS term
+    (57) aexpr -> aexpr . PLUS term
+    ]               shift and go to state 139
+    MINUS           shift and go to state 92
+    PLUS            shift and go to state 93
+
+
+state 114
+
+    (80) call -> identifier ( arguments . )
+    (74) arguments -> arguments . , expr
+    )               shift and go to state 140
+    ,               shift and go to state 133
+
+
+state 115
+
+    (81) call -> identifier ( ) .
+    DIVIDE          reduce using rule 81 (call -> identifier ( ) .)
+    TIMES           reduce using rule 81 (call -> identifier ( ) .)
+    GT              reduce using rule 81 (call -> identifier ( ) .)
+    LT              reduce using rule 81 (call -> identifier ( ) .)
+    NE              reduce using rule 81 (call -> identifier ( ) .)
+    GE              reduce using rule 81 (call -> identifier ( ) .)
+    LE              reduce using rule 81 (call -> identifier ( ) .)
+    EQ              reduce using rule 81 (call -> identifier ( ) .)
+    MINUS           reduce using rule 81 (call -> identifier ( ) .)
+    PLUS            reduce using rule 81 (call -> identifier ( ) .)
+    ;               reduce using rule 81 (call -> identifier ( ) .)
+    )               reduce using rule 81 (call -> identifier ( ) .)
+    AND             reduce using rule 81 (call -> identifier ( ) .)
+    OR              reduce using rule 81 (call -> identifier ( ) .)
+    {               reduce using rule 81 (call -> identifier ( ) .)
+    error           reduce using rule 81 (call -> identifier ( ) .)
+    FOR             reduce using rule 81 (call -> identifier ( ) .)
+    WHILE           reduce using rule 81 (call -> identifier ( ) .)
+    IF              reduce using rule 81 (call -> identifier ( ) .)
+    RETURN          reduce using rule 81 (call -> identifier ( ) .)
+    PRINT           reduce using rule 81 (call -> identifier ( ) .)
+    ID              reduce using rule 81 (call -> identifier ( ) .)
+    ]               reduce using rule 81 (call -> identifier ( ) .)
+    ,               reduce using rule 81 (call -> identifier ( ) .)
+
+
+state 116
+
+    (67) cexpr -> aexpr GT aexpr .
+    (56) aexpr -> aexpr . MINUS term
+    (57) aexpr -> aexpr . PLUS term
+    AND             reduce using rule 67 (cexpr -> aexpr GT aexpr .)
+    OR              reduce using rule 67 (cexpr -> aexpr GT aexpr .)
+    {               reduce using rule 67 (cexpr -> aexpr GT aexpr .)
+    error           reduce using rule 67 (cexpr -> aexpr GT aexpr .)
+    FOR             reduce using rule 67 (cexpr -> aexpr GT aexpr .)
+    WHILE           reduce using rule 67 (cexpr -> aexpr GT aexpr .)
+    IF              reduce using rule 67 (cexpr -> aexpr GT aexpr .)
+    RETURN          reduce using rule 67 (cexpr -> aexpr GT aexpr .)
+    PRINT           reduce using rule 67 (cexpr -> aexpr GT aexpr .)
+    ID              reduce using rule 67 (cexpr -> aexpr GT aexpr .)
+    ;               reduce using rule 67 (cexpr -> aexpr GT aexpr .)
+    )               reduce using rule 67 (cexpr -> aexpr GT aexpr .)
+    ]               reduce using rule 67 (cexpr -> aexpr GT aexpr .)
+    ,               reduce using rule 67 (cexpr -> aexpr GT aexpr .)
+    MINUS           shift and go to state 92
+    PLUS            shift and go to state 93
+
+
+state 117
+
+    (68) cexpr -> aexpr LT aexpr .
+    (56) aexpr -> aexpr . MINUS term
+    (57) aexpr -> aexpr . PLUS term
+    AND             reduce using rule 68 (cexpr -> aexpr LT aexpr .)
+    OR              reduce using rule 68 (cexpr -> aexpr LT aexpr .)
+    {               reduce using rule 68 (cexpr -> aexpr LT aexpr .)
+    error           reduce using rule 68 (cexpr -> aexpr LT aexpr .)
+    FOR             reduce using rule 68 (cexpr -> aexpr LT aexpr .)
+    WHILE           reduce using rule 68 (cexpr -> aexpr LT aexpr .)
+    IF              reduce using rule 68 (cexpr -> aexpr LT aexpr .)
+    RETURN          reduce using rule 68 (cexpr -> aexpr LT aexpr .)
+    PRINT           reduce using rule 68 (cexpr -> aexpr LT aexpr .)
+    ID              reduce using rule 68 (cexpr -> aexpr LT aexpr .)
+    ;               reduce using rule 68 (cexpr -> aexpr LT aexpr .)
+    )               reduce using rule 68 (cexpr -> aexpr LT aexpr .)
+    ]               reduce using rule 68 (cexpr -> aexpr LT aexpr .)
+    ,               reduce using rule 68 (cexpr -> aexpr LT aexpr .)
+    MINUS           shift and go to state 92
+    PLUS            shift and go to state 93
+
+
+state 118
+
+    (69) cexpr -> aexpr NE aexpr .
+    (56) aexpr -> aexpr . MINUS term
+    (57) aexpr -> aexpr . PLUS term
+    AND             reduce using rule 69 (cexpr -> aexpr NE aexpr .)
+    OR              reduce using rule 69 (cexpr -> aexpr NE aexpr .)
+    {               reduce using rule 69 (cexpr -> aexpr NE aexpr .)
+    error           reduce using rule 69 (cexpr -> aexpr NE aexpr .)
+    FOR             reduce using rule 69 (cexpr -> aexpr NE aexpr .)
+    WHILE           reduce using rule 69 (cexpr -> aexpr NE aexpr .)
+    IF              reduce using rule 69 (cexpr -> aexpr NE aexpr .)
+    RETURN          reduce using rule 69 (cexpr -> aexpr NE aexpr .)
+    PRINT           reduce using rule 69 (cexpr -> aexpr NE aexpr .)
+    ID              reduce using rule 69 (cexpr -> aexpr NE aexpr .)
+    ;               reduce using rule 69 (cexpr -> aexpr NE aexpr .)
+    )               reduce using rule 69 (cexpr -> aexpr NE aexpr .)
+    ]               reduce using rule 69 (cexpr -> aexpr NE aexpr .)
+    ,               reduce using rule 69 (cexpr -> aexpr NE aexpr .)
+    MINUS           shift and go to state 92
+    PLUS            shift and go to state 93
+
+
+state 119
+
+    (70) cexpr -> aexpr GE aexpr .
+    (56) aexpr -> aexpr . MINUS term
+    (57) aexpr -> aexpr . PLUS term
+    AND             reduce using rule 70 (cexpr -> aexpr GE aexpr .)
+    OR              reduce using rule 70 (cexpr -> aexpr GE aexpr .)
+    {               reduce using rule 70 (cexpr -> aexpr GE aexpr .)
+    error           reduce using rule 70 (cexpr -> aexpr GE aexpr .)
+    FOR             reduce using rule 70 (cexpr -> aexpr GE aexpr .)
+    WHILE           reduce using rule 70 (cexpr -> aexpr GE aexpr .)
+    IF              reduce using rule 70 (cexpr -> aexpr GE aexpr .)
+    RETURN          reduce using rule 70 (cexpr -> aexpr GE aexpr .)
+    PRINT           reduce using rule 70 (cexpr -> aexpr GE aexpr .)
+    ID              reduce using rule 70 (cexpr -> aexpr GE aexpr .)
+    ;               reduce using rule 70 (cexpr -> aexpr GE aexpr .)
+    )               reduce using rule 70 (cexpr -> aexpr GE aexpr .)
+    ]               reduce using rule 70 (cexpr -> aexpr GE aexpr .)
+    ,               reduce using rule 70 (cexpr -> aexpr GE aexpr .)
+    MINUS           shift and go to state 92
+    PLUS            shift and go to state 93
+
+
+state 120
+
+    (71) cexpr -> aexpr LE aexpr .
+    (56) aexpr -> aexpr . MINUS term
+    (57) aexpr -> aexpr . PLUS term
+    AND             reduce using rule 71 (cexpr -> aexpr LE aexpr .)
+    OR              reduce using rule 71 (cexpr -> aexpr LE aexpr .)
+    {               reduce using rule 71 (cexpr -> aexpr LE aexpr .)
+    error           reduce using rule 71 (cexpr -> aexpr LE aexpr .)
+    FOR             reduce using rule 71 (cexpr -> aexpr LE aexpr .)
+    WHILE           reduce using rule 71 (cexpr -> aexpr LE aexpr .)
+    IF              reduce using rule 71 (cexpr -> aexpr LE aexpr .)
+    RETURN          reduce using rule 71 (cexpr -> aexpr LE aexpr .)
+    PRINT           reduce using rule 71 (cexpr -> aexpr LE aexpr .)
+    ID              reduce using rule 71 (cexpr -> aexpr LE aexpr .)
+    ;               reduce using rule 71 (cexpr -> aexpr LE aexpr .)
+    )               reduce using rule 71 (cexpr -> aexpr LE aexpr .)
+    ]               reduce using rule 71 (cexpr -> aexpr LE aexpr .)
+    ,               reduce using rule 71 (cexpr -> aexpr LE aexpr .)
+    MINUS           shift and go to state 92
+    PLUS            shift and go to state 93
+
+
+state 121
+
+    (72) cexpr -> aexpr EQ aexpr .
+    (56) aexpr -> aexpr . MINUS term
+    (57) aexpr -> aexpr . PLUS term
+    AND             reduce using rule 72 (cexpr -> aexpr EQ aexpr .)
+    OR              reduce using rule 72 (cexpr -> aexpr EQ aexpr .)
+    {               reduce using rule 72 (cexpr -> aexpr EQ aexpr .)
+    error           reduce using rule 72 (cexpr -> aexpr EQ aexpr .)
+    FOR             reduce using rule 72 (cexpr -> aexpr EQ aexpr .)
+    WHILE           reduce using rule 72 (cexpr -> aexpr EQ aexpr .)
+    IF              reduce using rule 72 (cexpr -> aexpr EQ aexpr .)
+    RETURN          reduce using rule 72 (cexpr -> aexpr EQ aexpr .)
+    PRINT           reduce using rule 72 (cexpr -> aexpr EQ aexpr .)
+    ID              reduce using rule 72 (cexpr -> aexpr EQ aexpr .)
+    ;               reduce using rule 72 (cexpr -> aexpr EQ aexpr .)
+    )               reduce using rule 72 (cexpr -> aexpr EQ aexpr .)
+    ]               reduce using rule 72 (cexpr -> aexpr EQ aexpr .)
+    ,               reduce using rule 72 (cexpr -> aexpr EQ aexpr .)
+    MINUS           shift and go to state 92
+    PLUS            shift and go to state 93
+
+
+state 122
+
+    (56) aexpr -> aexpr MINUS term .
+    (59) term -> term . DIVIDE fact
+    (60) term -> term . TIMES fact
+    GT              reduce using rule 56 (aexpr -> aexpr MINUS term .)
+    LT              reduce using rule 56 (aexpr -> aexpr MINUS term .)
+    NE              reduce using rule 56 (aexpr -> aexpr MINUS term .)
+    GE              reduce using rule 56 (aexpr -> aexpr MINUS term .)
+    LE              reduce using rule 56 (aexpr -> aexpr MINUS term .)
+    EQ              reduce using rule 56 (aexpr -> aexpr MINUS term .)
+    MINUS           reduce using rule 56 (aexpr -> aexpr MINUS term .)
+    PLUS            reduce using rule 56 (aexpr -> aexpr MINUS term .)
+    ;               reduce using rule 56 (aexpr -> aexpr MINUS term .)
+    )               reduce using rule 56 (aexpr -> aexpr MINUS term .)
+    ]               reduce using rule 56 (aexpr -> aexpr MINUS term .)
+    ,               reduce using rule 56 (aexpr -> aexpr MINUS term .)
+    AND             reduce using rule 56 (aexpr -> aexpr MINUS term .)
+    OR              reduce using rule 56 (aexpr -> aexpr MINUS term .)
+    {               reduce using rule 56 (aexpr -> aexpr MINUS term .)
+    error           reduce using rule 56 (aexpr -> aexpr MINUS term .)
+    FOR             reduce using rule 56 (aexpr -> aexpr MINUS term .)
+    WHILE           reduce using rule 56 (aexpr -> aexpr MINUS term .)
+    IF              reduce using rule 56 (aexpr -> aexpr MINUS term .)
+    RETURN          reduce using rule 56 (aexpr -> aexpr MINUS term .)
+    PRINT           reduce using rule 56 (aexpr -> aexpr MINUS term .)
+    ID              reduce using rule 56 (aexpr -> aexpr MINUS term .)
+    DIVIDE          shift and go to state 94
+    TIMES           shift and go to state 95
+
+
+state 123
+
+    (57) aexpr -> aexpr PLUS term .
+    (59) term -> term . DIVIDE fact
+    (60) term -> term . TIMES fact
+    GT              reduce using rule 57 (aexpr -> aexpr PLUS term .)
+    LT              reduce using rule 57 (aexpr -> aexpr PLUS term .)
+    NE              reduce using rule 57 (aexpr -> aexpr PLUS term .)
+    GE              reduce using rule 57 (aexpr -> aexpr PLUS term .)
+    LE              reduce using rule 57 (aexpr -> aexpr PLUS term .)
+    EQ              reduce using rule 57 (aexpr -> aexpr PLUS term .)
+    MINUS           reduce using rule 57 (aexpr -> aexpr PLUS term .)
+    PLUS            reduce using rule 57 (aexpr -> aexpr PLUS term .)
+    ;               reduce using rule 57 (aexpr -> aexpr PLUS term .)
+    )               reduce using rule 57 (aexpr -> aexpr PLUS term .)
+    ]               reduce using rule 57 (aexpr -> aexpr PLUS term .)
+    ,               reduce using rule 57 (aexpr -> aexpr PLUS term .)
+    AND             reduce using rule 57 (aexpr -> aexpr PLUS term .)
+    OR              reduce using rule 57 (aexpr -> aexpr PLUS term .)
+    {               reduce using rule 57 (aexpr -> aexpr PLUS term .)
+    error           reduce using rule 57 (aexpr -> aexpr PLUS term .)
+    FOR             reduce using rule 57 (aexpr -> aexpr PLUS term .)
+    WHILE           reduce using rule 57 (aexpr -> aexpr PLUS term .)
+    IF              reduce using rule 57 (aexpr -> aexpr PLUS term .)
+    RETURN          reduce using rule 57 (aexpr -> aexpr PLUS term .)
+    PRINT           reduce using rule 57 (aexpr -> aexpr PLUS term .)
+    ID              reduce using rule 57 (aexpr -> aexpr PLUS term .)
+    DIVIDE          shift and go to state 94
+    TIMES           shift and go to state 95
+
+
+state 124
+
+    (59) term -> term DIVIDE fact .
+    DIVIDE          reduce using rule 59 (term -> term DIVIDE fact .)
+    TIMES           reduce using rule 59 (term -> term DIVIDE fact .)
+    GT              reduce using rule 59 (term -> term DIVIDE fact .)
+    LT              reduce using rule 59 (term -> term DIVIDE fact .)
+    NE              reduce using rule 59 (term -> term DIVIDE fact .)
+    GE              reduce using rule 59 (term -> term DIVIDE fact .)
+    LE              reduce using rule 59 (term -> term DIVIDE fact .)
+    EQ              reduce using rule 59 (term -> term DIVIDE fact .)
+    MINUS           reduce using rule 59 (term -> term DIVIDE fact .)
+    PLUS            reduce using rule 59 (term -> term DIVIDE fact .)
+    ;               reduce using rule 59 (term -> term DIVIDE fact .)
+    )               reduce using rule 59 (term -> term DIVIDE fact .)
+    ]               reduce using rule 59 (term -> term DIVIDE fact .)
+    ,               reduce using rule 59 (term -> term DIVIDE fact .)
+    AND             reduce using rule 59 (term -> term DIVIDE fact .)
+    OR              reduce using rule 59 (term -> term DIVIDE fact .)
+    {               reduce using rule 59 (term -> term DIVIDE fact .)
+    error           reduce using rule 59 (term -> term DIVIDE fact .)
+    FOR             reduce using rule 59 (term -> term DIVIDE fact .)
+    WHILE           reduce using rule 59 (term -> term DIVIDE fact .)
+    IF              reduce using rule 59 (term -> term DIVIDE fact .)
+    RETURN          reduce using rule 59 (term -> term DIVIDE fact .)
+    PRINT           reduce using rule 59 (term -> term DIVIDE fact .)
+    ID              reduce using rule 59 (term -> term DIVIDE fact .)
+
+
+state 125
+
+    (60) term -> term TIMES fact .
+    DIVIDE          reduce using rule 60 (term -> term TIMES fact .)
+    TIMES           reduce using rule 60 (term -> term TIMES fact .)
+    GT              reduce using rule 60 (term -> term TIMES fact .)
+    LT              reduce using rule 60 (term -> term TIMES fact .)
+    NE              reduce using rule 60 (term -> term TIMES fact .)
+    GE              reduce using rule 60 (term -> term TIMES fact .)
+    LE              reduce using rule 60 (term -> term TIMES fact .)
+    EQ              reduce using rule 60 (term -> term TIMES fact .)
+    MINUS           reduce using rule 60 (term -> term TIMES fact .)
+    PLUS            reduce using rule 60 (term -> term TIMES fact .)
+    ;               reduce using rule 60 (term -> term TIMES fact .)
+    )               reduce using rule 60 (term -> term TIMES fact .)
+    ]               reduce using rule 60 (term -> term TIMES fact .)
+    ,               reduce using rule 60 (term -> term TIMES fact .)
+    AND             reduce using rule 60 (term -> term TIMES fact .)
+    OR              reduce using rule 60 (term -> term TIMES fact .)
+    {               reduce using rule 60 (term -> term TIMES fact .)
+    error           reduce using rule 60 (term -> term TIMES fact .)
+    FOR             reduce using rule 60 (term -> term TIMES fact .)
+    WHILE           reduce using rule 60 (term -> term TIMES fact .)
+    IF              reduce using rule 60 (term -> term TIMES fact .)
+    RETURN          reduce using rule 60 (term -> term TIMES fact .)
+    PRINT           reduce using rule 60 (term -> term TIMES fact .)
+    ID              reduce using rule 60 (term -> term TIMES fact .)
+
+
+state 126
+
+    (61) fact -> ( aexpr . )
+    (56) aexpr -> aexpr . MINUS term
+    (57) aexpr -> aexpr . PLUS term
+    )               shift and go to state 112
+    MINUS           shift and go to state 92
+    PLUS            shift and go to state 93
+
+
+state 127
+
+    (36) ifStmt -> IF lexpr statement ELSE . statement
+    (19) statement -> . block
+    (20) statement -> . free_statement
+    (34) block -> . { varDecls statements }
+    (9) free_statement -> . error ;
+    (10) free_statement -> . error }
+    (11) free_statement -> . compoundStmt
+    (12) free_statement -> . simpleStmt ;
+    (16) compoundStmt -> . forStmt
+    (17) compoundStmt -> . whileStmt
+    (18) compoundStmt -> . ifStmt
+    (13) simpleStmt -> . returnStmt
+    (14) simpleStmt -> . printStmt
+    (15) simpleStmt -> . asgnStmt
+    (27) forStmt -> . FOR ( asgnStmt_opt ; lexpr_opt ; asgnStmt_opt ) statement
+    (29) whileStmt -> . WHILE lexpr statement
+    (36) ifStmt -> . IF lexpr statement ELSE statement
+    (37) ifStmt -> . IF lexpr statement
+    (28) returnStmt -> . RETURN expr
+    (35) printStmt -> . PRINT expr
+    (21) asgnStmt -> . identifier [ aexpr ] ASSIGN expr
+    (22) asgnStmt -> . identifier ASSIGN expr
+    (83) identifier -> . ID
+    {               shift and go to state 76
+    error           shift and go to state 15
+    FOR             shift and go to state 24
+    WHILE           shift and go to state 25
+    IF              shift and go to state 26
+    RETURN          shift and go to state 27
+    PRINT           shift and go to state 28
+    ID              shift and go to state 13
+
+    statement                      shift and go to state 141
+    block                          shift and go to state 74
+    free_statement                 shift and go to state 75
+    compoundStmt                   shift and go to state 16
+    simpleStmt                     shift and go to state 17
+    forStmt                        shift and go to state 18
+    whileStmt                      shift and go to state 19
+    ifStmt                         shift and go to state 20
+    returnStmt                     shift and go to state 21
+    printStmt                      shift and go to state 22
+    asgnStmt                       shift and go to state 23
+    identifier                     shift and go to state 29
+
+state 128
+
+    (21) asgnStmt -> identifier [ aexpr ] . ASSIGN expr
+    ASSIGN          shift and go to state 142
+
+
+state 129
+
+    (78) function -> identifier ( parameters ) . block
+    (34) block -> . { varDecls statements }
+    {               shift and go to state 76
+
+    block                          shift and go to state 143
+
+state 130
+
+    (76) parameters -> parameters , . identifier
+    (83) identifier -> . ID
+    ID              shift and go to state 13
+
+    identifier                     shift and go to state 144
+
+state 131
+
+    (79) function -> identifier ( ) block .
+    FUN             reduce using rule 79 (function -> identifier ( ) block .)
+    error           reduce using rule 79 (function -> identifier ( ) block .)
+    FOR             reduce using rule 79 (function -> identifier ( ) block .)
+    WHILE           reduce using rule 79 (function -> identifier ( ) block .)
+    IF              reduce using rule 79 (function -> identifier ( ) block .)
+    RETURN          reduce using rule 79 (function -> identifier ( ) block .)
+    PRINT           reduce using rule 79 (function -> identifier ( ) block .)
+    ID              reduce using rule 79 (function -> identifier ( ) block .)
+    $end            reduce using rule 79 (function -> identifier ( ) block .)
+
+
+state 132
+
+    (38) init -> [ arguments ] .
+    ;               reduce using rule 38 (init -> [ arguments ] .)
+
+
+state 133
+
+    (74) arguments -> arguments , . expr
+    (40) expr -> . sexpr
+    (41) expr -> . aexpr
+    (42) expr -> . lexpr
+    (73) sexpr -> . STRING
+    (55) aexpr -> . term
+    (56) aexpr -> . aexpr MINUS term
+    (57) aexpr -> . aexpr PLUS term
+    (43) lexpr -> . lterm
+    (44) lexpr -> . lexpr OR lterm
+    (58) term -> . fact
+    (59) term -> . term DIVIDE fact
+    (60) term -> . term TIMES fact
+    (45) lterm -> . lfact
+    (46) lterm -> . lterm AND lfact
+    (61) fact -> . ( aexpr )
+    (62) fact -> . getVector
+    (63) fact -> . identifier
+    (64) fact -> . NUMBER
+    (65) fact -> . call
+    (66) fact -> . MINUS fact
+    (47) lfact -> . ( lexpr )
+    (48) lfact -> . NOT lfact
+    (49) lfact -> . # identifier
+    (50) lfact -> . # getVector
+    (51) lfact -> . # call
+    (52) lfact -> . FALSE
+    (53) lfact -> . TRUE
+    (54) lfact -> . cexpr
+    (82) getVector -> . identifier [ aexpr ]
+    (83) identifier -> . ID
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    (67) cexpr -> . aexpr GT aexpr
+    (68) cexpr -> . aexpr LT aexpr
+    (69) cexpr -> . aexpr NE aexpr
+    (70) cexpr -> . aexpr GE aexpr
+    (71) cexpr -> . aexpr LE aexpr
+    (72) cexpr -> . aexpr EQ aexpr
+    STRING          shift and go to state 60
+    (               shift and go to state 61
+    NUMBER          shift and go to state 54
+    MINUS           shift and go to state 52
+    NOT             shift and go to state 42
+    #               shift and go to state 43
+    FALSE           shift and go to state 47
+    TRUE            shift and go to state 48
+    ID              shift and go to state 13
+
+    expr                           shift and go to state 145
+    sexpr                          shift and go to state 57
+    aexpr                          shift and go to state 58
+    lexpr                          shift and go to state 59
+    term                           shift and go to state 51
+    lterm                          shift and go to state 39
+    fact                           shift and go to state 53
+    lfact                          shift and go to state 40
+    getVector                      shift and go to state 45
+    identifier                     shift and go to state 44
+    call                           shift and go to state 46
+    cexpr                          shift and go to state 49
+
+state 134
+
+    (27) forStmt -> FOR ( asgnStmt_opt ; lexpr_opt . ; asgnStmt_opt ) statement
+    ;               shift and go to state 146
+
+
+state 135
+
+    (25) lexpr_opt -> empty .
+    ;               reduce using rule 25 (lexpr_opt -> empty .)
+
+
+state 136
+
+    (26) lexpr_opt -> lexpr .
+    (44) lexpr -> lexpr . OR lterm
+    ;               reduce using rule 26 (lexpr_opt -> lexpr .)
+    OR              shift and go to state 73
+
+
+state 137
+
+    (34) block -> { varDecls statements . }
+    (33) statements -> statements . statement
+    (19) statement -> . block
+    (20) statement -> . free_statement
+    (34) block -> . { varDecls statements }
+    (9) free_statement -> . error ;
+    (10) free_statement -> . error }
+    (11) free_statement -> . compoundStmt
+    (12) free_statement -> . simpleStmt ;
+    (16) compoundStmt -> . forStmt
+    (17) compoundStmt -> . whileStmt
+    (18) compoundStmt -> . ifStmt
+    (13) simpleStmt -> . returnStmt
+    (14) simpleStmt -> . printStmt
+    (15) simpleStmt -> . asgnStmt
+    (27) forStmt -> . FOR ( asgnStmt_opt ; lexpr_opt ; asgnStmt_opt ) statement
+    (29) whileStmt -> . WHILE lexpr statement
+    (36) ifStmt -> . IF lexpr statement ELSE statement
+    (37) ifStmt -> . IF lexpr statement
+    (28) returnStmt -> . RETURN expr
+    (35) printStmt -> . PRINT expr
+    (21) asgnStmt -> . identifier [ aexpr ] ASSIGN expr
+    (22) asgnStmt -> . identifier ASSIGN expr
+    (83) identifier -> . ID
+    }               shift and go to state 147
+    {               shift and go to state 76
+    error           shift and go to state 15
+    FOR             shift and go to state 24
+    WHILE           shift and go to state 25
+    IF              shift and go to state 26
+    RETURN          shift and go to state 27
+    PRINT           shift and go to state 28
+    ID              shift and go to state 13
+
+    statement                      shift and go to state 148
+    block                          shift and go to state 74
+    free_statement                 shift and go to state 75
+    compoundStmt                   shift and go to state 16
+    simpleStmt                     shift and go to state 17
+    forStmt                        shift and go to state 18
+    whileStmt                      shift and go to state 19
+    ifStmt                         shift and go to state 20
+    returnStmt                     shift and go to state 21
+    printStmt                      shift and go to state 22
+    asgnStmt                       shift and go to state 23
+    identifier                     shift and go to state 29
+
+state 138
+
+    (32) statements -> empty .
+    }               reduce using rule 32 (statements -> empty .)
+    {               reduce using rule 32 (statements -> empty .)
+    error           reduce using rule 32 (statements -> empty .)
+    FOR             reduce using rule 32 (statements -> empty .)
+    WHILE           reduce using rule 32 (statements -> empty .)
+    IF              reduce using rule 32 (statements -> empty .)
+    RETURN          reduce using rule 32 (statements -> empty .)
+    PRINT           reduce using rule 32 (statements -> empty .)
+    ID              reduce using rule 32 (statements -> empty .)
+
+
+state 139
+
+    (82) getVector -> identifier [ aexpr ] .
+    DIVIDE          reduce using rule 82 (getVector -> identifier [ aexpr ] .)
+    TIMES           reduce using rule 82 (getVector -> identifier [ aexpr ] .)
+    GT              reduce using rule 82 (getVector -> identifier [ aexpr ] .)
+    LT              reduce using rule 82 (getVector -> identifier [ aexpr ] .)
+    NE              reduce using rule 82 (getVector -> identifier [ aexpr ] .)
+    GE              reduce using rule 82 (getVector -> identifier [ aexpr ] .)
+    LE              reduce using rule 82 (getVector -> identifier [ aexpr ] .)
+    EQ              reduce using rule 82 (getVector -> identifier [ aexpr ] .)
+    MINUS           reduce using rule 82 (getVector -> identifier [ aexpr ] .)
+    PLUS            reduce using rule 82 (getVector -> identifier [ aexpr ] .)
+    ;               reduce using rule 82 (getVector -> identifier [ aexpr ] .)
+    )               reduce using rule 82 (getVector -> identifier [ aexpr ] .)
+    AND             reduce using rule 82 (getVector -> identifier [ aexpr ] .)
+    OR              reduce using rule 82 (getVector -> identifier [ aexpr ] .)
+    {               reduce using rule 82 (getVector -> identifier [ aexpr ] .)
+    error           reduce using rule 82 (getVector -> identifier [ aexpr ] .)
+    FOR             reduce using rule 82 (getVector -> identifier [ aexpr ] .)
+    WHILE           reduce using rule 82 (getVector -> identifier [ aexpr ] .)
+    IF              reduce using rule 82 (getVector -> identifier [ aexpr ] .)
+    RETURN          reduce using rule 82 (getVector -> identifier [ aexpr ] .)
+    PRINT           reduce using rule 82 (getVector -> identifier [ aexpr ] .)
+    ID              reduce using rule 82 (getVector -> identifier [ aexpr ] .)
+    ]               reduce using rule 82 (getVector -> identifier [ aexpr ] .)
+    ,               reduce using rule 82 (getVector -> identifier [ aexpr ] .)
+
+
+state 140
+
+    (80) call -> identifier ( arguments ) .
+    DIVIDE          reduce using rule 80 (call -> identifier ( arguments ) .)
+    TIMES           reduce using rule 80 (call -> identifier ( arguments ) .)
+    GT              reduce using rule 80 (call -> identifier ( arguments ) .)
+    LT              reduce using rule 80 (call -> identifier ( arguments ) .)
+    NE              reduce using rule 80 (call -> identifier ( arguments ) .)
+    GE              reduce using rule 80 (call -> identifier ( arguments ) .)
+    LE              reduce using rule 80 (call -> identifier ( arguments ) .)
+    EQ              reduce using rule 80 (call -> identifier ( arguments ) .)
+    MINUS           reduce using rule 80 (call -> identifier ( arguments ) .)
+    PLUS            reduce using rule 80 (call -> identifier ( arguments ) .)
+    ;               reduce using rule 80 (call -> identifier ( arguments ) .)
+    )               reduce using rule 80 (call -> identifier ( arguments ) .)
+    AND             reduce using rule 80 (call -> identifier ( arguments ) .)
+    OR              reduce using rule 80 (call -> identifier ( arguments ) .)
+    {               reduce using rule 80 (call -> identifier ( arguments ) .)
+    error           reduce using rule 80 (call -> identifier ( arguments ) .)
+    FOR             reduce using rule 80 (call -> identifier ( arguments ) .)
+    WHILE           reduce using rule 80 (call -> identifier ( arguments ) .)
+    IF              reduce using rule 80 (call -> identifier ( arguments ) .)
+    RETURN          reduce using rule 80 (call -> identifier ( arguments ) .)
+    PRINT           reduce using rule 80 (call -> identifier ( arguments ) .)
+    ID              reduce using rule 80 (call -> identifier ( arguments ) .)
+    ]               reduce using rule 80 (call -> identifier ( arguments ) .)
+    ,               reduce using rule 80 (call -> identifier ( arguments ) .)
+
+
+state 141
+
+    (36) ifStmt -> IF lexpr statement ELSE statement .
+    error           reduce using rule 36 (ifStmt -> IF lexpr statement ELSE statement .)
+    FOR             reduce using rule 36 (ifStmt -> IF lexpr statement ELSE statement .)
+    WHILE           reduce using rule 36 (ifStmt -> IF lexpr statement ELSE statement .)
+    IF              reduce using rule 36 (ifStmt -> IF lexpr statement ELSE statement .)
+    RETURN          reduce using rule 36 (ifStmt -> IF lexpr statement ELSE statement .)
+    PRINT           reduce using rule 36 (ifStmt -> IF lexpr statement ELSE statement .)
+    ID              reduce using rule 36 (ifStmt -> IF lexpr statement ELSE statement .)
+    $end            reduce using rule 36 (ifStmt -> IF lexpr statement ELSE statement .)
+    ELSE            reduce using rule 36 (ifStmt -> IF lexpr statement ELSE statement .)
+    }               reduce using rule 36 (ifStmt -> IF lexpr statement ELSE statement .)
+    {               reduce using rule 36 (ifStmt -> IF lexpr statement ELSE statement .)
+
+
+state 142
+
+    (21) asgnStmt -> identifier [ aexpr ] ASSIGN . expr
+    (40) expr -> . sexpr
+    (41) expr -> . aexpr
+    (42) expr -> . lexpr
+    (73) sexpr -> . STRING
+    (55) aexpr -> . term
+    (56) aexpr -> . aexpr MINUS term
+    (57) aexpr -> . aexpr PLUS term
+    (43) lexpr -> . lterm
+    (44) lexpr -> . lexpr OR lterm
+    (58) term -> . fact
+    (59) term -> . term DIVIDE fact
+    (60) term -> . term TIMES fact
+    (45) lterm -> . lfact
+    (46) lterm -> . lterm AND lfact
+    (61) fact -> . ( aexpr )
+    (62) fact -> . getVector
+    (63) fact -> . identifier
+    (64) fact -> . NUMBER
+    (65) fact -> . call
+    (66) fact -> . MINUS fact
+    (47) lfact -> . ( lexpr )
+    (48) lfact -> . NOT lfact
+    (49) lfact -> . # identifier
+    (50) lfact -> . # getVector
+    (51) lfact -> . # call
+    (52) lfact -> . FALSE
+    (53) lfact -> . TRUE
+    (54) lfact -> . cexpr
+    (82) getVector -> . identifier [ aexpr ]
+    (83) identifier -> . ID
+    (80) call -> . identifier ( arguments )
+    (81) call -> . identifier ( )
+    (67) cexpr -> . aexpr GT aexpr
+    (68) cexpr -> . aexpr LT aexpr
+    (69) cexpr -> . aexpr NE aexpr
+    (70) cexpr -> . aexpr GE aexpr
+    (71) cexpr -> . aexpr LE aexpr
+    (72) cexpr -> . aexpr EQ aexpr
+    STRING          shift and go to state 60
+    (               shift and go to state 61
+    NUMBER          shift and go to state 54
+    MINUS           shift and go to state 52
+    NOT             shift and go to state 42
+    #               shift and go to state 43
+    FALSE           shift and go to state 47
+    TRUE            shift and go to state 48
+    ID              shift and go to state 13
+
+    identifier                     shift and go to state 44
+    aexpr                          shift and go to state 58
+    expr                           shift and go to state 149
+    sexpr                          shift and go to state 57
+    lexpr                          shift and go to state 59
+    term                           shift and go to state 51
+    lterm                          shift and go to state 39
+    fact                           shift and go to state 53
+    lfact                          shift and go to state 40
+    getVector                      shift and go to state 45
+    call                           shift and go to state 46
+    cexpr                          shift and go to state 49
+
+state 143
+
+    (78) function -> identifier ( parameters ) block .
+    FUN             reduce using rule 78 (function -> identifier ( parameters ) block .)
+    error           reduce using rule 78 (function -> identifier ( parameters ) block .)
+    FOR             reduce using rule 78 (function -> identifier ( parameters ) block .)
+    WHILE           reduce using rule 78 (function -> identifier ( parameters ) block .)
+    IF              reduce using rule 78 (function -> identifier ( parameters ) block .)
+    RETURN          reduce using rule 78 (function -> identifier ( parameters ) block .)
+    PRINT           reduce using rule 78 (function -> identifier ( parameters ) block .)
+    ID              reduce using rule 78 (function -> identifier ( parameters ) block .)
+    $end            reduce using rule 78 (function -> identifier ( parameters ) block .)
+
+
+state 144
+
+    (76) parameters -> parameters , identifier .
+    )               reduce using rule 76 (parameters -> parameters , identifier .)
+    ,               reduce using rule 76 (parameters -> parameters , identifier .)
+
+
+state 145
+
+    (74) arguments -> arguments , expr .
+    ]               reduce using rule 74 (arguments -> arguments , expr .)
+    ,               reduce using rule 74 (arguments -> arguments , expr .)
+    )               reduce using rule 74 (arguments -> arguments , expr .)
+
+
+state 146
+
+    (27) forStmt -> FOR ( asgnStmt_opt ; lexpr_opt ; . asgnStmt_opt ) statement
+    (23) asgnStmt_opt -> . empty
+    (24) asgnStmt_opt -> . asgnStmt
+    (84) empty -> .
+    (21) asgnStmt -> . identifier [ aexpr ] ASSIGN expr
+    (22) asgnStmt -> . identifier ASSIGN expr
+    (83) identifier -> . ID
+    )               reduce using rule 84 (empty -> .)
+    ID              shift and go to state 13
+
+    asgnStmt_opt                   shift and go to state 150
+    empty                          shift and go to state 70
+    asgnStmt                       shift and go to state 71
+    identifier                     shift and go to state 29
+
+state 147
+
+    (34) block -> { varDecls statements } .
+    error           reduce using rule 34 (block -> { varDecls statements } .)
+    FOR             reduce using rule 34 (block -> { varDecls statements } .)
+    WHILE           reduce using rule 34 (block -> { varDecls statements } .)
+    IF              reduce using rule 34 (block -> { varDecls statements } .)
+    RETURN          reduce using rule 34 (block -> { varDecls statements } .)
+    PRINT           reduce using rule 34 (block -> { varDecls statements } .)
+    ID              reduce using rule 34 (block -> { varDecls statements } .)
+    $end            reduce using rule 34 (block -> { varDecls statements } .)
+    ELSE            reduce using rule 34 (block -> { varDecls statements } .)
+    }               reduce using rule 34 (block -> { varDecls statements } .)
+    {               reduce using rule 34 (block -> { varDecls statements } .)
+    FUN             reduce using rule 34 (block -> { varDecls statements } .)
+
+
+state 148
+
+    (33) statements -> statements statement .
+    }               reduce using rule 33 (statements -> statements statement .)
+    {               reduce using rule 33 (statements -> statements statement .)
+    error           reduce using rule 33 (statements -> statements statement .)
+    FOR             reduce using rule 33 (statements -> statements statement .)
+    WHILE           reduce using rule 33 (statements -> statements statement .)
+    IF              reduce using rule 33 (statements -> statements statement .)
+    RETURN          reduce using rule 33 (statements -> statements statement .)
+    PRINT           reduce using rule 33 (statements -> statements statement .)
+    ID              reduce using rule 33 (statements -> statements statement .)
+
+
+state 149
+
+    (21) asgnStmt -> identifier [ aexpr ] ASSIGN expr .
+    ;               reduce using rule 21 (asgnStmt -> identifier [ aexpr ] ASSIGN expr .)
+    )               reduce using rule 21 (asgnStmt -> identifier [ aexpr ] ASSIGN expr .)
+
+
+state 150
+
+    (27) forStmt -> FOR ( asgnStmt_opt ; lexpr_opt ; asgnStmt_opt . ) statement
+    )               shift and go to state 151
+
+
+state 151
+
+    (27) forStmt -> FOR ( asgnStmt_opt ; lexpr_opt ; asgnStmt_opt ) . statement
+    (19) statement -> . block
+    (20) statement -> . free_statement
+    (34) block -> . { varDecls statements }
+    (9) free_statement -> . error ;
+    (10) free_statement -> . error }
+    (11) free_statement -> . compoundStmt
+    (12) free_statement -> . simpleStmt ;
+    (16) compoundStmt -> . forStmt
+    (17) compoundStmt -> . whileStmt
+    (18) compoundStmt -> . ifStmt
+    (13) simpleStmt -> . returnStmt
+    (14) simpleStmt -> . printStmt
+    (15) simpleStmt -> . asgnStmt
+    (27) forStmt -> . FOR ( asgnStmt_opt ; lexpr_opt ; asgnStmt_opt ) statement
+    (29) whileStmt -> . WHILE lexpr statement
+    (36) ifStmt -> . IF lexpr statement ELSE statement
+    (37) ifStmt -> . IF lexpr statement
+    (28) returnStmt -> . RETURN expr
+    (35) printStmt -> . PRINT expr
+    (21) asgnStmt -> . identifier [ aexpr ] ASSIGN expr
+    (22) asgnStmt -> . identifier ASSIGN expr
+    (83) identifier -> . ID
+    {               shift and go to state 76
+    error           shift and go to state 15
+    FOR             shift and go to state 24
+    WHILE           shift and go to state 25
+    IF              shift and go to state 26
+    RETURN          shift and go to state 27
+    PRINT           shift and go to state 28
+    ID              shift and go to state 13
+
+    statement                      shift and go to state 152
+    block                          shift and go to state 74
+    free_statement                 shift and go to state 75
+    compoundStmt                   shift and go to state 16
+    simpleStmt                     shift and go to state 17
+    forStmt                        shift and go to state 18
+    whileStmt                      shift and go to state 19
+    ifStmt                         shift and go to state 20
+    returnStmt                     shift and go to state 21
+    printStmt                      shift and go to state 22
+    asgnStmt                       shift and go to state 23
+    identifier                     shift and go to state 29
+
+state 152
+
+    (27) forStmt -> FOR ( asgnStmt_opt ; lexpr_opt ; asgnStmt_opt ) statement .
+    error           reduce using rule 27 (forStmt -> FOR ( asgnStmt_opt ; lexpr_opt ; asgnStmt_opt ) statement .)
+    FOR             reduce using rule 27 (forStmt -> FOR ( asgnStmt_opt ; lexpr_opt ; asgnStmt_opt ) statement .)
+    WHILE           reduce using rule 27 (forStmt -> FOR ( asgnStmt_opt ; lexpr_opt ; asgnStmt_opt ) statement .)
+    IF              reduce using rule 27 (forStmt -> FOR ( asgnStmt_opt ; lexpr_opt ; asgnStmt_opt ) statement .)
+    RETURN          reduce using rule 27 (forStmt -> FOR ( asgnStmt_opt ; lexpr_opt ; asgnStmt_opt ) statement .)
+    PRINT           reduce using rule 27 (forStmt -> FOR ( asgnStmt_opt ; lexpr_opt ; asgnStmt_opt ) statement .)
+    ID              reduce using rule 27 (forStmt -> FOR ( asgnStmt_opt ; lexpr_opt ; asgnStmt_opt ) statement .)
+    $end            reduce using rule 27 (forStmt -> FOR ( asgnStmt_opt ; lexpr_opt ; asgnStmt_opt ) statement .)
+    ELSE            reduce using rule 27 (forStmt -> FOR ( asgnStmt_opt ; lexpr_opt ; asgnStmt_opt ) statement .)
+    }               reduce using rule 27 (forStmt -> FOR ( asgnStmt_opt ; lexpr_opt ; asgnStmt_opt ) statement .)
+    {               reduce using rule 27 (forStmt -> FOR ( asgnStmt_opt ; lexpr_opt ; asgnStmt_opt ) statement .)
+
+
+Conflicts:
+
+shift/reduce conflict for ELSE in state 98 resolved as shift
