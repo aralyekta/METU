@@ -1,6 +1,6 @@
 # CENG444
 
-In the course, I've wrote a compiler for a C-like language called Vox. Vox is a modified version of Lox, which can be found here: https://craftinginterpreters.com/the-lox-language.html. Also, the specs of the modified version (Vox) is present in this folder as "vox_specs.txt".
+In the course, I wrote a compiler for a C-like language called Vox. Vox is a modified version of Lox, which can be found here: https://craftinginterpreters.com/the-lox-language.html. Also, the specs of the modified version (Vox) is present in this folder as "vox_specs.txt".
 
 ## Project 1 (Lexer)
 
